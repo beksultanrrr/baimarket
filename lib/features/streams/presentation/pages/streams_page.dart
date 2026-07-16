@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/widgets/app_refresh_indicator.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../live/data/livekit_config.dart';
 import '../../../live/presentation/cubit/live_cubit.dart';
 import '../widgets/streams_app_bar.dart';
 import '../widgets/streams_avatar_list.dart';
@@ -31,7 +32,7 @@ class _StreamsPageState extends State<StreamsPage> {
   }
 
   StreamInfo _activeStreamInfo(LiveState live) {
-    final info = live.streamInfo!;
+    final info = live.streamInfo ?? devLiveStreamInfo();
     return StreamInfo(
       id: 'live',
       imageUrl: info.thumbnailUrl ?? '',
@@ -50,8 +51,11 @@ class _StreamsPageState extends State<StreamsPage> {
           bottom: false,
           child: BlocBuilder<LiveCubit, LiveState>(
             builder: (context, live) {
+              // Dev-обход: при заданном ручном LiveKit-токене показываем
+              // активную карточку (→ /live) без сокет-события streamStarted.
               final hasLive =
-                  live.isStreamActive && live.streamInfo != null;
+                  (live.isStreamActive && live.streamInfo != null) ||
+                      kLiveKitDevEnabled;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

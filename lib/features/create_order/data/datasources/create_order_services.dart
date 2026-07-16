@@ -33,7 +33,7 @@ class CreateOrderServices implements CreateOrderRepository {
   }
 
   @override
-  Future<String?> createOrder({
+  Future<OrderCreationResult?> createOrder({
     required int cartId,
     required String fullName,
     required String phoneNumber,
@@ -99,9 +99,12 @@ class CreateOrderServices implements CreateOrderRepository {
         );
       }
 
-      final url = orderResponse.data['redirectUrl']?.toString();
-      orderLog.info('redirectUrl extracted', url);
-      return url;
+      final data = orderResponse.data;
+      final url = data is Map ? data['redirectUrl']?.toString() : null;
+      final order = data is Map ? data['order'] : null;
+      final orderId = order is Map ? (order['id'] as num?)?.toInt() : null;
+      orderLog.info('order created', 'id=$orderId, redirectUrl=$url');
+      return OrderCreationResult(orderId: orderId, redirectUrl: url);
     } on OrderCreationException {
       rethrow;
     } on DioException catch (e, st) {

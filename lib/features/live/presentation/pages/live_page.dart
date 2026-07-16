@@ -8,6 +8,8 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../collection/presentation/cubit/collection_cubit.dart';
+import '../../data/livekit_config.dart';
+import '../../data/models/live_stream_info.dart';
 import '../cubit/live_cubit.dart';
 import '../widgets/live_action_rail.dart';
 import '../widgets/live_comments_sheet.dart';
@@ -15,6 +17,7 @@ import '../widgets/live_floating_chat.dart';
 import '../widgets/live_gifts_sheet.dart';
 import '../widgets/live_product_strip.dart';
 import '../widgets/live_shopping_scope.dart';
+import '../widgets/livekit_player.dart';
 
 class LivePage extends StatefulWidget {
   const LivePage({super.key});
@@ -67,8 +70,7 @@ class _LivePageState extends State<LivePage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LiveCubit, LiveState>(
-      listenWhen: (prev, curr) =>
-          curr.lastError != null && prev.lastError != curr.lastError,
+      listenWhen: (prev, curr) => curr.lastError != null && prev.lastError != curr.lastError,
       listener: (context, state) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -80,13 +82,17 @@ class _LivePageState extends State<LivePage> {
         );
       },
       builder: (context, state) {
-        if (!state.isStreamActive || state.streamInfo == null) {
+        final hasStream = state.isStreamActive && state.streamInfo != null;
+        // Dev-обход: если задан ручной LiveKit-токен, показываем эфир даже без
+        // сокет-события streamStarted (бэк ещё не интегрирован).
+        if (!hasStream && !kLiveKitDevEnabled) {
           return _InactiveStreamView(onClose: () => context.pop());
         }
-        _ensurePlayer(state.streamInfo!.videoId);
+        final source = resolveLiveKitSource(state.streamInfo ?? devLiveStreamInfo());
         return _ActiveStreamView(
           state: state,
-          player: _player!,
+          streamInfo: source,
+          videoPlayer: _buildVideoPlayer(source),
           collectionCubit: _collectionCubit,
           inputFocus: _inputFocus,
           likes: _localLikes,
@@ -97,12 +103,45 @@ class _LivePageState extends State<LivePage> {
       },
     );
   }
+
+  /// Строит видео-слой эфира: LiveKit, если бэк/dev-конфиг отдал комнату и
+  /// токен; иначе — YouTube-фоллбэк по `videoId`.
+  Widget _buildVideoPlayer(LiveStreamInfo source) {
+    if (source.isLiveKit) {
+      return LiveKitPlayer(
+        url: source.livekitUrl!,
+        token: source.token!,
+        roomName: source.roomName,
+      );
+    }
+    _ensurePlayer(source.videoId);
+    // Лёгкий scale 1.18 + ClipRect прячут UI YouTube (LIVE-баннер, watermark,
+    // кнопку "Watch on YouTube") за границами кропа. IgnorePointer глушит тачи
+    // на iframe — иначе ютуб всплывает свой play/pause overlay при тапе.
+    return Center(
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: ClipRect(
+          child: IgnorePointer(
+            child: Transform.scale(
+              scale: 1.18,
+              child: YoutubePlayer(
+                controller: _player!,
+                showVideoProgressIndicator: false,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _ActiveStreamView extends StatelessWidget {
   const _ActiveStreamView({
     required this.state,
-    required this.player,
+    required this.streamInfo,
+    required this.videoPlayer,
     required this.collectionCubit,
     required this.inputFocus,
     required this.likes,
@@ -112,7 +151,8 @@ class _ActiveStreamView extends StatelessWidget {
   });
 
   final LiveState state;
-  final YoutubePlayerController player;
+  final LiveStreamInfo streamInfo;
+  final Widget videoPlayer;
   final CollectionCubit collectionCubit;
   final FocusNode inputFocus;
   final int likes;
@@ -131,27 +171,9 @@ class _ActiveStreamView extends StatelessWidget {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // Плеер фоном — AspectRatio 16:9 по центру.
-          // Лёгкий scale 1.18 + ClipRect прячут UI YouTube (LIVE-баннер
-          // справа сверху, watermark, кнопку "Watch on YouTube") за
-          // границами кропа. IgnorePointer глушит тачи на iframe — иначе
-          // ютуб всплывает свой play/pause overlay при тапе по видео.
-          Center(
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: ClipRect(
-                child: IgnorePointer(
-                  child: Transform.scale(
-                    scale: 1.18,
-                    child: YoutubePlayer(
-                      controller: player,
-                      showVideoProgressIndicator: false,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Видео-слой фоном (LiveKit или YouTube-фоллбэк) — собирается в
+          // _LivePageState._buildVideoPlayer и приходит сюда готовым.
+          videoPlayer,
           // Затемнение сверху (под header) и снизу (под чат+ввод) — как в макете.
           const Positioned.fill(
             child: IgnorePointer(
@@ -175,8 +197,8 @@ class _ActiveStreamView extends StatelessWidget {
             child: Column(
               children: [
                 _LiveHeader(
-                  channelTitle: state.streamInfo!.channelTitle,
-                  thumbnailUrl: state.streamInfo!.thumbnailUrl,
+                  channelTitle: streamInfo.channelTitle,
+                  thumbnailUrl: streamInfo.thumbnailUrl,
                   viewerCount: state.viewerCount,
                   onClose: () => context.pop(),
                 ),
@@ -209,9 +231,7 @@ class _ActiveStreamView extends StatelessWidget {
                         const SizedBox(width: 8),
                         LiveActionRail(
                           cartCount: _cartItemsCount(context),
-                          messageCount: state.messageCount > 0
-                              ? state.messageCount
-                              : state.chatMessages.length,
+                          messageCount: state.messageCount > 0 ? state.messageCount : state.chatMessages.length,
                           likesCount: likes,
                           onCartTap: () => openLiveCartSheet(context),
                           onMessageTap: () => showLiveCommentsSheet(
@@ -229,10 +249,8 @@ class _ActiveStreamView extends StatelessWidget {
                   bloc: collectionCubit,
                   listener: (_, __) {},
                   builder: (context, cs) {
-                    if (cs is CollectionGot &&
-                        cs.collection.products.isNotEmpty) {
-                      return LiveProductStrip(
-                          products: cs.collection.products);
+                    if (cs is CollectionGot && cs.collection.products.isNotEmpty) {
+                      return LiveProductStrip(products: cs.collection.products);
                     }
                     return const SizedBox.shrink();
                   },
@@ -293,8 +311,7 @@ class _LiveHeader extends StatelessWidget {
                   ? Image.network(
                       thumbnailUrl!,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          Image.asset('assets/images/person.png'),
+                      errorBuilder: (_, __, ___) => Image.asset('assets/images/person.png'),
                     )
                   : Image.asset('assets/images/person.png'),
             ),
@@ -590,7 +607,7 @@ class _InactiveStreamView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      l10n.streamInactiveTitle,
+                      "l10n.streamInactiveTitle",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,

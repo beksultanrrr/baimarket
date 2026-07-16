@@ -21,6 +21,8 @@ import '../../../cart/data/models/cart_item_model.dart';
 import '../../../live/presentation/widgets/live_shopping_scope.dart';
 import '../../../order_success/data/models/order_success_args.dart';
 import '../../../payment/data/models/payment_args.dart';
+import '../../../payment/presentation/widgets/kaspi_payment_sheet.dart';
+import '../../domain/repositories/create_order_repository.dart';
 import '../../data/models/city_model.dart';
 import '../widgets/bonus_tickets_row.dart';
 import '../widgets/delivery_section.dart';
@@ -59,6 +61,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
 
   int _selectedSegment = 0;
   PaymentMethod _paymentMethod = PaymentMethod.cash;
+  bool _submitting = false;
 
   @override
   void initState() {
@@ -249,32 +252,41 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
       }
     }
 
+    final paymentSlug = _paymentTypeSlug(_paymentMethod);
+    final orderCityId = cityId;
+    Future<OrderCreationResult?> runCreateOrder() =>
+        createOrderPage.createOrder(
+          cartId: widget.cartModel.id,
+          fullName: whoTakesController.text,
+          phoneNumber: formatPhoneNumber(phoneNumberController.text),
+          selfPick: !isCourier,
+          postalCode: postalCodeController.text,
+          cityId: orderCityId,
+          deliveryAddress: addressController.text,
+          comment: 'Тест',
+          pickupUrl: pickupUrl,
+          selfPickDate: '',
+          filialId: isCourier ? null : (selectedFilialIndex ?? 0) + 1,
+          paymentTypeSlug: paymentSlug,
+        );
+
+    final args = _buildPaymentArgs(null, isCourier);
+    final scope = LiveShoppingScope.maybeOf(context);
+
+    // Kaspi (xpayment): дожидаемся создания заказа, чтобы получить orderId и
+    // redirectUrl, затем показываем шит оплаты с QR и опросом статуса.
+    if (_paymentMethod == PaymentMethod.kaspi) {
+      unawaited(_payWithKaspi(runCreateOrder, args));
+      return;
+    }
+
     // Бэк сейчас отвечает 403 «Buying is not active» — не блокируем юзера.
     // Стреляем createOrder в фоне (логи/попытка реально создать заказ),
     // но НЕ ждём результат и не реагируем на состояние через BlocListener:
     // сразу пушим /payment с собранными аргументами. Если payment URL
     // позже появится — UI оплаты возьмёт его из state и пойдёт в
     // WebView, иначе сработает fallback на /order_success.
-    final paymentSlug = _paymentTypeSlug(_paymentMethod);
-    unawaited(
-      createOrderPage.createOrder(
-        cartId: widget.cartModel.id,
-        fullName: whoTakesController.text,
-        phoneNumber: formatPhoneNumber(phoneNumberController.text),
-        selfPick: !isCourier,
-        postalCode: postalCodeController.text,
-        cityId: cityId,
-        deliveryAddress: addressController.text,
-        comment: 'Тест',
-        pickupUrl: pickupUrl,
-        selfPickDate: '',
-        filialId: isCourier ? null : (selectedFilialIndex ?? 0) + 1,
-        paymentTypeSlug: paymentSlug,
-      ),
-    );
-
-    final args = _buildPaymentArgs(null, isCourier);
-    final scope = LiveShoppingScope.maybeOf(context);
+    unawaited(runCreateOrder());
 
     // Наличный расчёт не требует онлайн-оплаты: пропускаем /payment и
     // /payment_webview, сразу показываем экран успешного оформления.
@@ -313,9 +325,81 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   }
 
   String _paymentTypeSlug(PaymentMethod m) {
-    // Пока поддерживаем только переключение наличного расчёта.
-    // Остальные способы идут по старому слагу `ONEV`.
-    return m == PaymentMethod.cash ? 'CASH' : 'ONEV';
+    switch (m) {
+      case PaymentMethod.cash:
+        return 'CASH';
+      case PaymentMethod.kaspi:
+        return 'KASPI';
+      default:
+        // Остальные способы идут по старому слагу `ONEV`.
+        return 'ONEV';
+    }
+  }
+
+  /// Создаём заказ (ждём результат ради orderId + redirectUrl), затем
+  /// открываем шит Kaspi-оплаты. Если заказ оплачен (шит вернул `true`) —
+  /// уходим на экран успешного оформления.
+  Future<void> _payWithKaspi(
+    Future<OrderCreationResult?> Function() runCreateOrder,
+    PaymentArgs args,
+  ) async {
+    // Захватываем messenger ДО await: после async-gap `context` может уже
+    // быть деактивирован (особенно в live-shopping оверлее) и
+    // `ScaffoldMessenger.of(context)` бросит «deactivated widget's ancestor».
+    final messenger = ScaffoldMessenger.of(context);
+    setState(() => _submitting = true);
+    OrderCreationResult? result;
+    try {
+      result = await runCreateOrder();
+    } finally {
+      if (mounted) setState(() => _submitting = false);
+    }
+    if (!mounted) return;
+
+    final orderId = result?.orderId;
+    final url = result?.redirectUrl;
+    if (orderId == null || url == null || url.isEmpty) {
+      orderLog.warn('kaspi: no orderId/redirectUrl', 'result=$result');
+      final state = createOrderPage.state;
+      final reason = state is OrderCreateError && (state.message?.isNotEmpty ?? false)
+          ? state.message!
+          : 'Не удалось начать оплату Kaspi';
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text(reason),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(16),
+        ),
+      );
+      return;
+    }
+
+    final paid = await showKaspiPaymentSheet(
+      context: context,
+      orderId: orderId,
+      redirectUrl: url,
+      amount: args.amount,
+    );
+    if (paid != true || !mounted) return;
+
+    final successArgs = OrderSuccessArgs(
+      orderId: orderId,
+      itemsTotal: args.itemsTotal ?? args.amount,
+      oldTotal: args.oldTotal,
+      savings: args.savings ?? 0,
+      ticketsEarned: args.ticketsEarned ?? 0,
+      deliveryAddressLine: args.deliveryAddressLine,
+      deliveryPostalCode: args.deliveryPostalCode,
+      productImageUrls: args.productImageUrls,
+    );
+    final scope = LiveShoppingScope.maybeOf(context);
+    orderLog.nav('kaspi paid → /order_success', 'orderId=$orderId');
+    if (scope != null) {
+      scope.openOrderSuccess(context, successArgs);
+    } else {
+      context.push('/order_success', extra: successArgs);
+    }
   }
 
   PaymentArgs _buildPaymentArgs(String? paymentUrl, bool isCourier) {
@@ -488,8 +572,8 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                     );
                   },
                   child: MainButton(
-                    onPressed: _onContinuePressed,
-                    text: 'Продолжить',
+                    onPressed: _submitting ? null : _onContinuePressed,
+                    text: _submitting ? 'Обработка…' : 'Продолжить',
                   ),
                 ),
                 const SizedBox(height: 8),

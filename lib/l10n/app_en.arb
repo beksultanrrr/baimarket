@@ -835,5 +835,19 @@
     "onAirNow": "On air now",
     "giftButton": "Gift",
     "commentInputHint": "Type a comment...",
-    "inCart": "In Cart"
+    "inCart": "In Cart",
+    "kaspiPayTitle": "Kaspi payment",
+    "kaspiAmountToPay": "To pay: {amount}",
+    "@kaspiAmountToPay": {
+        "placeholders": {
+            "amount": {
+                "type": "String"
+            }
+        }
+    },
+    "kaspiScanOrPay": "Scan the QR code or tap «Pay» to open Kaspi",
+    "kaspiWaitingPayment": "Waiting for payment…",
+    "kaspiPaymentFailed": "Payment failed",
+    "kaspiLinkExpired": "The payment link has expired",
+    "kaspiPayAgain": "Pay again"
 }

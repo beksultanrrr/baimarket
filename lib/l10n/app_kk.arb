@@ -642,5 +642,12 @@
     "onAirNow": "Қазір эфирде",
     "giftButton": "Сыйлық",
     "commentInputHint": "Пікір жазыңыз...",
-    "inCart": "Себетте"
+    "inCart": "Себетте",
+    "kaspiPayTitle": "Kaspi төлемі",
+    "kaspiAmountToPay": "Төлеуге: {amount}",
+    "kaspiScanOrPay": "QR-кодты сканерлеңіз немесе Kaspi ашу үшін «Төлеу» түймесін басыңыз",
+    "kaspiWaitingPayment": "Төлемді күтудеміз…",
+    "kaspiPaymentFailed": "Төлем өтпеді",
+    "kaspiLinkExpired": "Сілтеме мерзімі аяқталды",
+    "kaspiPayAgain": "Қайта төлеу"
 }

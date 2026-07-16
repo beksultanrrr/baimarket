@@ -103,7 +103,7 @@ class _ProductThumbStrip extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: items.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final photos = items[index].model.photoUrls as List<String>?;
           final url = (photos != null && photos.isNotEmpty)

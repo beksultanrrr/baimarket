@@ -34,7 +34,8 @@ android {
 
     defaultConfig {
         applicationId = "com.bmarket.baimarket"
-        minSdk = flutter.minSdkVersion // <-- Убедись, что здесь minSdk не меньше 19
+        // flutter_webrtc (livekit_client) требует minSdk >= 21.
+        minSdk = maxOf(flutter.minSdkVersion, 21)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

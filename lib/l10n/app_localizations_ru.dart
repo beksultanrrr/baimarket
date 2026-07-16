@@ -881,4 +881,27 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get inCart => 'В корзине';
+
+  @override
+  String get kaspiPayTitle => 'Оплата Kaspi';
+
+  @override
+  String kaspiAmountToPay(String amount) {
+    return 'К оплате: $amount';
+  }
+
+  @override
+  String get kaspiScanOrPay => 'Отсканируйте QR-код или нажмите «Оплатить», чтобы открыть Kaspi';
+
+  @override
+  String get kaspiWaitingPayment => 'Ожидаем оплату…';
+
+  @override
+  String get kaspiPaymentFailed => 'Оплата не прошла';
+
+  @override
+  String get kaspiLinkExpired => 'Срок действия ссылки истёк';
+
+  @override
+  String get kaspiPayAgain => 'Повторить оплату';
 }

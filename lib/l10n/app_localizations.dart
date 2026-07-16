@@ -1776,6 +1776,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'In Cart'**
   String get inCart;
+
+  /// No description provided for @kaspiPayTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Kaspi payment'**
+  String get kaspiPayTitle;
+
+  /// No description provided for @kaspiAmountToPay.
+  ///
+  /// In en, this message translates to:
+  /// **'To pay: {amount}'**
+  String kaspiAmountToPay(String amount);
+
+  /// No description provided for @kaspiScanOrPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan the QR code or tap «Pay» to open Kaspi'**
+  String get kaspiScanOrPay;
+
+  /// No description provided for @kaspiWaitingPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for payment…'**
+  String get kaspiWaitingPayment;
+
+  /// No description provided for @kaspiPaymentFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed'**
+  String get kaspiPaymentFailed;
+
+  /// No description provided for @kaspiLinkExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'The payment link has expired'**
+  String get kaspiLinkExpired;
+
+  /// No description provided for @kaspiPayAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay again'**
+  String get kaspiPayAgain;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

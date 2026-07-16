@@ -40,6 +40,17 @@ class PaymentMethodsSection extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 _MethodCard(
+                  isSelected: selected == PaymentMethod.kaspi,
+                  onTap: () => onChanged(PaymentMethod.kaspi),
+                  label: 'Kaspi',
+                  icon: const Icon(
+                    Icons.qr_code_2_rounded,
+                    size: 28,
+                    color: Color(0xFFE4002B),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                _MethodCard(
                   isSelected: selected == PaymentMethod.cash,
                   onTap: () => onChanged(PaymentMethod.cash),
                   label: 'Наличными',

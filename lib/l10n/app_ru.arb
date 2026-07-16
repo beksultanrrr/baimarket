@@ -645,5 +645,12 @@
     "onAirNow": "Сейчас в эфире",
     "giftButton": "Подарок",
     "commentInputHint": "Введите комментарии...",
-    "inCart": "В корзине"
+    "inCart": "В корзине",
+    "kaspiPayTitle": "Оплата Kaspi",
+    "kaspiAmountToPay": "К оплате: {amount}",
+    "kaspiScanOrPay": "Отсканируйте QR-код или нажмите «Оплатить», чтобы открыть Kaspi",
+    "kaspiWaitingPayment": "Ожидаем оплату…",
+    "kaspiPaymentFailed": "Оплата не прошла",
+    "kaspiLinkExpired": "Срок действия ссылки истёк",
+    "kaspiPayAgain": "Повторить оплату"
 }

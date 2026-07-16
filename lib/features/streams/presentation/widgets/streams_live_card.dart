@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../live/data/livekit_config.dart';
+import '../../../live/data/models/live_stream_info.dart';
 import '../../../live/presentation/cubit/live_cubit.dart';
 import 'streams_avatar_list.dart';
 
@@ -21,17 +23,24 @@ class StreamsLiveCard extends StatelessWidget {
   final StreamInfo stream;
   final LiveState? live;
 
-  bool get _isLive => live?.isStreamActive == true && live?.streamInfo != null;
+  bool get _isLive =>
+      (live?.isStreamActive == true && live?.streamInfo != null) ||
+      kLiveKitDevEnabled;
+
+  /// Метаданные эфира: из стейта, либо синтетические dev-данные.
+  LiveStreamInfo? get _info =>
+      live?.streamInfo ?? (kLiveKitDevEnabled ? devLiveStreamInfo() : null);
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final title = _isLive ? live!.streamInfo!.channelTitle : stream.name;
+    final info = _info;
+    final title = _isLive ? (info?.channelTitle ?? stream.name) : stream.name;
     final desc = _isLive
-        ? '${l10n.viewersLabel}: ${live!.viewerCount}'
+        ? '${l10n.viewersLabel}: ${live?.viewerCount ?? 0}'
         : stream.description;
     final image = _isLive
-        ? (live!.streamInfo!.thumbnailUrl ?? stream.imageUrl)
+        ? (info?.thumbnailUrl ?? stream.imageUrl)
         : stream.imageUrl;
 
     final card = Container(

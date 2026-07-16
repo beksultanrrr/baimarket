@@ -23,7 +23,7 @@ class OrdersFilterTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: OrderFilter.values.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final filter = OrderFilter.values[index];
           final isSelected = filter == selected;

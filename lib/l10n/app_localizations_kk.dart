@@ -881,4 +881,27 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get inCart => 'Себетте';
+
+  @override
+  String get kaspiPayTitle => 'Kaspi төлемі';
+
+  @override
+  String kaspiAmountToPay(String amount) {
+    return 'Төлеуге: $amount';
+  }
+
+  @override
+  String get kaspiScanOrPay => 'QR-кодты сканерлеңіз немесе Kaspi ашу үшін «Төлеу» түймесін басыңыз';
+
+  @override
+  String get kaspiWaitingPayment => 'Төлемді күтудеміз…';
+
+  @override
+  String get kaspiPaymentFailed => 'Төлем өтпеді';
+
+  @override
+  String get kaspiLinkExpired => 'Сілтеме мерзімі аяқталды';
+
+  @override
+  String get kaspiPayAgain => 'Қайта төлеу';
 }

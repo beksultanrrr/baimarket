@@ -170,7 +170,7 @@ class _ProductRow extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: order.cartItems.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 10),
+        separatorBuilder: (_, __) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final item = order.cartItems[index];
           final product = item.model;

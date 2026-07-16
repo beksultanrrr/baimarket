@@ -881,4 +881,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get inCart => 'In Cart';
+
+  @override
+  String get kaspiPayTitle => 'Kaspi payment';
+
+  @override
+  String kaspiAmountToPay(String amount) {
+    return 'To pay: $amount';
+  }
+
+  @override
+  String get kaspiScanOrPay => 'Scan the QR code or tap «Pay» to open Kaspi';
+
+  @override
+  String get kaspiWaitingPayment => 'Waiting for payment…';
+
+  @override
+  String get kaspiPaymentFailed => 'Payment failed';
+
+  @override
+  String get kaspiLinkExpired => 'The payment link has expired';
+
+  @override
+  String get kaspiPayAgain => 'Pay again';
 }

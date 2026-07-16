@@ -17,7 +17,7 @@ class CreateOrderCubit extends Cubit<CreateOrderState> {
     emit(CreateOrderInitial());
   }
 
-  Future<void> createOrder({
+  Future<OrderCreationResult?> createOrder({
     required int cartId,
     required String fullName,
     required String phoneNumber,
@@ -56,18 +56,27 @@ class CreateOrderCubit extends Cubit<CreateOrderState> {
         paymentTypeSlug: paymentTypeSlug,
       );
       if (res != null) {
-        orderLog.state('emit OrderCreated', 'paymentUrl="$res"');
-        emit(OrderCreated(paymentUrl: res));
+        orderLog.state(
+          'emit OrderCreated',
+          'orderId=${res.orderId}, redirectUrl="${res.redirectUrl}"',
+        );
+        emit(OrderCreated(
+          orderId: res.orderId,
+          redirectUrl: res.redirectUrl,
+        ));
       } else {
         orderLog.state('emit OrderCreateError (res == null)');
         emit(const OrderCreateError());
       }
+      return res;
     } on OrderCreationException catch (e, st) {
       orderLog.error('OrderCreationException → emit error', e.message, e, st);
       emit(OrderCreateError(message: e.message));
+      return null;
     } catch (e, st) {
       orderLog.error('createOrder cubit-level exception', e.toString(), e, st);
       emit(const OrderCreateError());
+      return null;
     }
   }
 }
