@@ -8,11 +8,11 @@ part of 'order_model.dart';
 
 OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   id: (json['id'] as num).toInt(),
-  cartItems:
-      (json['cartItems'] as List<dynamic>)
-          .map((e) => OrderProductModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  cartItems: (json['cartItems'] as List<dynamic>)
+      .map((e) => OrderProductModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
   totalPrice: (json['totalPrice'] as num).toInt(),
+  deliveryPrice: (json['deliveryPrice'] as num?)?.toInt() ?? 0,
   userId: (json['userId'] as num).toInt(),
   deliveryInfo: json['deliveryInfo'] as Map<String, dynamic>?,
   createdAt: json['createdAt'] as String,
@@ -21,7 +21,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) => OrderModel(
   paymentTypeSlug: json['paymentTypeSlug'] as String?,
   paymentUrl: json['paymentUrl'] as String?,
   status: json['status'] as String?,
-  trackingNumber: (json['trackingNumber'] as num?)?.toInt(),
+  trackingNumber: json['trackingNumber'] as String?,
 );
 
 Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
@@ -37,5 +37,6 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'deliveryInfo': instance.deliveryInfo,
       'createdAt': instance.createdAt,
       'totalPrice': instance.totalPrice,
+      'deliveryPrice': instance.deliveryPrice,
       'status': instance.status,
     };

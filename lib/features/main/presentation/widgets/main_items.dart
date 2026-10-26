@@ -86,7 +86,7 @@ class MainItems extends StatelessWidget {
                                       width: 32,
                                       child: NetworkImageWidget(
                                         url:
-                                            '$imgUrl${products[index].collections![index1]['labelUrl']}',
+                                            '$imgUrl${products[index].collections![index1].labelUrl ?? ''}',
                                       ),
                                     ),
                               ),

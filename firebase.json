@@ -1,1 +1,74 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"baimarket-a123a","appId":"1:508941561573:android:68e0c7a72953d9db5cee0c","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"baimarket-a123a","appId":"1:508941561573:ios:65883ebf575d00155cee0c","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"baimarket-a123a","configurations":{"android":"1:508941561573:android:68e0c7a72953d9db5cee0c","ios":"1:508941561573:ios:65883ebf575d00155cee0c"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "hibai-8a160",
+          "appId": "1:746121233690:android:d091604b2d70237cab58a3",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "hibai-8a160",
+          "appId": "1:746121233690:ios:884183aa99bb49c7ab58a3",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "hibai-8a160",
+          "configurations": {
+            "android": "1:746121233690:android:d091604b2d70237cab58a3",
+            "ios": "1:746121233690:ios:884183aa99bb49c7ab58a3"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "hosting/public",
+    "ignore": [
+      "firebase.json",
+      "**/node_modules/**",
+      "**/.DS_Store"
+    ],
+    "headers": [
+      {
+        "source": "/.well-known/apple-app-site-association",
+        "headers": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Cache-Control", "value": "public, max-age=300" }
+        ]
+      },
+      {
+        "source": "/.well-known/assetlinks.json",
+        "headers": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Cache-Control", "value": "public, max-age=300" }
+        ]
+      },
+      {
+        "source": "/app-version.json",
+        "headers": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+          { "key": "Access-Control-Allow-Origin", "value": "*" }
+        ]
+      },
+      {
+        "source": "**/*.html",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

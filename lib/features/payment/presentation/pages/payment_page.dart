@@ -83,7 +83,6 @@ class _PaymentView extends StatelessWidget {
     if (rawState is! PaymentReady) return;
     final state = rawState;
     final enrichedArgs = args.copyWith(cardBrand: state.selectedCard?.brand);
-    final scope = LiveShoppingScope.maybeOf(context);
 
     final url = args.paymentUrl;
     if (url != null && url.isNotEmpty) {
@@ -91,31 +90,27 @@ class _PaymentView extends StatelessWidget {
         'push /payment_webview',
         'url="$url", brand=${state.selectedCard?.brand.name}',
       );
-      if (scope != null) {
-        scope.openPaymentWebview(context, enrichedArgs);
-      } else {
-        context.push('/payment_webview', extra: enrichedArgs);
-      }
+      liveAwarePush(context, '/payment_webview', extra: enrichedArgs);
       return;
     }
 
     paymentLog.warn('no paymentUrl → fallback to /order_success (mock-mode)');
     final successArgs = OrderSuccessArgs(
-      orderId: DateTime.now().millisecondsSinceEpoch.remainder(1000000),
-      itemsTotal: args.itemsTotal ?? args.amount,
+      orderId: args.orderId ??
+          DateTime.now().millisecondsSinceEpoch.remainder(1000000),
+      // Только товары: доставка идёт отдельной строкой, складывать их
+      // на success-экране не наша забота.
+      itemsTotal: args.itemsTotal ?? (args.amount - args.deliveryPrice),
       oldTotal: args.oldTotal,
       savings: args.savings ?? 0,
       ticketsEarned: args.ticketsEarned ?? 0,
       deliveryAddressLine: args.deliveryAddressLine,
       deliveryPostalCode: args.deliveryPostalCode,
       productImageUrls: args.productImageUrls,
+      deliveryPrice: args.deliveryPrice,
       cardBrand: state.selectedCard?.brand,
     );
-    if (scope != null) {
-      scope.openOrderSuccess(context, successArgs);
-    } else {
-      context.push('/order_success', extra: successArgs);
-    }
+    liveAwarePush(context, '/order_success', extra: successArgs);
   }
 
   @override
@@ -158,7 +153,8 @@ class _PaymentView extends StatelessWidget {
               const SizedBox(height: 24),
               PaymentAmountCard(
                 amount: args.amount,
-                commission: args.commission,
+                itemsTotal: args.itemsTotal,
+                deliveryPrice: args.deliveryPrice,
               ),
               const SizedBox(height: 14),
               BlocBuilder<PaymentCubit, PaymentState>(

@@ -11,10 +11,9 @@ CatalogModel _$CatalogModelFromJson(Map<String, dynamic> json) => CatalogModel(
   nameKz: json['nameKz'] as String?,
   nameRu: json['nameRu'] as String?,
   nameEn: json['nameEn'] as String?,
-  models:
-      (json['models'] as List<dynamic>)
-          .map((e) => CategoryProductModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+  models: (json['models'] as List<dynamic>)
+      .map((e) => CategoryProductModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$CatalogModelToJson(CatalogModel instance) =>

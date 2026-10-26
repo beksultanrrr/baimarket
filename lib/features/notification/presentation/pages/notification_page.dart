@@ -122,7 +122,7 @@ class _NotificationCard extends StatelessWidget {
   static const _structureConfig = {
     'success': (
       Color(0xFFDFF6F0),
-      Color(0xFF3DBFAD),
+      Color(0xFF71CD32),
       'assets/icons/notification/notification_success.svg',
     ),
     'info': (

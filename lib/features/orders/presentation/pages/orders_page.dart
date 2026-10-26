@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/app_pallete.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../data/models/order_model.dart';
 import '../cubit/orders_cubit.dart';
 import '../widgets/order_card.dart';
 import '../widgets/order_filter.dart';
@@ -105,29 +106,31 @@ class _OrdersPageState extends State<OrdersPage> {
         child: OrdersEmptyState(onGoShopping: _goToShopping),
       );
     }
-    if (state is OrdersGot) {
-      final filtered = state.orders
-          .where((o) => orderMatchesFilter(_filter, o.status))
-          .toList();
-      if (filtered.isEmpty) {
-        return SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-          child: OrdersEmptyState(onGoShopping: _goToShopping),
-        );
-      }
-      return ListView.builder(
+    if (state is OrdersGot) return _list(state.orders);
+    return const SizedBox.shrink();
+  }
+
+  Widget _list(List<OrderModel> orders) {
+    final filtered =
+        orders.where((o) => orderMatchesFilter(_filter, o.status)).toList();
+    if (filtered.isEmpty) {
+      return SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
-        itemCount: filtered.length,
-        itemBuilder: (context, index) {
-          final order = filtered[index];
-          return OrderCard(
-            order: order,
-            onTap: () => context.push('/order', extra: order),
-            onLeaveReview: () {},
-          );
-        },
+        child: OrdersEmptyState(onGoShopping: _goToShopping),
       );
     }
-    return const SizedBox.shrink();
+    return ListView.builder(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+      itemCount: filtered.length,
+      itemBuilder: (context, index) {
+        final order = filtered[index];
+        return OrderCard(
+          order: order,
+          onTap: () => context.push('/order', extra: order),
+          // TODO(reviews): отзывы временно отключены целиком.
+          // onLeaveReview: () {},
+        );
+      },
+    );
   }
 }

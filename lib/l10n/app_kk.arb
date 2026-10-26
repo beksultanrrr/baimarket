@@ -1,653 +1,868 @@
 {
-    "@@locale": "kk",
-    "appName": "Bai Market",
-    "welcome": "Қош келдіңіз",
-    "login": "Кіру",
-    "register": "Тіркелу",
-    "email": "Электрондық пошта",
-    "password": "Құпия сөз",
-    "confirmPassword": "Құпия сөзді растау",
-    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
-    "dontHaveAccount": "Тіркелгіңіз жоқ па?",
-    "alreadyHaveAccount": "Тіркелгіңіз бар ма?",
-    "phone": "Телефон",
-    "name": "Аты",
-    "surname": "Тегі",
-    "cart": "Себет",
-    "favorites": "Таңдаулылар",
-    "profile": "Профиль",
-    "settings": "Баптаулар",
-    "language": "Тіл",
-    "notifications": "Хабарландырулар",
-    "logout": "Шығу",
-    "catalog": "Каталог",
-    "freeDelivery": "Тегін жеткізу",
-    "enterName": "Атыңызды енгізіңіз",
-    "enterSurname": "Тегіңізді енгізіңіз",
-    "phoneNumber": "Телефон нөмірі",
-    "enterPhone": "Телефон нөміріңізді енгізіңіз",
-    "enterEmail": "Email-діңізді енгізіңіз",
-    "enterPassword": "Құпия сөзіңізді енгізіңіз",
-    "enterConfirmPassword": "Құпия сөзіңізді растаңыз",
-    "deliveryAddress": "Жеткізу мекенжайы:",
-    "addressExample": "Мысалы: Әуезов 34",
-    "postalCode": "Пошта индексі",
-    "cardNumber": "Карта нөмірі",
-    "enterCardNumber": "Карта нөмірін енгізіңіз",
-    "cvv": "CVV",
-    "whoWillMeet": "Кім қарсы алады (Толық аты-жөні)?",
-    "nameExample": "Мысалы: Даниял Асылбеков",
-    "tryAgain": "Қайталап көріңіз",
-    "emptyCityList": "Қалалар тізімі бос",
-    "productName": "Өнім атауы",
-    "productDescription": "Өнім сипаттамасы",
-    "@productDescription": {
-        "description": "Default product description text"
-    },
-    "homeAddress": "\"Үй\" мекенжайы",
-    "@homeAddress": {
-        "description": "Home address label"
-    },
-    "postalIndex": "индекс: {index}",
-    "myAddresses": "Менің мекенжайларым",
-    "orderHistory": "Тапсырыстар тарихы",
-    "@orderHistory": {
-        "description": "Order history page title"
-    },
-    "orderDetails": "Тапсырыс туралы",
-    "@orderDetails": {
-        "description": "Order details page title"
-    },
-    "support": "Қолдау қызметі",
-    "@support": {
-        "description": "Support section title"
-    },
-    "supportTitle": "Қолдау қызметі",
-    "@supportTitle": {
-        "description": "Support page title"
-    },
-    "supportWorkingHours": "Біз сізге көмеkтесуге\nдайын әр күні 9:00 - 22:00",
-    "@supportWorkingHours": {
-        "description": "Support working hours message"
-    },
-    "whatsapp": "WhatsApp",
-    "@whatsapp": {
-        "description": "WhatsApp button text"
-    },
-    "telegram": "Telegram",
-    "@telegram": {
-        "description": "Telegram button text"
-    },
-    "faq": "Жиі қойылатын сұрақтар",
-    "@faq": {
-        "description": "FAQ section title"
-    },
-    "failedToOpen": "{url} ашу мүмкін емес",
-    "@failedToOpen": {
-        "description": "Error message when URL cannot be opened",
-        "placeholders": {
-            "url": {
-                "type": "String"
-            }
-        }
-    },
-    "exitApp": "Қолданбадан шығу",
-    "exitConfirmation": "Сіз шынымен қолданбадан шығғыңыз келе ме?",
-    "cancel": "Бас тарту",
-    "notInStock": "Сатылымда жоқ",
-    "@notInStock": {
-        "description": "Product out of stock label"
-    },
-    "youWon": "Сіз жеңдіңіз!",
-    "@youWon": {
-        "description": "Prize won message"
-    },
-    "weWillContactYou": "Жақында сізбен байланысамыз",
-    "@weWillContactYou": {
-        "description": "Contact message after winning"
-    },
-    "index": "Индекс: {index}",
-    "@index": {
-        "description": "Postal index text with placeholder",
-        "placeholders": {
-            "index": {
-                "type": "String"
-            }
-        }
-    },
-    "price": "{price} ₸",
-    "@price": {
-        "description": "Price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "oldPrice": "{price} ₸",
-    "@oldPrice": {
-        "description": "Old price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "productDescriptionShort": "Барлық макияжда жеңілдік пен ыңғайлылықты қамтамасыз етеді...",
-    "home": "Басты бет",
-    "products": "тауарлар",
-    "@products": {
-        "description": "Products count text"
-    },
-    "more": "Толығырақ",
-    "in_sale": "Сатылымда",
-    "not_in_sale": "Сатылымда жоқ",
-    "purchases": "Сатып алулар",
-    "orderAgain": "Қайта тапсырыс беру",
-    "myPrizes": "Менің ұтыстарым",
-    "noPrizes": "Ұтыс жоқ",
-    "cartEmpty": "Себет бос",
-    "addedItemsWillAppearHere": "Қосылған тауарлар\nмұнда көрсетіледі",
-    "goToShopping": "Сатып алуға өту",
-    "proceedToCheckout": "Рәсімдеуге өту",
-    "pricePerItem": "{price} тг/дана",
-    "@pricePerItem": {
-        "description": "Price per item text",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "cannotAddMore": "Қосымша қосу мүмкін емес. Бұл максимум.",
-    "prize_goods": "Ұтыстың товарлары",
-    "number_of_tickets": "Акцияға қатысу нөмірі",
-    "tickets": "билеттер",
-    "description": "Сипаттама",
-    "@description": {
-        "description": "Product description section title"
-    },
-    "addToCart": "Себетке қосу",
-    "@addToCart": {
-        "description": "Add to cart button text"
-    },
-    "error": "Қате: {message}",
-    "@error": {
-        "description": "Generic error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "errorTitle": "Қате",
-    "@errorTitle": {
-        "description": "Error title for snackbar"
-    },
-    "productOutOfStock": "Тауар қоймада жоқ!",
-    "@productOutOfStock": {
-        "description": "Product out of stock message"
-    },
-    "success": "Сәтті!",
-    "@success": {
-        "description": "Success title for snackbar"
-    },
-    "productAddedToCart": "Тауар сәтті себетке қосылды!",
-    "@productAddedToCart": {
-        "description": "Product added to cart success message"
-    },
-    "goToCart": "Себетке өту",
-    "@goToCart": {
-        "description": "Go to cart button text"
-    },
-    "showFirst": "Алдымен көрсету",
-    "@showFirst": {
-        "description": "Sorting modal title"
-    },
-    "sortPopular": "Танымал",
-    "@sortPopular": {
-        "description": "Sort by popularity option"
-    },
-    "sortCheap": "Алдымен арзан",
-    "@sortCheap": {
-        "description": "Sort by price ascending option"
-    },
-    "sortExpensive": "Алдымен қымбат",
-    "@sortExpensive": {
-        "description": "Sort by price descending option"
-    },
-    "myData": "Менің деректерім",
-    "@myData": {
-        "description": "My data page title"
-    },
-    "save": "Сақтау",
-    "@save": {
-        "description": "Save button text"
-    },
-    "deleteAccount": "Тіркелгіні жою",
-    "@deleteAccount": {
-        "description": "Delete account button text"
-    },
-    "fillAllFields": "Барлық өрістерді толтырыңыз",
-    "@fillAllFields": {
-        "description": "Validation message for empty fields"
-    },
-    "profileUpdateError": "Профильді жаңарту кезінде қате: {message}",
-    "@profileUpdateError": {
-        "description": "Profile update error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "faqTicketAfterPayment": "Төлемнен кейін билет қалай беріледі?",
-    "@faqTicketAfterPayment": {
-        "description": "FAQ question about ticket issuance"
-    },
-    "faqTicketAfterPaymentAnswer": "Төлемнен кейін билет автоматты түрде беріледі. Сіз оны Менің профилім бөлімінде көре аласыз.",
-    "@faqTicketAfterPaymentAnswer": {
-        "description": "FAQ answer about ticket issuance"
-    },
-    "faqDeliveryMethod": "Жеткізу қалай жүргізіледі?",
-    "@faqDeliveryMethod": {
-        "description": "FAQ question about delivery method"
-    },
-    "faqDeliveryMethodAnswer": "Жеткізу ҚазПошта арқылы жүргізіледі. Тапсырыс жіберілген кезде сіз хабарландыру аласыз.",
-    "@faqDeliveryMethodAnswer": {
-        "description": "FAQ answer about delivery method"
-    },
-    "faqDeliveryTime": "Жеткізу қанша уақыт алады?",
-    "@faqDeliveryTime": {
-        "description": "FAQ question about delivery time"
-    },
-    "faqDeliveryTimeAnswer": "Жеткізу әдетте 3-7 жұмыс күні алады, сіздің аймағыңызға байланысты.",
-    "@faqDeliveryTimeAnswer": {
-        "description": "FAQ answer about delivery time"
-    },
-    "faqCancelOrder": "Төлемнен кейін тапсырысты болдырмауға бола ма?",
-    "@faqCancelOrder": {
-        "description": "FAQ question about order cancellation"
-    },
-    "faqCancelOrderAnswer": "Иә, тапсырысты жіберілгенге дейін болдыра аласыз. Ол үшін біздің қолдау қызметімен байланысыңыз.",
-    "@faqCancelOrderAnswer": {
-        "description": "FAQ answer about order cancellation"
-    },
-    "faqTrackOrder": "Тапсырысты қалай қадағалауға болады?",
-    "@faqTrackOrder": {
-        "description": "FAQ question about order tracking"
-    },
-    "faqTrackOrderAnswer": "Жіберілгеннен кейін сіз қадағалау нөмірін аласыз. Сіз пакетті ҚазПошта веб-сайтында немесе Менің тапсырыстарым бөлімінде қадағалай аласыз.",
-    "@faqTrackOrderAnswer": {
-        "description": "FAQ answer about order tracking"
-    },
-    "@deliveryAddress": {
-        "description": "Delivery address label"
-    },
-    "noData": "Деректер жоқ",
-    "@noData": {
-        "description": "No data available message"
-    },
-    "recipient": "Алушы:",
-    "@recipient": {
-        "description": "Recipient label"
-    },
-    "noName": "Аты жоқ",
-    "@noName": {
-        "description": "No name available message"
-    },
-    "noPhone": "Телефон нөмірі жоқ",
-    "@noPhone": {
-        "description": "No phone number available message"
-    },
-    "deliveryDate": "Жеткізу күні:",
-    "@deliveryDate": {
-        "description": "Delivery date label"
-    },
-    "orderId": "Тапсырыс ID: {id}",
-    "@orderId": {
-        "description": "Order ID text with placeholder",
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "orderStatusPaymentPending": "Төлем күтілуде",
-    "@orderStatusPaymentPending": {
-        "description": "Order status: Payment Pending"
-    },
-    "orderStatusProcessing": "Өңделуде",
-    "@orderStatusProcessing": {
-        "description": "Order status: Processing"
-    },
-    "orderStatusWay": "Жолда",
-    "@orderStatusWay": {
-        "description": "Order status: On the Way"
-    },
-    "orderStatusPickup": "Алу пунктісінде күтілуде",
-    "@orderStatusPickup": {
-        "description": "Order status: Ready for Pickup"
-    },
-    "orderStatusDelivered": "Алынды",
-    "@orderStatusDelivered": {
-        "description": "Order status: Delivered"
-    },
-    "orderStatusCanceled": "Бас тартылды",
-    "@orderStatusCanceled": {
-        "description": "Order status: Canceled"
-    },
-    "orderStatusAssembling": "Тапсырыс жиналуда",
-    "@orderStatusAssembling": {
-        "description": "Order status: Assembling"
-    },
-    "orderStatusAbandoned": "Бас тартылды",
-    "@orderStatusAbandoned": {
-        "description": "Order status: Abandoned"
-    },
-    "orderStatusPaymentFailed": "Төлем қатесі",
-    "@orderStatusPaymentFailed": {
-        "description": "Order status: Payment Failed"
-    },
-    "orderProcessingMessage": "Сіздің тауарларыңыз брондалды, тапсырыс өңделуде. Тапсырыс жинауға берілгенде сіз хабарландыру аласыз",
-    "@orderProcessingMessage": {
-        "description": "Order processing status message"
-    },
-    "ticketsWillBeAwarded": "Билеттер есептеледі",
-    "@ticketsWillBeAwarded": {
-        "description": "Tickets award message"
-    },
-    "totalAmount": "Жалпы сома",
-    "@totalAmount": {
-        "description": "Total amount label"
-    },
-    "items": "Тауарлар",
-    "@items": {
-        "description": "Items label"
-    },
-    "discount": "Жеңілдік",
-    "@discount": {
-        "description": "Discount label"
-    },
-    "promotionalNumbers": "Акциялық нөмірлер",
-    "@promotionalNumbers": {
-        "description": "Promotional numbers label"
-    },
-    "delivery": "Жеткізу",
-    "@delivery": {
-        "description": "Delivery label"
-    },
-    "free": "Тегін",
-    "@free": {
-        "description": "Free delivery text"
-    },
-    "total": "Барлығы",
-    "@total": {
-        "description": "Total label"
-    },
-    "paid": "Төленді",
-    "@paid": {
-        "description": "Paid status"
-    },
-    "unpaid": "Төленбеді",
-    "@unpaid": {
-        "description": "Unpaid status"
-    },
-    "enterPhoneNumber": "Телефон нөміріңізді \nенгізіңіз",
-    "@enterPhoneNumber": {
-        "description": "Phone number input title"
-    },
-    "weWillSendSms": "Растау коды бар SMS жібереміз",
-    "@weWillSendSms": {
-        "description": "SMS verification message"
-    },
-    "getCode": "Код алу",
-    "@getCode": {
-        "description": "Get verification code button"
-    },
-    "termsAndPrivacy": "\"Код алу\" түймесін басу арқылы сіз пайдалану шарттарын және құпиялылық саясатын қабылдайсыз",
-    "@termsAndPrivacy": {
-        "description": "Terms and privacy policy text"
-    },
-    "enterCode": "Кодты енгізіңіз",
-    "@enterCode": {
-        "description": "Enter verification code title"
-    },
-    "sentToNumber": "Оны +7 {phoneNumber} нөміріне жібердік \n",
-    "@sentToNumber": {
-        "description": "SMS sent confirmation message",
-        "placeholders": {
-            "phoneNumber": {
-                "type": "String"
-            }
-        }
-    },
-    "signIn": "Кіру",
-    "@signIn": {
-        "description": "Sign in button text"
-    },
-    "market": "Маркет",
-    "streams": "Эфирлер",
-    "orders": "Тапсырыстар",
-    "searchHomeHint": "Не іздедіңіз?",
-    "all": "Барлығы",
-    "plusPrice": "Plus-пен алсаңыз",
-    "sellerOrders": "{count} тапсырыс",
-    "@sellerOrders": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "reviews": "Пікірлер",
-    "reviewsCount": "{count} пікір",
-    "@reviewsCount": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "readAll": "Барлығын оқу",
-    "relatedProducts": "Сізге ұнауы мүмкін",
-    "buy": "Сатып алу",
-    "newTag": "Жаңа",
-    "hitTag": "Хит",
-    "myTickets": "Менің билеттерім",
-    "specifyDeliveryAddress": "Жеткізу мекенжайын көрсетіңіз",
-    "myOrders": "Менің тапсырыстарым",
-    "orderStatus": "Тапсырыс күйі",
-    "myCard": "Менің картам",
-    "contacts": "Байланыстар",
-    "inviteFriends": "Достарыңызды шақырыңыз",
-    "goToPayment": "Төлемге өту",
-    "clearCart": "Тазалау",
-    "youSaved": "Сіз үнемдедіңіз",
-    "recommended": "Ұсынамыз",
-    "notAvailable": "Қолжетімсіз",
-    "defaultDescription": "Күнделікті күтімге арналған жоғары сапалы өнім. Мұқият таңдалған компоненттер тиімді нәтиже береді. Барлық тері түрлеріне жарамды. Мамандар ұсынған өнім.",
-    "liveNow": "Қазір эфирде",
-    "otpSubtitle": "Телефоныңызға 4 таңбалы код\nжібердік",
-    "resendCode": "Кодты қайта жіберу",
-    "confirm": "Растау",
-    "continueAction": "Жалғастыру",
-    "notificationCategoryPurchase": "Сатып алу",
-    "notificationCategoryDelivery": "Жеткізу",
-    "notificationCategoryStream": "Эфирлер",
-    "notificationCategorySubscription": "Жазылым",
-    "noNotifications": "Хабарландырулар жоқ",
-    "selectAddress": "Мекенжай таңдаңыз",
-    "noSavedAddresses": "Сізде сақталған мекенжайлар жоқ",
-    "addAddress": "Мекенжай қосу",
-    "raffleTab": "Ұтыстар",
-    "allShopsTab": "Барлық дүкендер",
-    "wholeCatalogTab": "Барлық каталог",
-    "raffleDefaultTitle": "Ұтыс",
-    "raffleDateLabel": "Күні: {date}",
-    "@raffleDateLabel": {
-        "placeholders": {
-            "date": {
-                "type": "String"
-            }
-        }
-    },
-    "raffleDateTbd": "Күні: нақтыланады",
-    "raffleGiftsCount": "{count} сыйлық",
-    "@raffleGiftsCount": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "raffleGiftsAction": "Ұтыстарға шолу",
-    "raffleGiftsTitle": "Ұтыс сыйлықтары",
-    "raffleGiftsEmpty": "Сыйлықтар әзірге жоқ",
-    "raffleEmpty": "Белсенді ұтыстар әзірге жоқ",
-    "raffleLoadError": "Ұтысты жүктеу мүмкін болмады",
-    "raffleProductsEmpty": "Бұл ұтыста әзірге тауарлар жоқ",
-    "sortDiscount": "Жеңілдік",
-    "baseAvatar": "Негізгі",
-    "@baseAvatar": {
-        "description": "Label for the base avatar option (initial letter)"
-    },
-    "selectAvatar": "Таңдау",
-    "@selectAvatar": {
-        "description": "Label for the custom photo avatar option"
-    },
-    "dateOfBirth": "Туған күні",
-    "@dateOfBirth": {
-        "description": "Date of birth field label"
-    },
-    "birthDateHint": "кк-аа-жжжж",
-    "@birthDateHint": {
-        "description": "Date of birth placeholder"
-    },
-    "phoneNumberHint": "(000) - 00 - 00",
-    "@phoneNumberHint": {
-        "description": "Phone number field placeholder"
-    },
-    "addPhoto": "Фото қосу",
-    "@addPhoto": {
-        "description": "Add photo bottom sheet title"
-    },
-    "gallery": "Галерея",
-    "@gallery": {
-        "description": "Gallery option in the photo picker sheet"
-    },
-    "camera": "Камера",
-    "@camera": {
-        "description": "Camera option in the photo picker sheet"
-    },
-    "shareAppMessage": "Сәлем! Мен мына керемет қосымшаны қолданамын. Қосыл: {link}",
-    "@shareAppMessage": {
-        "description": "Message pre-filled in the system share sheet when inviting friends",
-        "placeholders": {
-            "link": {
-                "type": "String"
-            }
-        }
-    },
-    "shareAppError": "\"Бөлісу\" терезесін ашу мүмкін болмады",
-    "@shareAppError": {
-        "description": "Error shown when the native share sheet fails to open"
-    },
-    "ordersTabAll": "Барлығы",
-    "ordersTabActive": "Белсенді",
-    "ordersTabCompleted": "Аяқталған",
-    "ordersTabReturn": "Қайтарылған",
-    "ordersEmptyTitle": "Тапсырыс жоқ",
-    "ordersEmptyMessage": "Тапсырыстар осында көрсетіледі",
-    "orderTagActive": "Белсенді",
-    "orderTagCompleted": "Аяқталды",
-    "orderTagReturn": "Қайтарылды",
-    "orderLeaveReview": "Пікір қалдыру",
-    "orderInTransitMessage": "Тапсырысыңыз жіберуге берілді. Сәл сабыр сақтаңыз, тауар жолда.",
-    "orderDeliveredMessage": "Құттықтаймыз! Курьер тапсырысты жеткізді. Жұмысымызды бағаласаңыз, қуанышты боламыз.",
-    "orderReturnMessage": "Тапсырыс қайтарылды немесе бас тартылды.",
-    "priceTenge": "{price}₸",
-    "@priceTenge": {
-        "description": "Price with tenge symbol (no space)",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "favoritesEmptyTitle": "Әзірге бос",
-    "favoritesEmptySubtitle": "Кейін оңай оралу үшін тауарларды таңдаулыға қосыңыз!",
-    "goShopping": "Сатып алуға",
-    "myCards": "Менің карталарым",
-    "paymentCard": "Төлем картасы",
-    "addCard": "Карта қосу",
-    "cardsEmptyTitle": "Карта жоқ",
-    "cardsEmptySubtitle": "Сізде әлі сақталған карталар жоқ",
-    "contactsTitle": "Байланыстар",
-    "callCenter": "Колл-орталық",
-    "callCenterSubtitle": "Кеңес береміз және тапсырыс\nресімдеуге көмектесеміз",
-    "acceptCallsHours": "Қоңырауларды 10:00-ден 20:00-ге дейін қабылдаймыз",
-    "respondHours": "10:00-ден 20:00-ге дейін жауап береміз",
-    "writeOnWhatsapp": "Whatsapp-қа жазу",
-    "writeOnTelegram": "Telegram-ға жазу",
-    "deliverySectionTitle": "Жеткізу",
-    "deliverySectionSubtitle": "Жаңартулар телеграм каналымызда",
-    "selfPickupSectionTitle": "Өзі алу мекенжайы",
-    "branches": "Филиалдар",
-    "loginRequired": "Аккаунтқа кіріңіз",
-    "loginRequiredHint": "Жалғастыру үшін аккаунтыңызға кіріңіз",
-    "addToCartFailed": "Себетке қосу мүмкін болмады",
-    "pullToRefresh": "Жаңарту үшін төмен тартыңыз",
-    "refreshing": "Жаңартылуда…",
-    "removeFromCartFailed": "Себеттен жою мүмкін болмады",
-    "paymentAmountTitle": "Төлем сомасы:",
-    "paymentSumLabel": "Сома:",
-    "paymentCommissionLabel": "Комиссия:",
-    "paymentTermsPart1": "Төлем жүргізе, сіз автоматты түрде",
-    "paymentTermsLinkText": "шарттармен",
-    "paymentTermsPart2": "келісесіз",
-    "payButton": "Төлем жасау",
-    "fromTitle": "Қайдан",
-    "fromOtherCard": "Басқа картадан",
-    "removeCardTitle": "Картаны жою керек пе?",
-    "removeCardSubtitle": "Осы картаны жоюды шынымен қалайсыз ба",
-    "removeAction": "Жою",
-    "enterCardDataTitle": "Карта деректерін енгізіңіз",
-    "cardExpiryLabel": "Жарамдылық мерзімі",
-    "cardExpiryHint": "Мерзім",
-    "cardCvvLabel": "CVV-код",
-    "saveCardData": "Карта деректерін сақтау",
-    "cardWarning": "Карта интернет-транзакцияларға ашық және лимит жеткілікті екеніне көз жеткізіңіз",
-    "orderAcceptedTitle": "Сіздің заказыңыз қабылданды!",
-    "orderIdLabel": "Тапсырыс ID: {id}",
-    "@orderIdLabel": {
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "receiptItemsLabel": "Тауарлар:",
-    "receiptSavedLabel": "Үнемделді:",
-    "receiptTicketsLabel": "Билеттер:",
-    "receiptPaymentMethodLabel": "Төлем тәсілі:",
-    "viewOrderStatus": "Күйді көру",
-    "viewersLabel": "Көрермендер",
-    "streamInactiveTitle": "Стрим қазір белсенді емес",
-    "streamInactiveSubtitle": "Тарату басталуын күтіңіз",
-    "searchHint": "Тауар іздеу…",
-    "searchPrompt": "Тауар табу үшін теруді бастаңыз",
-    "searchEmpty": "Ештеңе табылмады",
-    "searchError": "Іздеу орындалмады. Қайталап көріңіз",
-    "onAirNow": "Қазір эфирде",
-    "giftButton": "Сыйлық",
-    "commentInputHint": "Пікір жазыңыз...",
-    "inCart": "Себетте",
-    "kaspiPayTitle": "Kaspi төлемі",
-    "kaspiAmountToPay": "Төлеуге: {amount}",
-    "kaspiScanOrPay": "QR-кодты сканерлеңіз немесе Kaspi ашу үшін «Төлеу» түймесін басыңыз",
-    "kaspiWaitingPayment": "Төлемді күтудеміз…",
-    "kaspiPaymentFailed": "Төлем өтпеді",
-    "kaspiLinkExpired": "Сілтеме мерзімі аяқталды",
-    "kaspiPayAgain": "Қайта төлеу"
+  "@@locale": "kk",
+  "appName": "hibai",
+  "welcome": "Қош келдіңіз",
+  "login": "Кіру",
+  "register": "Тіркелу",
+  "email": "Электрондық пошта",
+  "password": "Құпия сөз",
+  "confirmPassword": "Құпия сөзді растау",
+  "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+  "dontHaveAccount": "Тіркелгіңіз жоқ па?",
+  "alreadyHaveAccount": "Тіркелгіңіз бар ма?",
+  "phone": "Телефон",
+  "name": "Аты",
+  "surname": "Тегі",
+  "cart": "Себет",
+  "favorites": "Таңдаулылар",
+  "profile": "Профиль",
+  "settings": "Баптаулар",
+  "language": "Тіл",
+  "notifications": "Хабарландырулар",
+  "logout": "Шығу",
+  "catalog": "Каталог",
+  "freeDelivery": "Тегін жеткізу",
+  "enterName": "Атыңызды енгізіңіз",
+  "enterSurname": "Тегіңізді енгізіңіз",
+  "phoneNumber": "Телефон нөмірі",
+  "enterPhone": "Телефон нөміріңізді енгізіңіз",
+  "enterEmail": "Email-діңізді енгізіңіз",
+  "enterPassword": "Құпия сөзіңізді енгізіңіз",
+  "enterConfirmPassword": "Құпия сөзіңізді растаңыз",
+  "deliveryAddress": "Жеткізу мекенжайы:",
+  "addressExample": "Мысалы: Әуезов 34",
+  "postalCode": "Пошта индексі",
+  "cardNumber": "Карта нөмірі",
+  "enterCardNumber": "Карта нөмірін енгізіңіз",
+  "cvv": "CVV",
+  "whoWillMeet": "Кім қарсы алады (Толық аты-жөні)?",
+  "nameExample": "Мысалы: Даниял Асылбеков",
+  "tryAgain": "Қайталап көріңіз",
+  "emptyCityList": "Қалалар тізімі бос",
+  "productName": "Өнім атауы",
+  "productDescription": "Өнім сипаттамасы",
+  "@productDescription": {
+    "description": "Default product description text"
+  },
+  "homeAddress": "\"Үй\" мекенжайы",
+  "@homeAddress": {
+    "description": "Home address label"
+  },
+  "postalIndex": "индекс: {index}",
+  "myAddresses": "Менің мекенжайларым",
+  "orderHistory": "Тапсырыстар тарихы",
+  "@orderHistory": {
+    "description": "Order history page title"
+  },
+  "orderDetails": "Тапсырыс туралы",
+  "@orderDetails": {
+    "description": "Order details page title"
+  },
+  "support": "Қолдау қызметі",
+  "@support": {
+    "description": "Support section title"
+  },
+  "supportTitle": "Қолдау қызметі",
+  "@supportTitle": {
+    "description": "Support page title"
+  },
+  "supportWorkingHours": "Біз сізге көмеkтесуге\nдайын әр күні 9:00 - 22:00",
+  "@supportWorkingHours": {
+    "description": "Support working hours message"
+  },
+  "whatsapp": "WhatsApp",
+  "@whatsapp": {
+    "description": "WhatsApp button text"
+  },
+  "telegram": "Telegram",
+  "@telegram": {
+    "description": "Telegram button text"
+  },
+  "faq": "Жиі қойылатын сұрақтар",
+  "@faq": {
+    "description": "FAQ section title"
+  },
+  "failedToOpen": "{url} ашу мүмкін емес",
+  "@failedToOpen": {
+    "description": "Error message when URL cannot be opened",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "exitApp": "Қолданбадан шығу",
+  "exitConfirmation": "Сіз шынымен қолданбадан шығғыңыз келе ме?",
+  "cancel": "Бас тарту",
+  "notInStock": "Сатылымда жоқ",
+  "@notInStock": {
+    "description": "Product out of stock label"
+  },
+  "youWon": "Сіз жеңдіңіз!",
+  "@youWon": {
+    "description": "Prize won message"
+  },
+  "weWillContactYou": "Жақында сізбен байланысамыз",
+  "@weWillContactYou": {
+    "description": "Contact message after winning"
+  },
+  "index": "Индекс: {index}",
+  "@index": {
+    "description": "Postal index text with placeholder",
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "price": "{price} ₸",
+  "@price": {
+    "description": "Price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "oldPrice": "{price} ₸",
+  "@oldPrice": {
+    "description": "Old price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "productDescriptionShort": "Барлық макияжда жеңілдік пен ыңғайлылықты қамтамасыз етеді...",
+  "home": "Басты бет",
+  "products": "тауарлар",
+  "@products": {
+    "description": "Products count text"
+  },
+  "more": "Толығырақ",
+  "in_sale": "Сатылымда",
+  "not_in_sale": "Сатылымда жоқ",
+  "purchases": "Сатып алулар",
+  "orderAgain": "Қайта тапсырыс беру",
+  "myPrizes": "Менің ұтыстарым",
+  "noPrizes": "Ұтыс жоқ",
+  "cartEmpty": "Себет бос",
+  "addedItemsWillAppearHere": "Қосылған тауарлар\nмұнда көрсетіледі",
+  "goToShopping": "Сатып алуға өту",
+  "proceedToCheckout": "Рәсімдеуге өту",
+  "pricePerItem": "{price} тг/дана",
+  "@pricePerItem": {
+    "description": "Price per item text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "cannotAddMore": "Қосымша қосу мүмкін емес. Бұл максимум.",
+  "prize_goods": "Ұтыстың товарлары",
+  "number_of_tickets": "Акцияға қатысу нөмірі",
+  "tickets": "билеттер",
+  "description": "Сипаттама",
+  "@description": {
+    "description": "Product description section title"
+  },
+  "addToCart": "Себетке қосу",
+  "@addToCart": {
+    "description": "Add to cart button text"
+  },
+  "error": "Қате: {message}",
+  "@error": {
+    "description": "Generic error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "errorTitle": "Қате",
+  "@errorTitle": {
+    "description": "Error title for snackbar"
+  },
+  "productOutOfStock": "Тауар қоймада жоқ!",
+  "@productOutOfStock": {
+    "description": "Product out of stock message"
+  },
+  "success": "Сәтті!",
+  "@success": {
+    "description": "Success title for snackbar"
+  },
+  "productAddedToCart": "Тауар сәтті себетке қосылды!",
+  "@productAddedToCart": {
+    "description": "Product added to cart success message"
+  },
+  "goToCart": "Себетке өту",
+  "@goToCart": {
+    "description": "Go to cart button text"
+  },
+  "showFirst": "Алдымен көрсету",
+  "@showFirst": {
+    "description": "Sorting modal title"
+  },
+  "sortPopular": "Танымал",
+  "@sortPopular": {
+    "description": "Sort by popularity option"
+  },
+  "sortCheap": "Арзан",
+  "@sortCheap": {
+    "description": "Sort by price ascending option"
+  },
+  "sortExpensive": "Қымбат",
+  "@sortExpensive": {
+    "description": "Sort by price descending option"
+  },
+  "myData": "Менің деректерім",
+  "@myData": {
+    "description": "My data page title"
+  },
+  "save": "Сақтау",
+  "@save": {
+    "description": "Save button text"
+  },
+  "deleteAccount": "Тіркелгіні жою",
+  "@deleteAccount": {
+    "description": "Delete account button text"
+  },
+  "fillAllFields": "Барлық өрістерді толтырыңыз",
+  "@fillAllFields": {
+    "description": "Validation message for empty fields"
+  },
+  "profileUpdateError": "Профильді жаңарту кезінде қате: {message}",
+  "@profileUpdateError": {
+    "description": "Profile update error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "faqTicketAfterPayment": "Төлемнен кейін билет қалай беріледі?",
+  "@faqTicketAfterPayment": {
+    "description": "FAQ question about ticket issuance"
+  },
+  "faqTicketAfterPaymentAnswer": "Төлемнен кейін билет автоматты түрде беріледі. Сіз оны Менің профилім бөлімінде көре аласыз.",
+  "@faqTicketAfterPaymentAnswer": {
+    "description": "FAQ answer about ticket issuance"
+  },
+  "faqDeliveryMethod": "Жеткізу қалай жүргізіледі?",
+  "@faqDeliveryMethod": {
+    "description": "FAQ question about delivery method"
+  },
+  "faqDeliveryMethodAnswer": "Жеткізу ҚазПошта арқылы жүргізіледі. Тапсырыс жіберілген кезде сіз хабарландыру аласыз.",
+  "@faqDeliveryMethodAnswer": {
+    "description": "FAQ answer about delivery method"
+  },
+  "faqDeliveryTime": "Жеткізу қанша уақыт алады?",
+  "@faqDeliveryTime": {
+    "description": "FAQ question about delivery time"
+  },
+  "faqDeliveryTimeAnswer": "Жеткізу әдетте 3-7 жұмыс күні алады, сіздің аймағыңызға байланысты.",
+  "@faqDeliveryTimeAnswer": {
+    "description": "FAQ answer about delivery time"
+  },
+  "faqCancelOrder": "Төлемнен кейін тапсырысты болдырмауға бола ма?",
+  "@faqCancelOrder": {
+    "description": "FAQ question about order cancellation"
+  },
+  "faqCancelOrderAnswer": "Иә, тапсырысты жіберілгенге дейін болдыра аласыз. Ол үшін біздің қолдау қызметімен байланысыңыз.",
+  "@faqCancelOrderAnswer": {
+    "description": "FAQ answer about order cancellation"
+  },
+  "faqTrackOrder": "Тапсырысты қалай қадағалауға болады?",
+  "@faqTrackOrder": {
+    "description": "FAQ question about order tracking"
+  },
+  "faqTrackOrderAnswer": "Жіберілгеннен кейін сіз қадағалау нөмірін аласыз. Сіз пакетті ҚазПошта веб-сайтында немесе Менің тапсырыстарым бөлімінде қадағалай аласыз.",
+  "@faqTrackOrderAnswer": {
+    "description": "FAQ answer about order tracking"
+  },
+  "@deliveryAddress": {
+    "description": "Delivery address label"
+  },
+  "noData": "Деректер жоқ",
+  "@noData": {
+    "description": "No data available message"
+  },
+  "recipient": "Алушы:",
+  "@recipient": {
+    "description": "Recipient label"
+  },
+  "noName": "Аты жоқ",
+  "@noName": {
+    "description": "No name available message"
+  },
+  "noPhone": "Телефон нөмірі жоқ",
+  "@noPhone": {
+    "description": "No phone number available message"
+  },
+  "deliveryDate": "Жеткізу күні:",
+  "@deliveryDate": {
+    "description": "Delivery date label"
+  },
+  "orderId": "Тапсырыс ID: {id}",
+  "@orderId": {
+    "description": "Order ID text with placeholder",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatusPaymentPending": "Төлем күтілуде",
+  "@orderStatusPaymentPending": {
+    "description": "Order status: Payment Pending"
+  },
+  "orderStatusProcessing": "Өңделуде",
+  "@orderStatusProcessing": {
+    "description": "Order status: Processing"
+  },
+  "orderStatusWay": "Жолда",
+  "@orderStatusWay": {
+    "description": "Order status: On the Way"
+  },
+  "orderStatusPickup": "Бөлімшеде күтуде",
+  "@orderStatusPickup": {
+    "description": "Order status: the parcel is waiting at the Kazpost branch"
+  },
+  "orderStatusDelivered": "Алынды",
+  "@orderStatusDelivered": {
+    "description": "Order status: Delivered"
+  },
+  "orderStatusCanceled": "Бас тартылды",
+  "@orderStatusCanceled": {
+    "description": "Order status: Canceled"
+  },
+  "orderStatusAssembling": "Тапсырыс жиналуда",
+  "@orderStatusAssembling": {
+    "description": "Order status: Assembling"
+  },
+  "orderStatusAbandoned": "Бас тартылды",
+  "@orderStatusAbandoned": {
+    "description": "Order status: Abandoned"
+  },
+  "orderStatusPaymentFailed": "Төлем қатесі",
+  "@orderStatusPaymentFailed": {
+    "description": "Order status: Payment Failed"
+  },
+  "orderProcessingMessage": "Сіздің тауарларыңыз брондалды, тапсырыс өңделуде. Тапсырыс жинауға берілгенде сіз хабарландыру аласыз",
+  "@orderProcessingMessage": {
+    "description": "Order processing status message"
+  },
+  "ticketsWillBeAwarded": "Билеттер есептеледі",
+  "@ticketsWillBeAwarded": {
+    "description": "Tickets award message"
+  },
+  "totalAmount": "Жалпы сома",
+  "@totalAmount": {
+    "description": "Total amount label"
+  },
+  "items": "Тауарлар",
+  "@items": {
+    "description": "Items label"
+  },
+  "discount": "Жеңілдік",
+  "@discount": {
+    "description": "Discount label"
+  },
+  "promotionalNumbers": "Акциялық нөмірлер",
+  "@promotionalNumbers": {
+    "description": "Promotional numbers label"
+  },
+  "delivery": "Жеткізу",
+  "@delivery": {
+    "description": "Delivery label"
+  },
+  "free": "Тегін",
+  "@free": {
+    "description": "Free delivery text"
+  },
+  "total": "Барлығы",
+  "@total": {
+    "description": "Total label"
+  },
+  "paid": "Төленді",
+  "@paid": {
+    "description": "Paid status"
+  },
+  "unpaid": "Төленбеді",
+  "@unpaid": {
+    "description": "Unpaid status"
+  },
+  "enterPhoneNumber": "Телефон нөміріңізді \nенгізіңіз",
+  "@enterPhoneNumber": {
+    "description": "Phone number input title"
+  },
+  "weWillSendSms": "Растау коды бар SMS жібереміз",
+  "@weWillSendSms": {
+    "description": "SMS verification message"
+  },
+  "getCode": "Код алу",
+  "@getCode": {
+    "description": "Get verification code button"
+  },
+  "orderConsentText": "Түймені басу арқылы сіз Оферта шарттарымен және Құпиялылық саясатымен келісесіз",
+  "orderConsentOffer": "Оферта шарттарымен",
+  "orderConsentPrivacy": "Құпиялылық саясатымен",
+  "termsAndPrivacy": "\"Код алу\" түймесін басу арқылы сіз пайдалану шарттарын және құпиялылық саясатын қабылдайсыз",
+  "@termsAndPrivacy": {
+    "description": "Terms and privacy policy text"
+  },
+  "userAgreement": "пайдалану шарттарын",
+  "@userAgreement": {
+    "description": "User agreement link label inside termsAndPrivacy"
+  },
+  "privacyPolicy": "құпиялылық саясатын",
+  "@privacyPolicy": {
+    "description": "Privacy policy link label inside termsAndPrivacy"
+  },
+  "greeting": "Сәлеметсіз бе!",
+  "@greeting": {
+    "description": "PIN lock screen greeting"
+  },
+  "cannotLogin": "Кіре алмайсыз ба?",
+  "@cannotLogin": {
+    "description": "Can't log in link on the PIN lock screen"
+  },
+  "createPinTitle": "PIN-код ойлап табыңыз",
+  "@createPinTitle": {
+    "description": "Create PIN screen title"
+  },
+  "confirmPinTitle": "PIN-кодты қайталаңыз",
+  "@confirmPinTitle": {
+    "description": "Confirm PIN screen title"
+  },
+  "pinMismatch": "PIN-кодтар сәйкес келмейді",
+  "@pinMismatch": {
+    "description": "Error when the two entered PINs differ"
+  },
+  "wrongPin": "PIN-код қате",
+  "@wrongPin": {
+    "description": "Toast shown when the entered PIN is incorrect"
+  },
+  "fillInData": "Толтырыңыз",
+  "@fillInData": {
+    "description": "Registration / fill-in-details screen title"
+  },
+  "selectCity": "Қаланы таңдаңыз",
+  "@selectCity": {
+    "description": "City picker placeholder"
+  },
+  "enterCode": "Кодты енгізіңіз",
+  "@enterCode": {
+    "description": "Enter verification code title"
+  },
+  "sentToNumber": "Оны +7 {phoneNumber} нөміріне жібердік \n",
+  "@sentToNumber": {
+    "description": "SMS sent confirmation message",
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "signIn": "Кіру",
+  "@signIn": {
+    "description": "Sign in button text"
+  },
+  "market": "Маркет",
+  "streams": "Эфирлер",
+  "orders": "Тапсырыстар",
+  "searchHomeHint": "Не іздедіңіз?",
+  "all": "Барлығы",
+  "plusPrice": "Plus-пен алсаңыз",
+  "sellerOrders": "{count} тапсырыс",
+  "@sellerOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reviews": "Пікірлер",
+  "reviewsCount": "{count} пікір",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "readAll": "Барлығын оқу",
+  "relatedProducts": "Сізге ұнауы мүмкін",
+  "buy": "Сатып алу",
+  "newTag": "Жаңа",
+  "hitTag": "Хит",
+  "myTickets": "Менің билеттерім",
+  "specifyDeliveryAddress": "Жеткізу мекенжайын көрсетіңіз",
+  "myOrders": "Менің тапсырыстарым",
+  "orderStatus": "Тапсырыс күйі",
+  "myCard": "Менің картам",
+  "contacts": "Байланыстар",
+  "sattyJuldyz": "Satty juldyz",
+  "techSupport": "Тех көмек",
+  "inviteFriends": "Достарыңызды шақырыңыз",
+  "goToPayment": "Төлемге өту",
+  "clearCart": "Тазалау",
+  "youSaved": "Сіз үнемдедіңіз",
+  "recommended": "Ұсынамыз",
+  "notAvailable": "Қолжетімсіз",
+  "defaultDescription": "Күнделікті күтімге арналған жоғары сапалы өнім. Мұқият таңдалған компоненттер тиімді нәтиже береді. Барлық тері түрлеріне жарамды. Мамандар ұсынған өнім.",
+  "liveNow": "Қазір эфирде",
+  "otpSubtitle": "Телефоныңызға 4 таңбалы код\nжібердік",
+  "resendCode": "Кодты қайта жіберу",
+  "confirm": "Растау",
+  "continueAction": "Жалғастыру",
+  "notificationCategoryPurchase": "Сатып алу",
+  "notificationCategoryDelivery": "Жеткізу",
+  "notificationCategoryStream": "Эфирлер",
+  "notificationCategorySubscription": "Жазылым",
+  "noNotifications": "Хабарландырулар жоқ",
+  "selectAddress": "Мекенжай таңдаңыз",
+  "noSavedAddresses": "Сізде сақталған мекенжайлар жоқ",
+  "deliveryAddressesTitle": "Жеткізу мекенжайлары",
+  "deliveryAddressTitle": "Жеткізу мекенжайы",
+  "addMoreAddress": "Тағы мекенжай қосу",
+  "saveAddress": "Мекенжайды сақтау",
+  "newAddress": "Жаңа мекенжай",
+  "addressLabeled": "«{label}» мекенжайы",
+  "addressAdded": "Мекенжай сәтті қосылды",
+  "addressDeleted": "Мекенжай жойылды",
+  "deleteAddressTitle": "Мекенжайды жою керек пе?",
+  "deleteAddressMessage": "Осы мекенжайды жойғыңыз келетініне сенімдісіз бе?",
+  "deleteAction": "Жою",
+  "addAction": "Қосу",
+  "savingInProgress": "Сақталуда...",
+  "addressNameLabel": "Мекенжай атауы",
+  "addressNameHint": "Мысалы: Үй немесе жұмыс",
+  "enterAddressName": "Атауын енгізіңіз",
+  "streetAndHouseHint": "Көше және үй нөмірі",
+  "enterAddressLine": "Мекенжайды енгізіңіз",
+  "apartmentLabel": "Пәтер",
+  "entranceLabel": "Кіреберіс",
+  "floorLabel": "Қабат",
+  "postalIndexHint": "Индекс",
+  "enterPostalIndex": "Индексті енгізіңіз",
+  "selectCityFirst": "Қаланы таңдаңыз",
+  "selectRegion": "Аймақты таңдаңыз",
+  "addressesLoadError": "Мекенжайларды жүктеу қатесі",
+  "addressAddError": "Мекенжай қосу қатесі",
+  "addressSaveError": "Мекенжайды сақтау мүмкін болмады",
+  "addressDeleteError": "Мекенжайды жою қатесі",
+  "addAddress": "Мекенжай қосу",
+  "raffleTab": "Ұтыстар",
+  "allShopsTab": "Барлық дүкендер",
+  "wholeCatalogTab": "Барлық каталог",
+  "catalogTileLottery": "Ұтыс\nтауарлары",
+  "catalogTileDiscount": "Жеңілдікті\nтауарлар",
+  "catalogTileMakeup": "Макияжға",
+  "catalogTilePerfume": "Парфюмерия",
+  "catalogTileBodyCare": "Денеге\nкүтім",
+  "catalogTileHairCare": "Шашқа\nкүтім",
+  "catalogTileCosmeticSets": "Косметика\nжинақтары",
+  "catalogTileFaceCare": "Бетке\nкүтім",
+  "catalogTileSunCare": "Күннен\nқорғау",
+  "catalogTileHygiene": "Жеке\nгигиена",
+  "catalogTileOralCare": "Ауыз қуысын\nкүту",
+  "raffleDefaultTitle": "Ұтыс",
+  "raffleDateLabel": "Күні: {date}",
+  "@raffleDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "raffleDateTbd": "Күні: нақтыланады",
+  "raffleGiftsCount": "{count} сыйлық",
+  "@raffleGiftsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "raffleGiftsAction": "Ұтыстарға шолу",
+  "raffleGiftsTitle": "Ұтыс сыйлықтары",
+  "raffleGiftsEmpty": "Сыйлықтар әзірге жоқ",
+  "raffleEmpty": "Белсенді ұтыстар әзірге жоқ",
+  "raffleLoadError": "Ұтысты жүктеу мүмкін болмады",
+  "raffleProductsEmpty": "Бұл ұтыста әзірге тауарлар жоқ",
+  "sortDiscount": "Жеңілдік",
+  "baseAvatar": "Негізгі",
+  "@baseAvatar": {
+    "description": "Label for the base avatar option (initial letter)"
+  },
+  "selectAvatar": "Таңдау",
+  "@selectAvatar": {
+    "description": "Label for the custom photo avatar option"
+  },
+  "dateOfBirth": "Туған күні",
+  "@dateOfBirth": {
+    "description": "Date of birth field label"
+  },
+  "birthDateHint": "кк-аа-жжжж",
+  "@birthDateHint": {
+    "description": "Date of birth placeholder"
+  },
+  "phoneNumberHint": "(000) - 00 - 00",
+  "@phoneNumberHint": {
+    "description": "Phone number field placeholder"
+  },
+  "addPhoto": "Фото қосу",
+  "@addPhoto": {
+    "description": "Add photo bottom sheet title"
+  },
+  "gallery": "Галерея",
+  "@gallery": {
+    "description": "Gallery option in the photo picker sheet"
+  },
+  "camera": "Камера",
+  "@camera": {
+    "description": "Camera option in the photo picker sheet"
+  },
+  "shareAppMessage": "Сәлем! Мен мына керемет қосымшаны қолданамын. Қосыл: {link}",
+  "@shareAppMessage": {
+    "description": "Message pre-filled in the system share sheet when inviting friends",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAppError": "\"Бөлісу\" терезесін ашу мүмкін болмады",
+  "@shareAppError": {
+    "description": "Error shown when the native share sheet fails to open"
+  },
+  "ordersTabAll": "Барлығы",
+  "ordersTabActive": "Белсенді",
+  "ordersTabCompleted": "Аяқталған",
+  "ordersTabReturn": "Қайтарылған",
+  "ordersEmptyTitle": "Тапсырыс жоқ",
+  "ordersEmptyMessage": "Тапсырыстар осында көрсетіледі",
+  "orderTagActive": "Белсенді",
+  "orderTagCompleted": "Аяқталды",
+  "orderTagReturn": "Қайтарылды",
+  "orderLeaveReview": "Пікір қалдыру",
+  "orderInTransitMessage": "Тапсырысыңыз жіберуге берілді. Сәл сабыр сақтаңыз, тауар жолда.",
+  "orderDeliveredMessage": "Құттықтаймыз! Курьер тапсырысты жеткізді. Жұмысымызды бағаласаңыз, қуанышты боламыз.",
+  "orderReturnMessage": "Тапсырыс қайтарылды немесе бас тартылды.",
+  "priceTenge": "{price}₸",
+  "@priceTenge": {
+    "description": "Price with tenge symbol (no space)",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "favoritesEmptyTitle": "Әзірге бос",
+  "favoritesEmptySubtitle": "Кейін оңай оралу үшін тауарларды таңдаулыға қосыңыз!",
+  "goShopping": "Сатып алуға",
+  "myCards": "Менің карталарым",
+  "paymentCard": "Төлем картасы",
+  "addCard": "Карта қосу",
+  "cardsEmptyTitle": "Карта жоқ",
+  "cardsEmptySubtitle": "Сізде әлі сақталған карталар жоқ",
+  "contactsTitle": "Байланыстар",
+  "callCenter": "Колл-орталық",
+  "callCenterSubtitle": "Кеңес береміз және тапсырыс\nресімдеуге көмектесеміз",
+  "acceptCallsHours": "Қоңырауларды 10:00-ден 20:00-ге дейін қабылдаймыз",
+  "respondHours": "10:00-ден 20:00-ге дейін жауап береміз",
+  "writeOnWhatsapp": "Whatsapp-қа жазу",
+  "writeOnTelegram": "Telegram-ға жазу",
+  "deliverySectionTitle": "Жеткізу",
+  "deliverySectionSubtitle": "Жаңартулар телеграм каналымызда",
+  "selfPickupSectionTitle": "Өзі алу мекенжайы",
+  "branches": "Филиалдар",
+  "loginRequired": "Аккаунтқа кіріңіз",
+  "loginRequiredHint": "Жалғастыру үшін аккаунтыңызға кіріңіз",
+  "addToCartFailed": "Себетке қосу мүмкін болмады",
+  "pullToRefresh": "Жаңарту үшін төмен тартыңыз",
+  "refreshing": "Жаңартылуда…",
+  "removeFromCartFailed": "Себеттен жою мүмкін болмады",
+  "paymentAmountTitle": "Төлем сомасы:",
+  "paymentSumLabel": "Сома:",
+  "paymentCommissionLabel": "Комиссия:",
+  "paymentTermsPart1": "Төлем жүргізе, сіз автоматты түрде",
+  "paymentTermsLinkText": "шарттармен",
+  "paymentTermsPart2": "келісесіз",
+  "payButton": "Төлем жасау",
+  "fromTitle": "Қайдан",
+  "fromOtherCard": "Басқа картадан",
+  "removeCardTitle": "Картаны жою керек пе?",
+  "removeCardSubtitle": "Осы картаны жоюды шынымен қалайсыз ба",
+  "removeAction": "Жою",
+  "enterCardDataTitle": "Карта деректерін енгізіңіз",
+  "cardExpiryLabel": "Жарамдылық мерзімі",
+  "cardExpiryHint": "Мерзім",
+  "cardCvvLabel": "CVV-код",
+  "saveCardData": "Карта деректерін сақтау",
+  "cardWarning": "Карта интернет-транзакцияларға ашық және лимит жеткілікті екеніне көз жеткізіңіз",
+  "orderAcceptedTitle": "Сіздің заказыңыз қабылданды!",
+  "orderIdLabel": "Тапсырыс ID: {id}",
+  "@orderIdLabel": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptItemsLabel": "Тауарлар:",
+  "receiptSavedLabel": "Үнемделді:",
+  "receiptTicketsLabel": "Билеттер:",
+  "receiptPaymentMethodLabel": "Төлем тәсілі:",
+  "viewOrderStatus": "Күйді көру",
+  "viewersLabel": "Көрермендер",
+  "streamInactiveTitle": "Стрим қазір белсенді емес",
+  "streamInactiveSubtitle": "Тарату басталуын күтіңіз",
+  "searchHint": "Тауар іздеу…",
+  "searchPrompt": "Тауар табу үшін теруді бастаңыз",
+  "searchEmpty": "Ештеңе табылмады",
+  "searchError": "Іздеу орындалмады. Қайталап көріңіз",
+  "onAirNow": "Қазір эфирде",
+  "giftButton": "Сыйлық",
+  "commentInputHint": "Пікір жазыңыз...",
+  "inCart": "Себетте",
+  "kaspiPayTitle": "Kaspi төлемі",
+  "kaspiAmountToPay": "Төлеуге: {amount}",
+  "kaspiScanOrPay": "QR-кодты сканерлеңіз немесе Kaspi ашу үшін «Төлеу» түймесін басыңыз",
+  "kaspiWaitingPayment": "Төлемді күтудеміз…",
+  "kaspiPaymentFailed": "Төлем өтпеді",
+  "kaspiLinkExpired": "Сілтеме мерзімі аяқталды",
+  "kaspiPayAgain": "Қайта төлеу",
+  "sellerRaffleDate": "Ұтыс: {date}",
+  "sellersEmpty": "Әзірге дүкендер жоқ",
+  "sellersLoadError": "Дүкендерді жүктеу мүмкін болмады",
+  "sellerProductsEmpty": "Бұл дүкенде әзірге тауар жоқ",
+  "sellerNotFound": "Дүкен қолжетімсіз",
+  "sellerStoreTitleFallback": "Дүкен",
+  "ticketsBadge": "+{count}",
+  "productUnavailable": "Тауар қолжетімсіз",
+  "plusPriceActive": "Plus бағаңыз",
+  "reviewsEmpty": "Әзірге пікірлер жоқ",
+  "reviewAnonymous": "Сатып алушы",
+  "reviewComposerHint": "Тауар туралы әсеріңізбен бөлісіңіз",
+  "reviewSend": "Жіберу",
+  "reviewSubmitted": "Пікіріңізге рахмет!",
+  "reviewAlreadyLeft": "Сіз бұл тауарға пікір қалдырғансыз",
+  "reviewTooManyRequests": "Тым көп әрекет. Бір минуттан кейін қайталаңыз",
+  "reviewSubmitError": "Пікірді жіберу мүмкін болмады",
+  "reviewsLoadError": "Пікірлерді жүктеу мүмкін болмады",
+  "shareProductMessage": "{name} — {price}. Bai Market-тен таптым.",
+  "shareProductMessageNoPrice": "{name}. Bai Market-тен таптым.",
+  "cartItemsCount": "{count, plural, other{{count} тауар}}",
+  "checkoutShort": "Рәсімдеу",
+  "cartClearFailed": "Себетті тазалау мүмкін болмады",
+  "cartNotEnoughStock": "Қорда тауар жеткіліксіз",
+  "cartQuantityChangeFailed": "Санын өзгерту мүмкін болмады — тауар себеттен жойылды, қайта қосыңыз",
+  "cartItemRemovedByStock": "«{name}» бітті және себеттен жойылды",
+  "cartItemPriceChanged": "«{name}» бағасы өзгерді",
+  "cartItemQuantityReduced": "«{name}» саны {quantity} дейін азайтылды",
+  "cartRefreshFailed": "Себетті жаңарту мүмкін болмады",
+  "pushPermissionTitle": "Хабарламаларды қосыңыз",
+  "pushPermissionBody": "Тапсырыс күйі, ұтыс нәтижелері және жаңалықтар туралы хабарлаймыз",
+  "pushPermissionAllow": "Қосу",
+  "pushPermissionLater": "Кейінірек",
+  "pushDisabledBanner": "Хабарламалар өшірілген",
+  "pushEnableAction": "Қосу",
+  "notificationsSettingsTitle": "Хабарламалар",
+  "notificationsOn": "Қосылған",
+  "notificationsOff": "Өшірілген",
+  "notificationsLoadError": "Хабарламаларды жүктеу мүмкін болмады",
+  "commonCancel": "Бас тарту",
+  "addedToCart": "Себетке қосылды",
+  "outOfStock": "Қоймада жоқ",
+  "pullToRefreshHint": "Жаңарту үшін төмен тартыңыз",
+  "streamsLoadError": "Эфирлерді жүктеу мүмкін болмады",
+  "streamsEmptyTitle": "Қазір эфир жоқ",
+  "streamsEmptySubtitle": "Сәлден кейін қараңыз",
+  "streamErrorGeneric": "Бірдеңе дұрыс болмады",
+  "streamEndedTitle": "Эфир аяқталды",
+  "streamEndedSubtitle": "Басқа эфирді таңдаңыз",
+  "streamReconnecting": "Қайта қосылудамыз…",
+  "streamConnectionLost": "Байланыс үзілді",
+  "streamRetry": "Қайталау",
+  "streamChatTooLong": "Хабарлама тым ұзын",
+  "streamChatRateLimited": "Хабарлама тым көп, сәл күте тұрыңыз",
+  "streamProductsTitle": "Эфирдегі тауарлар",
+  "streamGiftsTitle": "Сыйлықтар",
+  "pinnedProductBadge": "Эфирде",
+  "streamHostCameraPaused": "Сатушы камераны өшірді",
+  "streamStartCta": "Эфир бастау",
+  "streamResumeCta": "Эфиріңізге оралу",
+  "startStreamSheetTitle": "Жаңа эфир",
+  "startStreamTitleLabel": "Эфир атауы",
+  "startStreamTitleHint": "Мысалы: Кроссовкалар жеңілдігі",
+  "startStreamTitleTooShort": "Ұзынырақ атау енгізіңіз",
+  "startStreamSubmit": "Бастау",
+  "startStreamFailed": "Эфирді бастау мүмкін болмады",
+  "streamAccessDenied": "Эфирлер қолжетімсіз, қолдау қызметіне хабарласыңыз",
+  "streamAlreadyLiveTitle": "Сізде эфир жүріп жатыр",
+  "streamAlreadyLiveMessage": "Бір мезгілде бір ғана эфир жүргізуге болады. Ағымдағысын аяқтаңыз немесе көрермен ретінде ашыңыз.",
+  "streamEndAndRestart": "Аяқтап, қайта бастау",
+  "streamOpenAsViewer": "Көрермен ретінде ашу",
+  "streamStopConfirmTitle": "Эфирді аяқтайсыз ба?",
+  "streamStopConfirmAction": "Аяқтау",
+  "hostCameraPaused": "Камера өшірулі",
+  "hostPickProductTitle": "Тауарды көрсету",
+  "hostPinProduct": "Көрсету",
+  "hostUnpinProduct": "Тауарды экраннан алу",
+  "hostNoProducts": "Әзірге тауар жоқ",
+  "hostPermissionDeniedTitle": "Камера мен микрофонға рұқсат керек",
+  "hostPermissionDeniedMessage": "Эфирге шығу үшін параметрлерде рұқсат беріңіз.",
+  "hostOpenSettings": "Параметрлер",
+  "storyOpenProduct": "Тауарға өту",
+  "stockLeft": "{count} дана қалды!",
+  "amount": "Сома",
+  "quantity": "Саны",
+  "updateForcedTitle": "Жаңарту қажет",
+  "updateForcedMessage": "Bai Market қолданбасының бұл нұсқасына қолдау көрсетілмейді. Соңғы нұсқаны орнатыңыз — бұл бір минуттан аз уақыт алады.",
+  "updateRecommendedTitle": "Жаңа нұсқа шықты",
+  "updateRecommendedMessage": "Біз жаңа мүмкіндіктер қостық және бірнеше ақауды түзеттік. Жаңарту бір минуттан аз уақыт алады.",
+  "updateNow": "Жаңарту",
+  "updateLater": "Кейінірек",
+  "updateWhatsNew": "Не жаңалық",
+  "profileVersion": "Нұсқа: {version}",
+  "updateVersionBadge": "{version} нұсқасы",
+  "updateStoreOpenFailed": "Қолданбалар дүкенін ашу мүмкін болмады. Қайталап көріңіз.",
+  "checkoutTitle": "Тапсырысты рәсімдеу",
+  "savedAddressTitle": "Сақталған мекенжай",
+  "selectSavedAddressFirst": "Сақталған мекенжайды таңдаңыз",
+  "chooseAction": "таңдау",
+  "changeAction": "Өзгерту",
+  "addressFallbackTitle": "Мекенжай",
+  "branchWithAddress": "Филиал: {address}",
+  "cityFallbackName": "Қала",
+  "recipientNameCourierLabel": "Кім қарсы алады (Аты-жөні)",
+  "recipientNamePickupLabel": "Кім алып кетеді (Аты-жөні)",
+  "recipientNameHint": "Мысалы: Асылбек Даниял",
+  "processingAction": "Өңделуде\u2026",
+  "kaspiPaymentStartFailed": "Kaspi төлемін бастау мүмкін болмады",
+  "paymentMethodsTitle": "Төлем әдістері",
+  "deliveryByCourier": "Курьермен",
+  "deliverySelfPickup": "Өзі алып кету",
+  "filialDistrict": "Бостандық ауданы",
+  "filialAddressLine": "Абдулла Розыбакиев көшесі, 112",
+  "deliveryMethodBranch": "Қазпошта бөлімшесіне дейін",
+  "deliveryMethodBranchHint": "Трек-нөмір бойынша поштадан аласыз",
+  "deliveryMethodDoor": "Есікке дейін",
+  "deliveryMethodDoorHint": "Go Post курьері үйге жеткізеді",
+  "houseNumberLabel": "Үй және пәтер",
+  "houseNumberHint": "150, пәтер 25",
+  "enterHouseNumber": "Үй мен пәтерді көрсетіңіз",
+  "postalCodeInvalidLength": "Индекс 6 саннан тұруы керек",
+  "enterPostalForDelivery": "Жеткізу құнын білу үшін индексті енгізіңіз",
+  "selectAddressForDelivery": "Жеткізу құнын білу үшін мекенжайды таңдаңыз",
+  "deliveryPriceCalculating": "Есептеп жатырмыз\u2026",
+  "amountToPay": "Төлеуге",
+  "trackingNumberLabel": "Трек-нөмір",
+  "trackOnKazpost": "post.kz сайтында бақылау",
+  "trackingNumberCopied": "Трек-нөмір көшірілді",
+  "orderStatusPickupKazpostMessage": "Сәлемдеме Қазпошта бөлімшесінде күтіп тұр. Оны трек-нөмір бойынша алыңыз",
+  "deliveryQuoteFailed": "Жеткізуді есептеу мүмкін болмады. Қайталап көріңіз"
 }

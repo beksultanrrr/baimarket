@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Акцент уведомлений. Совпадает с kNotificationColor
+         в lib/core/push/push_channels.dart. -->
+    <color name="notification_color">#71CD32</color>
+	<color name="ic_launcher_background">#AEFE15</color>
+</resources>

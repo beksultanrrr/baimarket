@@ -3,14 +3,29 @@ import 'package:flutter/material.dart';
 import '../../../../l10n/app_localizations.dart';
 import 'tenge_format.dart';
 
+/// Карточка суммы на экране оплаты.
+///
+/// Разбивка «Товары / Доставка / К оплате»: обе цифры приходят готовыми
+/// с бэка (totalPrice — только товары, deliveryPrice — из корня заказа),
+/// сами по корзине ничего не считаем. Если доставки нет ([deliveryPrice] == 0,
+/// старые заказы) — строка доставки скрывается и остаётся одна «Сумма», как раньше.
 class PaymentAmountCard extends StatefulWidget {
   const PaymentAmountCard({
     super.key,
     required this.amount,
-    required this.commission,
+    this.itemsTotal,
+    this.deliveryPrice = 0,
   });
+
+  /// Полная сумма к оплате. Используется как запасной вариант, если
+  /// [itemsTotal] не передали.
   final int amount;
-  final int commission;
+
+  /// Только товары, без доставки.
+  final int? itemsTotal;
+
+  /// Цена доставки, зашитая в заказ при его создании.
+  final int deliveryPrice;
 
   @override
   State<PaymentAmountCard> createState() => _PaymentAmountCardState();
@@ -20,9 +35,17 @@ class _PaymentAmountCardState extends State<PaymentAmountCard>
     with SingleTickerProviderStateMixin {
   bool _expanded = true;
 
+  /// Товары: если бэк отдал их отдельно — берём как есть, иначе вычитаем
+  /// доставку из общей суммы.
+  int get _items => widget.itemsTotal ?? (widget.amount - widget.deliveryPrice);
+
+  /// К оплате = товары + доставка.
+  int get _total => _items + widget.deliveryPrice;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final hasDelivery = widget.deliveryPrice > 0;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -69,7 +92,7 @@ class _PaymentAmountCardState extends State<PaymentAmountCard>
           ),
           const SizedBox(height: 6),
           Text(
-            formatTengeWithKopecks(widget.amount),
+            formatTengeWithKopecks(_total),
             style: const TextStyle(
               fontFamily: 'Gilroy',
               fontSize: 30,
@@ -88,15 +111,22 @@ class _PaymentAmountCardState extends State<PaymentAmountCard>
                       const SizedBox(height: 16),
                       const Divider(height: 1, color: Color(0xFFEDEDED)),
                       const SizedBox(height: 16),
-                      _row(
-                        l10n.paymentSumLabel,
-                        formatTengeWithKopecks(widget.amount),
-                      ),
-                      const SizedBox(height: 12),
-                      _row(
-                        l10n.paymentCommissionLabel,
-                        formatTengeWithKopecks(widget.commission),
-                      ),
+                      if (hasDelivery) ...[
+                        _row(l10n.items, formatTengeWithKopecks(_items)),
+                        const SizedBox(height: 12),
+                        _row(
+                          l10n.delivery,
+                          formatTengeWithKopecks(widget.deliveryPrice),
+                        ),
+                        const SizedBox(height: 12),
+                        _row(l10n.amountToPay, formatTengeWithKopecks(_total)),
+                      ] else
+                        // Доставки в заказе нет (старые заказы) — одна строка,
+                        // как было до разбивки.
+                        _row(
+                          l10n.paymentSumLabel,
+                          formatTengeWithKopecks(_total),
+                        ),
                     ],
                   )
                 : const SizedBox(width: double.infinity),

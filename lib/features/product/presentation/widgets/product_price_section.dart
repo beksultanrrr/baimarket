@@ -10,8 +10,11 @@ class ProductPriceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    // Mock Plus price as 30% discount
-    final plusPrice = model.price != null ? (model.price! * 0.7).round() : null;
+    final plusPrice = model.plusPrice;
+    // Зачёркнутая цена — только если она реально больше текущей.
+    final hasOldPrice = model.oldPrice != null &&
+        model.price != null &&
+        model.oldPrice! > model.price!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,7 +32,7 @@ class ProductPriceSection extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            if (model.oldPrice != null) ...[
+            if (hasOldPrice) ...[
               const SizedBox(width: 8),
               Text(
                 l10n.oldPrice(model.oldPrice.toString()),

@@ -16,5 +16,9 @@ class UserAddressRepositoryImpl implements UserAddressRepository {
       remoteDatasource.addAddress(address);
 
   @override
+  Future<void> updateAddress(int id, UserAddressModel address) =>
+      remoteDatasource.updateAddress(id, address);
+
+  @override
   Future<void> deleteAddress(int id) => remoteDatasource.deleteAddress(id);
 }

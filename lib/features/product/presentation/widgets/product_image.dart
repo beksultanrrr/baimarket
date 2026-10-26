@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/urls.dart';
 import '../../../../core/widgets/show_image.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 class ProductImagesCarousel extends StatefulWidget {
   final List<String> photoUrls;
@@ -29,14 +30,13 @@ class _ProductImagesCarouselState extends State<ProductImagesCarousel> {
   }
 
   void _openFullScreenImage(BuildContext context, int initialIndex) {
-    Navigator.push(
+    // Внутри эфира сырой Navigator.push лёг бы нетегированным маршрутом
+    // поверх стрима и обрубил бы closeAll всему, что выше.
+    liveAwarePushWidget(
       context,
-      MaterialPageRoute(
-        builder:
-            (_) => FullScreenImageViewer(
-              urls: widget.photoUrls,
-              initialIndex: initialIndex,
-            ),
+      FullScreenImageViewer(
+        urls: widget.photoUrls,
+        initialIndex: initialIndex,
       ),
     );
   }
@@ -110,7 +110,7 @@ class _ProductImagesCarouselState extends State<ProductImagesCarousel> {
                       width: 32,
                       child: NetworkImageWidget(
                         url:
-                            '$imgUrl${widget.model.collections![index1]['labelUrl']}',
+                            '$imgUrl${widget.model.collections![index1].labelUrl ?? ''}',
                       ),
                     ),
               ),

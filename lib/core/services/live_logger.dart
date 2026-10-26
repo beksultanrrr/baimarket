@@ -3,9 +3,8 @@ import 'app_logger.dart';
 /// Тег `LIVE` для socket / стрим-инфраструктуры.
 const liveLog = AppLogger('LIVE');
 
-/// Старое имя класса — оставлено для обратной совместимости с уже
-/// написанным кодом (LiveSocketService / LiveCubit принимают `LiveLogger`
-/// в конструкторе).
+/// Инстанс-обёртка над [liveLog]: `LiveSocketService` и `LiveRoomCubit`
+/// принимают логгер в конструкторе, чтобы его можно было подменить в тесте.
 class LiveLogger {
   const LiveLogger();
   void info(String message, [Object? data]) => liveLog.info(message, data);

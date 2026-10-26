@@ -13,20 +13,23 @@ class OrderTotalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    final itemsTotal = order.cartItems.fold<int>(
-      0,
-      (sum, item) => sum + (item.model.price ?? 0),
-    );
-    final originalTotal = order.cartItems.fold<int>(
+    // Обе цифры приходят с бэка готовыми: totalPrice — ТОЛЬКО товары,
+    // deliveryPrice лежит в КОРНЕ заказа (в deliveryInfo его нет и не было).
+    // Сумму сами не считаем: цена доставки фиксируется при создании заказа.
+    final itemsTotal = order.totalPrice;
+    final delivery = order.deliveryPrice;
+    final rawOriginal = order.cartItems.fold<int>(
       0,
       (sum, item) => sum + (item.model.oldPrice ?? item.model.price ?? 0),
     );
-    final discount = (originalTotal - itemsTotal).clamp(0, 1 << 31);
-    final delivery =
-        (order.deliveryInfo?['deliveryPrice'] as num?)?.toInt() ?? 0;
-    final total = order.totalPrice;
-    final savings = originalTotal > total ? originalTotal - total : 0;
-    final hasDiscount = originalTotal > total;
+    // Цены в карточках товаров могли уехать после оформления — тогда «до скидки»
+    // берём по бэку, иначе строки в столбик не сойдутся.
+    final originalTotal = rawOriginal > itemsTotal ? rawOriginal : itemsTotal;
+    final discount = originalTotal - itemsTotal;
+    // К оплате = товары + доставка. Доставка идёт отдельной строкой ВЫШЕ и в
+    // totalPrice не входит.
+    final total = itemsTotal + delivery;
+    final hasDiscount = discount > 0;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -54,18 +57,19 @@ class OrderTotalCard extends StatelessWidget {
             value: '-${_fmt(discount)}',
             valueColor: const Color(0xFFEE6A5A),
           ),
-          const SizedBox(height: 10),
-          _LineRow(
-            label: l10n.delivery,
-            value: delivery == 0 ? l10n.free : _fmt(delivery),
-          ),
+          // Доставка платная всегда — 0 бывает только у старых заказов,
+          // оформленных до подключения Казпочты. Там строку просто не рисуем.
+          if (delivery > 0) ...[
+            const SizedBox(height: 10),
+            _LineRow(label: l10n.delivery, value: _fmt(delivery)),
+          ],
           const SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFFEEEEEE)),
           const SizedBox(height: 14),
           Row(
             children: [
               Text(
-                l10n.total,
+                l10n.amountToPay,
                 style: const TextStyle(
                   fontFamily: 'Gilroy',
                   fontSize: 16,
@@ -75,8 +79,10 @@ class OrderTotalCard extends StatelessWidget {
               ),
               const Spacer(),
               if (hasDiscount) ...[
+                // Зачёркнутая цена тоже с доставкой — иначе сравнивались бы
+                // две разные величины.
                 Text(
-                  _fmt(originalTotal),
+                  _fmt(originalTotal + delivery),
                   style: const TextStyle(
                     fontFamily: 'Gilroy',
                     fontSize: 15,
@@ -98,9 +104,10 @@ class OrderTotalCard extends StatelessWidget {
               ),
             ],
           ),
-          if (savings > 0) ...[
+          // Экономия — только по товарам: доставка скидке не подлежит.
+          if (discount > 0) ...[
             const SizedBox(height: 16),
-            _SavingsRow(amount: savings),
+            _SavingsRow(amount: discount),
           ],
         ],
       ),
@@ -157,7 +164,7 @@ class _SavingsRow extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: const Color(0xFFE6F7F2),
+        color: const Color(0xFFD4F4C1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(

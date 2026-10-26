@@ -1,13 +1,15 @@
 import 'package:bai_market/core/providers/language_provider.dart';
+import 'package:bai_market/features/app_update/presentation/cubit/app_update_cubit.dart';
+import 'package:bai_market/features/app_update/presentation/widgets/app_update_gate.dart';
 import 'package:bai_market/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:bai_market/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:bai_market/features/cart/presentation/widgets/cart_event_listener.dart';
+import 'package:bai_market/features/cart/presentation/widgets/cart_floating_bar_host.dart';
 import 'package:bai_market/features/catalog/presentation/cubit/catalog_cubit.dart';
 import 'package:bai_market/features/collection/presentation/cubit/collection_cubit.dart';
 import 'package:bai_market/features/create_order/presentation/cubit/create_order_cubit.dart';
 import 'package:bai_market/features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'package:bai_market/features/get_slug_list/presentation/cubit/slug_cubit.dart';
-import 'package:bai_market/features/live/presentation/cubit/live_cubit.dart';
 import 'package:bai_market/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:bai_market/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:bai_market/features/product/presentation/cubit/product_cubit.dart';
@@ -22,8 +24,12 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 import 'core/firebase_service.dart';
+import 'core/push/push_gate.dart';
+import 'core/ui/root_messenger.dart';
 import 'core/routing/app_routing.dart';
 import 'l10n/app_localizations.dart';
+import 'package:bai_market/features/profile/presentation/cubit/current_user_cubit.dart';
+import 'package:bai_market/features/live/presentation/cubit/live_host_cubit.dart';
 
 void main() async {
   try {
@@ -101,6 +107,12 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => SlugCubit()),
         BlocProvider(create: (context) => ProductCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
+        // Роль нужна вне экрана профиля (вкладка «Эфиры»), живёт всю
+        // сессию и меняется только на входе/выходе.
+        BlocProvider(create: (context) => CurrentUserCubit()..ensureLoaded()),
+        // Один экземпляр на всё приложение: «идёт ли у меня эфир» читают и
+        // вкладка «Эфиры», и экран ведущего, который этот эфир завершает.
+        BlocProvider(create: (context) => LiveHostCubit()),
         BlocProvider(create: (context) => CollectionCubit()),
         BlocProvider(create: (context) => FavoritesCubit()),
         BlocProvider(create: (context) => CartCubit()),
@@ -108,7 +120,7 @@ class _MainAppState extends State<MainApp> {
         BlocProvider(create: (context) => CreateOrderCubit()),
         BlocProvider(create: (context) => OrdersCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
-        BlocProvider(create: (context) => LiveCubit()..connect()),
+        BlocProvider(create: (context) => AppUpdateCubit()),
       ],
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
@@ -117,15 +129,34 @@ class _MainAppState extends State<MainApp> {
               FocusScope.of(context).unfocus();
             },
             child: MaterialApp.router(
-              title: 'Bai Market',
+              // Видно в списке недавних приложений на Android.
+              title: 'hibai',
               debugShowCheckedModeBanner: false,
+              // Мессенджер выше навигатора роутера и всех оверлеев: снекбары
+              // экранов показываем только через него, иначе шит эфира
+              // оставляет протухшую регистрацию Scaffold и showSnackBar
+              // падает. См. [rootMessengerKey].
+              scaffoldMessengerKey: rootMessengerKey,
               theme: ThemeData(
                 primarySwatch: Colors.green,
                 fontFamily: 'Inter',
               ),
               routerConfig: router,
-              builder: (context, child) =>
-                  CartEventListener(child: child ?? const SizedBox.shrink()),
+              // Единственная точка выше навигатора роутера: и сообщения
+              // корзины, и её плашка должны переживать любой push.
+              //
+              // AppUpdateGate — самый внешний слой намеренно: диалог
+              // обязательного обновления обязан лежать поверх всего, включая
+              // плашку корзины и шиты эфира.
+              builder: (context, child) => AppUpdateGate(
+                child: PushGate(
+                  child: CartEventListener(
+                    child: CartFloatingBarHost(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                  ),
+                ),
+              ),
               localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,

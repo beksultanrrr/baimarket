@@ -2,14 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/utils/count_format.dart';
+
 /// Вертикальный ряд action-кнопок справа на лайв-странице (как TikTok):
-/// корзина, чат, лайк. Каждая — иконка + число под ней.
+/// корзина, чат и — если включено — лайки. Каждая: иконка + число под ней.
+///
+/// Лайков в контракте эфиров нет: ни ручки, ни события. Раньше экран рисовал
+/// зашитое число 345, поэтому по умолчанию блок скрыт, пока бэк их не заведёт.
 class LiveActionRail extends StatelessWidget {
   const LiveActionRail({
     super.key,
     required this.cartCount,
     required this.messageCount,
-    required this.likesCount,
+    this.likesCount,
     this.onCartTap,
     this.onMessageTap,
     this.onLikeTap,
@@ -17,7 +22,9 @@ class LiveActionRail extends StatelessWidget {
 
   final int cartCount;
   final int messageCount;
-  final int likesCount;
+
+  /// `null` — секцию лайков не показываем вовсе.
+  final int? likesCount;
   final VoidCallback? onCartTap;
   final VoidCallback? onMessageTap;
   final VoidCallback? onLikeTap;
@@ -40,12 +47,14 @@ class LiveActionRail extends StatelessWidget {
             count: messageCount,
             onTap: onMessageTap,
           ),
-          const SizedBox(height: 10),
-          _RailItem(
-            asset: 'assets/icons/stream/action_heart.svg',
-            count: likesCount,
-            onTap: onLikeTap,
-          ),
+          if (likesCount != null) ...[
+            const SizedBox(height: 10),
+            _RailItem(
+              asset: 'assets/icons/stream/action_heart.svg',
+              count: likesCount!,
+              onTap: onLikeTap,
+            ),
+          ],
         ],
       ),
     );
@@ -57,14 +66,6 @@ class _RailItem extends StatelessWidget {
   final String asset;
   final int count;
   final VoidCallback? onTap;
-
-  String _fmt(int v) {
-    if (v >= 1000) {
-      final k = (v / 1000);
-      return '${k.toStringAsFixed(k.truncateToDouble() == k ? 0 : 1)}K';
-    }
-    return v.toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class _RailItem extends StatelessWidget {
           SvgPicture.asset(asset, width: 40, height: 40),
           const SizedBox(height: 2),
           Text(
-            _fmt(count),
+            formatCountShort(count),
             style: const TextStyle(
               fontFamily: 'Inter',
               fontSize: 11,

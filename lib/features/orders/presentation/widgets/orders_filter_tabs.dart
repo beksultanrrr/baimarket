@@ -5,11 +5,7 @@ import '../../../../l10n/app_localizations.dart';
 import 'order_filter.dart';
 
 class OrdersFilterTabs extends StatelessWidget {
-  const OrdersFilterTabs({
-    super.key,
-    required this.selected,
-    required this.onSelected,
-  });
+  const OrdersFilterTabs({super.key, required this.selected, required this.onSelected});
 
   final OrderFilter selected;
   final ValueChanged<OrderFilter> onSelected;
@@ -35,22 +31,16 @@ class OrdersFilterTabs extends StatelessWidget {
               curve: Curves.easeOut,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: isSelected ? mainColorLight : Colors.white,
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: isSelected ? mainColorLight : const Color(0xFFE8E8E8),
-                  width: 1,
-                ),
+                // По макету активный чип чёрный, а не зелёный; невыбранные —
+                // белые с тонкой рамкой и тёмным (не серым) текстом.
+                color: isSelected ? darkButtonColor : Colors.white,
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(color: isSelected ? darkButtonColor : hairlineBorder, width: kHairlineWidth),
               ),
               alignment: Alignment.center,
               child: Text(
                 orderFilterLabel(l10n, filter),
-                style: TextStyle(
-                  fontFamily: 'Gilroy',
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: isSelected ? Colors.white : const Color(0xFFB8B8B8),
-                ),
+                style: TextStyle(fontFamily: 'Gilroy', fontSize: 14, fontWeight: FontWeight.w500, color: isSelected ? Colors.white : darkButtonColor, height: 1),
               ),
             ),
           );

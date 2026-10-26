@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bai_market/features/cart/data/models/cart_model.dart';
 import 'package:bai_market/features/create_order/presentation/cubit/create_order_cubit.dart';
 import 'package:flutter/material.dart';
@@ -13,29 +11,30 @@ import 'package:bai_market/features/my_address/data/datasources/user_address_rem
 import 'package:bai_market/features/my_address/data/repositories/user_address_repository_impl.dart';
 import 'package:bai_market/features/my_address/presentation/pages/add_address_page.dart';
 import 'package:bai_market/core/network/app_dio.dart';
+import 'package:bai_market/core/ui/root_messenger.dart';
 import 'package:bai_market/core/urls.dart';
 
 import '../../../../core/services/order_logger.dart';
+import '../../../../core/widgets/consent_text.dart';
 import '../../../../core/widgets/main_button.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../cart/data/models/cart_item_model.dart';
 import '../../../live/presentation/widgets/live_shopping_scope.dart';
 import '../../../order_success/data/models/order_success_args.dart';
 import '../../../payment/data/models/payment_args.dart';
 import '../../../payment/presentation/widgets/kaspi_payment_sheet.dart';
+import '../../data/models/delivery_quote.dart';
 import '../../domain/repositories/create_order_repository.dart';
-import '../../data/models/city_model.dart';
+import '../widgets/address_field.dart';
 import '../widgets/bonus_tickets_row.dart';
 import '../widgets/delivery_section.dart';
-import '../widgets/filial_picker_sheet.dart';
 import '../widgets/order_total_section.dart';
 import '../widgets/payment_methods_section.dart';
+import '../widgets/postal_field.dart';
 import '../widgets/recipient_section.dart';
 import '../widgets/total_price_block.dart' show calculateTotalDiscount;
 
-const int _kCourierDeliveryPrice = 900;
 const int _kTicketsToEarn = 2;
-const String _kFilialDistrict = 'Бостандыкский район';
-const String _kFilialAddressLine = 'улица Абдуллы Розыбакиева, 112';
 
 class CreateOrderPage extends StatefulWidget {
   const CreateOrderPage({super.key, required this.cartModel});
@@ -50,18 +49,51 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
   late TextEditingController regionController;
   late TextEditingController phoneNumberController;
   late TextEditingController postalCodeController;
+
+  /// ТОЛЬКО улица: дом и квартира уходят отдельным полем.
   late TextEditingController addressController;
-  late TextEditingController filialId;
+
+  /// Дом и квартира одной строкой — «150, кв. 25, подъезд 2». Единственное,
+  /// что доезжает до Казпочты помимо улицы и города, поэтому обязательное.
+  late TextEditingController houseNumberController;
+
   int? selectedRegionId;
   final CreateOrderCubit createOrderPage = CreateOrderCubit();
   final ProfileCubit profileCubit = ProfileCubit();
   UserAddressModel? selectedUserAddress;
-  CityModel? selectedPickupCity;
-  int? selectedFilialIndex;
 
-  int _selectedSegment = 0;
-  PaymentMethod _paymentMethod = PaymentMethod.cash;
+  /// Способ доставки. Признака «по умолчанию» контракт не даёт, поэтому до
+  /// выбора покупателя здесь `null` и «Продолжить» ругается.
+  DeliveryMethod? _deliveryMethod;
+
+  /// Единственный доступный способ оплаты — карточка «Наличными» убрана из
+  /// `payment_methods_section.dart`, поэтому Kaspi выбран сразу.
+  PaymentMethod _paymentMethod = PaymentMethod.kaspi;
   bool _submitting = false;
+
+  /// Покупатель уже пытался оформить заказ без выбранного адреса — подсвечиваем
+  /// строку адреса красным, чтобы причина отказа осталась на экране, а не
+  /// уехала вместе со снекбаром.
+  bool _addressMissing = false;
+
+  /// Индекс дописан до шести цифр. Держим отдельным полем, потому что
+  /// подсказка под способами доставки зависит от него, а состояние кубита
+  /// при вводе индекса не меняется (остаётся `Idle`) и перестройки не даёт.
+  bool _postalReady = false;
+
+  /// Город берётся ИСКЛЮЧИТЕЛЬНО из адресной книги: отдельного селектора
+  /// города на экране нет и быть не должно — два источника правды разъедутся.
+  /// [cityController] — техническое хранилище подстановки из выбранного
+  /// адреса, поэтому читаем сначала сам адрес, а его — как запасной вариант.
+  int? get _cityId {
+    final fromAddress = selectedUserAddress?.cityId;
+    if (fromAddress != null && fromAddress > 0) return fromAddress;
+    final parsed = int.tryParse(cityController.text.trim());
+    return (parsed != null && parsed > 0) ? parsed : null;
+  }
+
+  /// Индекс — ровно шесть цифр, иначе бэк отдаст 400.
+  static final RegExp _postalCodeRe = RegExp(r'^\d{6}$');
 
   @override
   void initState() {
@@ -72,36 +104,49 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     phoneNumberController = TextEditingController();
     postalCodeController = TextEditingController();
     addressController = TextEditingController();
-    filialId = TextEditingController();
+    houseNumberController = TextEditingController();
+
+    // Индекс меняется и руками, и подстановкой из сохранённого адреса —
+    // поэтому котировку дёргаем из слушателя контроллера, а не из onChanged
+    // поля: иначе программная подстановка расчёт не запустит.
+    postalCodeController.addListener(_onPostalCodeChanged);
 
     profileCubit.getProfileData();
   }
 
   @override
   void dispose() {
+    postalCodeController.removeListener(_onPostalCodeChanged);
     whoTakesController.dispose();
     cityController.dispose();
     regionController.dispose();
     phoneNumberController.dispose();
     postalCodeController.dispose();
     addressController.dispose();
-    filialId.dispose();
+    houseNumberController.dispose();
     profileCubit.close();
+    // Кубит страницы свой, не из main.dart: закрываем сами, иначе дебаунс
+    // котировки переживёт экран.
+    createOrderPage.close();
     super.dispose();
   }
 
+  /// Отсев коротких значений и дебаунс — внутри `DeliveryQuoteCubit`,
+  /// здесь фильтровать нечего.
+  void _onPostalCodeChanged() {
+    final ready = _postalCodeRe.hasMatch(postalCodeController.text.trim());
+    if (ready != _postalReady && mounted) setState(() => _postalReady = ready);
+    createOrderPage.loadQuote(postalCodeController.text, _cityId);
+  }
+
   Future<void> _openAddressSheet() async {
-    final cubit = MyAddressCubit(
-      UserAddressRepositoryImpl(UserAddressRemoteDatasource(appDio, mainUrl)),
-    );
+    final cubit = MyAddressCubit(UserAddressRepositoryImpl(UserAddressRemoteDatasource(appDio, mainUrl)));
     await cubit.loadAddresses();
     if (!mounted) return;
     final address = await showModalBottomSheet<UserAddressModel>(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
       builder: (_) {
         return BlocProvider.value(
           value: cubit,
@@ -113,16 +158,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                   selectedId: selectedUserAddress?.id,
                   onSelect: (addr) => Navigator.pop(context, addr),
                   onAdd: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder:
-                            (_) => BlocProvider.value(
-                              value: cubit,
-                              child: const AddAddressPage(),
-                            ),
-                      ),
-                    );
+                    final result = await liveAwarePushWidget<bool>(context, BlocProvider.value(value: cubit, child: const AddAddressPage()));
                     if (result == true) {
                       await cubit.loadAddresses();
                     }
@@ -134,10 +170,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
               }
               if (state is MyAddressError) {
                 return Center(
-                  child: Text(
-                    state.message,
-                    style: const TextStyle(color: Colors.red),
-                  ),
+                  child: Text(AppLocalizations.of(context)!.addressesLoadError, style: const TextStyle(color: Colors.red)),
                 );
               }
               return AddressBottomSheet(
@@ -145,16 +178,7 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
                 selectedId: null,
                 onSelect: (_) {},
                 onAdd: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (_) => BlocProvider.value(
-                            value: cubit,
-                            child: const AddAddressPage(),
-                          ),
-                    ),
-                  );
+                  final result = await liveAwarePushWidget<bool>(context, BlocProvider.value(value: cubit, child: const AddAddressPage()));
                   if (result == true) {
                     await cubit.loadAddresses();
                   }
@@ -169,159 +193,141 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     if (address != null && mounted) {
       setState(() {
         selectedUserAddress = address;
+        _addressMissing = false;
         selectedRegionId = address.regionId;
         regionController.text = address.regionId.toString();
         cityController.text = address.cityId.toString();
         addressController.text = address.addressLine;
         postalCodeController.text = address.postalCode;
+        // Старые адреса бэк не парсил: у них дома нет, а весь адрес лежит
+        // в `addressLine`. Тогда улицу подставляем как есть, а поле дома
+        // оставляем пустым — покупатель дозаполнит, заново вводить адрес
+        // не просим.
+        houseNumberController.text = address.houseNumber?.trim() ?? '';
       });
+      // В расчёт уходит и город, а слушатель индекса молчит, если у нового
+      // адреса индекс тот же — дёргаем расчёт руками.
+      createOrderPage.loadQuote(postalCodeController.text, _cityId);
     }
   }
 
-  Future<void> _openFilialSheet() async {
-    final result = await showFilialPickerSheet(
-      context: context,
-      initialCity: selectedPickupCity,
-      initialFilialIndex: selectedFilialIndex,
+  /// Ошибки показываем ТОЛЬКО через корневой мессенджер
+  /// (см. [showRootSnackBar]): в live-shopping оверлее ближайший к экрану
+  /// мессенджер держит уже деактивированный Scaffold, и `showSnackBar` на нём
+  /// падает даже без async-gap. Ближайший остаётся аварийным фолбэком, а сам
+  /// показ никогда не бросает — сообщение об ошибке не должно ронять экран.
+  void _showError(String message) {
+    final shown = showRootSnackBar(
+      SnackBar(content: Text(message), backgroundColor: Colors.redAccent, behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16)),
+      fallbackContext: mounted ? context : null,
     );
-    if (result != null && mounted) {
-      setState(() {
-        selectedPickupCity = result.city;
-        selectedFilialIndex = result.filialIndex;
-        cityController.text = result.city.id.toString();
-        filialId.text = result.filialIndex.toString();
-      });
-    }
+    if (!shown) orderLog.warn('snackbar not shown', message);
   }
 
-  String _cityName(CityModel c) => c.nameRu ?? c.nameKz ?? c.nameEn ?? 'Город';
-
-  void _onContinuePressed() {
-    final isCourier = _selectedSegment == 0;
-    final missingCourierAddress =
-        isCourier &&
-        (selectedUserAddress == null || cityController.text.isEmpty);
-    final missingPickupFilial =
-        !isCourier &&
-        (selectedPickupCity == null || selectedFilialIndex == null);
+  Future<void> _onContinuePressed() async {
+    final l10n = AppLocalizations.of(context)!;
+    final postalCode = postalCodeController.text.trim();
+    final street = addressController.text.trim();
+    final houseNumber = houseNumberController.text.trim();
+    final method = _deliveryMethod;
+    final cityId = _cityId;
 
     orderLog.step(
       'Continue pressed',
-      'isCourier=$isCourier, '
-          'name="${whoTakesController.text}", '
+      'name="${whoTakesController.text}", '
           'phone="${phoneNumberController.text}", '
-          'cityCtrl="${cityController.text}", '
-          'addressCtrl="${addressController.text}", '
-          'postal="${postalCodeController.text}", '
-          'selectedUserAddressId=${selectedUserAddress?.id}, '
-          'selectedPickupCityId=${selectedPickupCity?.id}, '
-          'selectedFilialIndex=$selectedFilialIndex',
+          'cityId=$cityId, '
+          'street="$street", '
+          'houseNumber="$houseNumber", '
+          'postal="$postalCode", '
+          'deliveryMethod=${method?.wire}, '
+          'selectedUserAddressId=${selectedUserAddress?.id}',
     );
 
-    if (whoTakesController.text.isEmpty ||
-        phoneNumberController.text.isEmpty ||
-        missingCourierAddress ||
-        missingPickupFilial) {
+    // Город приходит только вместе с сохранённым адресом, поля города на
+    // экране нет. Поэтому «адрес не выбран» — отдельная причина отказа, её
+    // нельзя прятать за общим «заполните все поля»: иначе покупатель, вбивший
+    // индекс и улицу руками, не понимает, чего от него хотят.
+    if (cityId == null) {
+      orderLog.warn('validation BLOCKED', 'cityId=null (сохранённый адрес не выбран)');
+      setState(() => _addressMissing = true);
+      _showError(l10n.selectSavedAddressFirst);
+      return;
+    }
+    if (whoTakesController.text.isEmpty || phoneNumberController.text.isEmpty || street.isEmpty || method == null) {
       orderLog.warn(
         'validation BLOCKED',
         'nameEmpty=${whoTakesController.text.isEmpty}, '
             'phoneEmpty=${phoneNumberController.text.isEmpty}, '
-            'missingCourierAddress=$missingCourierAddress, '
-            'missingPickupFilial=$missingPickupFilial',
+            'cityId=$cityId, streetEmpty=${street.isEmpty}, '
+            'methodEmpty=${method == null}',
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Пожалуйста, заполните все поля'),
-          backgroundColor: Colors.redAccent,
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.all(16),
-        ),
-      );
+      _showError(l10n.fillAllFields);
       return;
     }
-    orderLog.step('validation OK — proceeding to /payment immediately');
+    if (!_postalCodeRe.hasMatch(postalCode)) {
+      orderLog.warn('validation BLOCKED', 'postalCode="$postalCode"');
+      _showError(l10n.postalCodeInvalidLength);
+      return;
+    }
+    if (houseNumber.isEmpty) {
+      orderLog.warn('validation BLOCKED', 'houseNumber empty');
+      _showError(l10n.enterHouseNumber);
+      return;
+    }
+    orderLog.step('validation OK — creating order');
 
-    final cityId = int.parse(cityController.text);
-    String? pickupUrl;
-    if (!isCourier) {
-      final urls = selectedPickupCity?.pickupUrls ?? const <String>[];
-      if (urls.isNotEmpty &&
-          selectedFilialIndex != null &&
-          selectedFilialIndex! < urls.length) {
-        pickupUrl = urls[selectedFilialIndex!];
-      }
+    // Заказ создаём ДО навигации: 400 от бэка теперь штатный ответ (индекс,
+    // дом, пустая корзина) и его надо показать, а сумма к оплате приходит
+    // только в ответе — считать её на клиенте нельзя.
+    setState(() => _submitting = true);
+    OrderCreationResult? result;
+    try {
+      result = await createOrderPage.createOrder(
+        cartId: widget.cartModel.id,
+        fullName: whoTakesController.text,
+        phoneNumber: formatPhoneNumber(phoneNumberController.text),
+        postalCode: postalCode,
+        cityId: cityId,
+        deliveryMethod: method,
+        deliveryAddress: street,
+        houseNumber: houseNumber,
+        comment: '',
+        paymentTypeSlug: _paymentTypeSlug(_paymentMethod),
+      );
+    } finally {
+      if (mounted) setState(() => _submitting = false);
+    }
+    if (!mounted) return;
+
+    final orderId = result?.orderId;
+    if (result == null || orderId == null) {
+      final state = createOrderPage.state;
+      final reason = state is OrderCreateError && (state.message?.isNotEmpty ?? false) ? state.message! : l10n.streamErrorGeneric;
+      orderLog.warn('order not created', 'result=$result');
+      _showError(reason);
+      return;
     }
 
-    final paymentSlug = _paymentTypeSlug(_paymentMethod);
-    final orderCityId = cityId;
-    Future<OrderCreationResult?> runCreateOrder() =>
-        createOrderPage.createOrder(
-          cartId: widget.cartModel.id,
-          fullName: whoTakesController.text,
-          phoneNumber: formatPhoneNumber(phoneNumberController.text),
-          selfPick: !isCourier,
-          postalCode: postalCodeController.text,
-          cityId: orderCityId,
-          deliveryAddress: addressController.text,
-          comment: 'Тест',
-          pickupUrl: pickupUrl,
-          selfPickDate: '',
-          filialId: isCourier ? null : (selectedFilialIndex ?? 0) + 1,
-          paymentTypeSlug: paymentSlug,
-        );
+    final args = _buildPaymentArgs(result);
 
-    final args = _buildPaymentArgs(null, isCourier);
-    final scope = LiveShoppingScope.maybeOf(context);
-
-    // Kaspi (xpayment): дожидаемся создания заказа, чтобы получить orderId и
-    // redirectUrl, затем показываем шит оплаты с QR и опросом статуса.
+    // Kaspi (xpayment): заказ уже создан, показываем шит оплаты с QR и
+    // опросом статуса.
     if (_paymentMethod == PaymentMethod.kaspi) {
-      unawaited(_payWithKaspi(runCreateOrder, args));
+      await _payWithKaspi(result, args);
       return;
     }
-
-    // Бэк сейчас отвечает 403 «Buying is not active» — не блокируем юзера.
-    // Стреляем createOrder в фоне (логи/попытка реально создать заказ),
-    // но НЕ ждём результат и не реагируем на состояние через BlocListener:
-    // сразу пушим /payment с собранными аргументами. Если payment URL
-    // позже появится — UI оплаты возьмёт его из state и пойдёт в
-    // WebView, иначе сработает fallback на /order_success.
-    unawaited(runCreateOrder());
 
     // Наличный расчёт не требует онлайн-оплаты: пропускаем /payment и
     // /payment_webview, сразу показываем экран успешного оформления.
     if (_paymentMethod == PaymentMethod.cash) {
-      final successArgs = OrderSuccessArgs(
-        orderId: DateTime.now().millisecondsSinceEpoch.remainder(1000000),
-        itemsTotal: args.itemsTotal ?? args.amount,
-        oldTotal: args.oldTotal,
-        savings: args.savings ?? 0,
-        ticketsEarned: args.ticketsEarned ?? 0,
-        deliveryAddressLine: args.deliveryAddressLine,
-        deliveryPostalCode: args.deliveryPostalCode,
-        productImageUrls: args.productImageUrls,
-      );
-      orderLog.nav(
-        'cash → push /order_success',
-        'amount=${args.amount}, savings=${args.savings}',
-      );
-      if (scope != null) {
-        scope.openOrderSuccess(context, successArgs);
-      } else {
-        context.push('/order_success', extra: successArgs);
-      }
+      orderLog.nav('cash → push /order_success', 'orderId=$orderId, amount=${args.amount}');
+      liveAwarePush(context, '/order_success', extra: _buildSuccessArgs(args, result));
       return;
     }
 
-    orderLog.nav(
-      'push /payment (no wait)',
-      'amount=${args.amount}, savings=${args.savings}',
-    );
-    if (scope != null) {
-      scope.openPayment(context, args);
-    } else {
-      context.push('/payment', extra: args);
-    }
+    orderLog.nav('push /payment', 'orderId=$orderId, amount=${args.amount}, delivery=${args.deliveryPrice}');
+    liveAwarePush(context, '/payment', extra: args);
   }
 
   String _paymentTypeSlug(PaymentMethod m) {
@@ -336,73 +342,33 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     }
   }
 
-  /// Создаём заказ (ждём результат ради orderId + redirectUrl), затем
-  /// открываем шит Kaspi-оплаты. Если заказ оплачен (шит вернул `true`) —
-  /// уходим на экран успешного оформления.
-  Future<void> _payWithKaspi(
-    Future<OrderCreationResult?> Function() runCreateOrder,
-    PaymentArgs args,
-  ) async {
-    // Захватываем messenger ДО await: после async-gap `context` может уже
-    // быть деактивирован (особенно в live-shopping оверлее) и
-    // `ScaffoldMessenger.of(context)` бросит «deactivated widget's ancestor».
-    final messenger = ScaffoldMessenger.of(context);
-    setState(() => _submitting = true);
-    OrderCreationResult? result;
-    try {
-      result = await runCreateOrder();
-    } finally {
-      if (mounted) setState(() => _submitting = false);
-    }
-    if (!mounted) return;
-
-    final orderId = result?.orderId;
-    final url = result?.redirectUrl;
-    if (orderId == null || url == null || url.isEmpty) {
-      orderLog.warn('kaspi: no orderId/redirectUrl', 'result=$result');
-      final state = createOrderPage.state;
-      final reason = state is OrderCreateError && (state.message?.isNotEmpty ?? false)
-          ? state.message!
-          : 'Не удалось начать оплату Kaspi';
-      messenger.showSnackBar(
-        SnackBar(
-          content: Text(reason),
-          backgroundColor: Colors.redAccent,
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-        ),
-      );
+  /// Шит Kaspi-оплаты по уже созданному заказу. Если заказ оплачен (шит
+  /// вернул `true`) — уходим на экран успешного оформления.
+  Future<void> _payWithKaspi(OrderCreationResult result, PaymentArgs args) async {
+    // l10n захватываем ДО await: после async-gap `context` может уже быть
+    // деактивирован (особенно в live-shopping оверлее). Мессенджер захватывать
+    // не нужно — снекбары идут через корневой ключ.
+    final l10n = AppLocalizations.of(context)!;
+    final orderId = result.orderId!;
+    final url = result.redirectUrl;
+    if (url == null || url.isEmpty) {
+      orderLog.warn('kaspi: no redirectUrl', 'orderId=$orderId');
+      _showError(l10n.kaspiPaymentStartFailed);
       return;
     }
 
-    final paid = await showKaspiPaymentSheet(
-      context: context,
-      orderId: orderId,
-      redirectUrl: url,
-      amount: args.amount,
-    );
+    final paid = await showKaspiPaymentSheet(context: context, orderId: orderId, redirectUrl: url, amount: args.amount);
     if (paid != true || !mounted) return;
 
-    final successArgs = OrderSuccessArgs(
-      orderId: orderId,
-      itemsTotal: args.itemsTotal ?? args.amount,
-      oldTotal: args.oldTotal,
-      savings: args.savings ?? 0,
-      ticketsEarned: args.ticketsEarned ?? 0,
-      deliveryAddressLine: args.deliveryAddressLine,
-      deliveryPostalCode: args.deliveryPostalCode,
-      productImageUrls: args.productImageUrls,
-    );
-    final scope = LiveShoppingScope.maybeOf(context);
     orderLog.nav('kaspi paid → /order_success', 'orderId=$orderId');
-    if (scope != null) {
-      scope.openOrderSuccess(context, successArgs);
-    } else {
-      context.push('/order_success', extra: successArgs);
-    }
+    liveAwarePush(context, '/order_success', extra: _buildSuccessArgs(args, result));
   }
 
-  PaymentArgs _buildPaymentArgs(String? paymentUrl, bool isCourier) {
+  /// Аргументы оплаты собираем ИЗ ОТВЕТА бэка: цена доставки фиксируется при
+  /// создании заказа и уже зашита в платёжную ссылку, а `totalPrice` — это
+  /// только товары. Локальный подсчёт остаётся лишь как страховка на случай,
+  /// если полей в ответе не окажется.
+  PaymentArgs _buildPaymentArgs(OrderCreationResult result) {
     final items = widget.cartModel.cartItems ?? const <CartItemModel>[];
     final goodsBefore = items.fold<int>(0, (sum, it) {
       final m = it.model;
@@ -412,15 +378,12 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     });
     final discount = calculateTotalDiscount(items);
     final goodsAfter = goodsBefore - discount;
-    final delivery = isCourier ? _kCourierDeliveryPrice : 0;
-    final totalAfter = goodsAfter + delivery;
-    final totalBefore = goodsBefore + delivery;
 
-    final addressLine =
-        isCourier
-            ? selectedUserAddress?.addressLine
-            : '$_kFilialDistrict, $_kFilialAddressLine';
-    final postalCode = isCourier ? selectedUserAddress?.postalCode : null;
+    // Предварительная сумма товаров — серверная (`cartModel.totalPrice`):
+    // локальный fold по `oldPrice` считает цены ДО скидки и с серверным итогом
+    // не сходится. Он остаётся только как последний фолбэк.
+    final itemsTotal = result.totalPrice ?? widget.cartModel.totalPrice ?? goodsAfter;
+    final delivery = result.deliveryPrice ?? 0;
 
     final productImages = <String>[];
     for (final it in items) {
@@ -429,64 +392,80 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
     }
 
     return PaymentArgs(
-      amount: totalAfter,
-      paymentUrl: paymentUrl,
-      itemsTotal: goodsAfter,
-      oldTotal: discount > 0 ? totalBefore : null,
+      amount: itemsTotal + delivery,
+      paymentUrl: result.redirectUrl,
+      itemsTotal: itemsTotal,
+      oldTotal: discount > 0 ? goodsBefore + delivery : null,
       savings: discount,
       ticketsEarned: _kTicketsToEarn,
-      deliveryAddressLine: addressLine,
-      deliveryPostalCode: postalCode,
+      deliveryAddressLine: _fullAddressLine(),
+      deliveryPostalCode: postalCodeController.text.trim(),
       productImageUrls: productImages,
+      deliveryPrice: delivery,
+      deliveryMethod: _deliveryMethod?.wire,
+      orderId: result.orderId,
     );
   }
 
+  OrderSuccessArgs _buildSuccessArgs(PaymentArgs args, OrderCreationResult result) {
+    return OrderSuccessArgs(
+      orderId: result.orderId ?? 0,
+      itemsTotal: args.itemsTotal ?? args.amount,
+      oldTotal: args.oldTotal,
+      savings: args.savings ?? 0,
+      ticketsEarned: args.ticketsEarned ?? 0,
+      deliveryAddressLine: args.deliveryAddressLine,
+      deliveryPostalCode: args.deliveryPostalCode,
+      productImageUrls: args.productImageUrls,
+      deliveryPrice: args.deliveryPrice,
+      trackingNumber: result.trackingNumber,
+    );
+  }
+
+  /// Улица и дом одной строкой — только для показа в чеке и на success-экране.
+  /// В API они уходят раздельно.
+  String _fullAddressLine() {
+    final parts = [addressController.text.trim(), houseNumberController.text.trim()].where((part) => part.isNotEmpty);
+    return parts.join(', ');
+  }
+
   Widget _buildDeliveryRow() {
-    if (_selectedSegment == 0) {
-      if (selectedUserAddress == null) {
-        return DeliveryEntryRow(
-          iconAsset: 'assets/icons/create_order/create_order_location.svg',
-          title: 'Сохраненный адрес',
-          actionLabel: 'выбрать',
-          onTap: _openAddressSheet,
-        );
-      }
+    final l10n = AppLocalizations.of(context)!;
+    if (selectedUserAddress == null) {
+      // Город приходит только с сохранённым адресом, поэтому выбор адреса —
+      // обязательный шаг, а не опция: пишем это прямо в строке-подсказке, а
+      // после неудачной попытки оформить заказ красим её в красный.
       return DeliveryEntryRow(
-        iconAsset: 'assets/icons/create_order/create_order_location.svg',
-        title:
-            selectedUserAddress!.label.isEmpty
-                ? 'Адрес'
-                : selectedUserAddress!.label,
-        subtitle: [
-          selectedUserAddress!.addressLine,
-          if (selectedUserAddress!.postalCode.isNotEmpty)
-            'индекс: ${selectedUserAddress!.postalCode}',
-        ].join('\n'),
+        iconAsset: 'assets/icons/create_order/create_order_location_tick.svg',
+        title: l10n.savedAddressTitle,
+        actionLabel: l10n.selectSavedAddressFirst,
+        actionColor: _addressMissing ? const Color(0xFFFF3B47) : const Color(0xFF39951F),
         onTap: _openAddressSheet,
       );
     }
-
-    if (selectedPickupCity == null || selectedFilialIndex == null) {
-      return DeliveryEntryRow(
-        iconAsset: 'assets/icons/create_order/create_order_location.svg',
-        title: 'Филиалы',
-        actionLabel: 'выбрать',
-        onTap: _openFilialSheet,
-      );
-    }
     return DeliveryEntryRow(
-      iconAsset: 'assets/icons/create_order/create_order_location.svg',
-      title: _cityName(selectedPickupCity!),
-      subtitle: 'Филиал: $_kFilialDistrict, $_kFilialAddressLine',
-      actionLabel: 'Изменить',
-      actionColor: const Color(0xFFFF3B47),
-      onTap: _openFilialSheet,
+      iconAsset: 'assets/icons/create_order/create_order_location_tick.svg',
+      title: selectedUserAddress!.label.isEmpty ? l10n.addressFallbackTitle : selectedUserAddress!.label,
+      subtitle: [selectedUserAddress!.addressLine, if (selectedUserAddress!.postalCode.isNotEmpty) l10n.postalIndex(selectedUserAddress!.postalCode)].join('\n'),
+      onTap: _openAddressSheet,
     );
+  }
+
+  /// Что показать вместо цены доставки. `null` — расчёт пришёл, цены есть.
+  String? _quoteStatusText(DeliveryQuoteState state, AppLocalizations l10n) {
+    if (state is DeliveryQuoteLoading) return l10n.deliveryPriceCalculating;
+    if (state is DeliveryQuoteError) return l10n.deliveryQuoteFailed;
+    if (state is DeliveryQuoteLoaded) return null;
+    // Расчёт идёт по паре «индекс + город». Пока индекс не дописан — просим
+    // индекс; когда он готов, а адрес не выбран — просим адрес, иначе
+    // подсказка советовала бы ввести уже введённое.
+    if (_postalReady && _cityId == null) return l10n.selectAddressForDelivery;
+    return l10n.enterPostalForDelivery;
   }
 
   @override
   Widget build(BuildContext context) {
-    final isCourier = _selectedSegment == 0;
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       resizeToAvoidBottomInset: true,
@@ -500,14 +479,9 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
-          'Оформление заказа',
-          style: TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
+        title: Text(
+          l10n.checkoutTitle,
+          style: const TextStyle(fontFamily: 'Gilroy', fontSize: 18, fontWeight: FontWeight.w700, color: Colors.black),
         ),
       ),
       body: SafeArea(
@@ -515,83 +489,88 @@ class _CreateOrderPageState extends State<CreateOrderPage> {
           bloc: profileCubit,
           listener: (context, state) {
             if (state is ProfileGot) {
-              if (whoTakesController.text.isEmpty &&
-                  (state.profile.firstName?.isNotEmpty ?? false) &&
-                  (state.profile.lastName?.isNotEmpty ?? false)) {
-                whoTakesController.text =
-                    '${state.profile.firstName!.trim()} ${state.profile.lastName!.trim()}'.trim();
+              if (whoTakesController.text.isEmpty && (state.profile.firstName?.isNotEmpty ?? false) && (state.profile.lastName?.isNotEmpty ?? false)) {
+                whoTakesController.text = '${state.profile.firstName!.trim()} ${state.profile.lastName!.trim()}'.trim();
               }
-              if (phoneNumberController.text.isEmpty &&
-                  state.profile.phoneNumber != null) {
-                phoneNumberController.text = _stripLeadingCountry(
-                  state.profile.phoneNumber!,
-                );
+              if (phoneNumberController.text.isEmpty && state.profile.phoneNumber != null) {
+                phoneNumberController.text = _stripLeadingCountry(state.profile.phoneNumber!);
               }
             }
           },
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
-            child: Column(
-              children: [
-                DeliverySection(
-                  selectedSegment: _selectedSegment,
-                  onSegmentChanged: (i) => setState(() => _selectedSegment = i),
-                  row: _buildDeliveryRow(),
-                ),
-                const SizedBox(height: 12),
-                RecipientSection(
-                  nameController: whoTakesController,
-                  phoneController: phoneNumberController,
-                  nameLabel:
-                      isCourier ? 'Кто встретит (ФИО)' : 'Кто придет (ФИО)',
-                ),
-                const SizedBox(height: 12),
-                PaymentMethodsSection(
-                  selected: _paymentMethod,
-                  onChanged: (m) => setState(() => _paymentMethod = m),
-                ),
-                const SizedBox(height: 12),
-                const BonusTicketsRow(ticketsToEarn: _kTicketsToEarn),
-                const SizedBox(height: 12),
-                OrderTotalSection(
-                  cartModel: widget.cartModel,
-                  deliveryPrice: isCourier ? _kCourierDeliveryPrice : 0,
-                ),
-                const SizedBox(height: 16),
-                // Кнопка не зависит от состояния cubit-а: createOrder()
-                // запускается в фоне, навигация на /payment делается сразу
-                // в `_onContinuePressed`. Слушать BlocConsumer не нужно —
-                // только логируем переходы для отладки.
-                BlocListener<CreateOrderCubit, CreateOrderState>(
-                  bloc: createOrderPage,
-                  listener: (context, state) {
-                    orderLog.state(
-                      'background cubit state',
-                      state.runtimeType.toString(),
-                    );
-                  },
-                  child: MainButton(
-                    onPressed: _submitting ? null : _onContinuePressed,
-                    text: _submitting ? 'Обработка…' : 'Продолжить',
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    'Нажимая на кнопку, вы соглашаетесь с Условиями обработки персональных данных, а также с Условиями продажи',
-                    style: TextStyle(
-                      fontFamily: 'Gilroy',
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF6E6E6E),
+          // Котировка живёт в дочернем кубите, поэтому её состояние не мешает
+          // OrderCreating/OrderCreated.
+          child: BlocBuilder<DeliveryQuoteCubit, DeliveryQuoteState>(
+            bloc: createOrderPage.quote,
+            builder: (context, quoteState) {
+              final loaded = quoteState is DeliveryQuoteLoaded ? quoteState : null;
+              final method = _deliveryMethod;
+              final deliveryPrice = method == null ? null : loaded?.priceFor(method);
+              final statusText = _quoteStatusText(quoteState, l10n);
+              final isQuoting = quoteState is DeliveryQuoteLoading;
+
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                child: Column(
+                  children: [
+                    DeliverySection(
+                      row: _buildDeliveryRow(),
+                      children: [
+                        PostalField(controller: postalCodeController),
+                        AddressField(controller: addressController),
+                        HouseNumberField(controller: houseNumberController),
+                        DeliveryMethodSelector(
+                          selected: method,
+                          onChanged: (m) => setState(() => _deliveryMethod = m),
+                          branchPrice: loaded?.priceFor(DeliveryMethod.branch),
+                          doorPrice: loaded?.priceFor(DeliveryMethod.door),
+                          statusText: statusText,
+                          onRetry: quoteState is DeliveryQuoteError ? createOrderPage.quote.retryQuote : null,
+                        ),
+                      ],
                     ),
-                    textAlign: TextAlign.center,
-                  ),
+                    const SizedBox(height: 12),
+                    RecipientSection(
+                      nameController: whoTakesController,
+                      phoneController: phoneNumberController,
+                      // До отделения посылку получает сам покупатель, курьера
+                      // никто не встречает.
+                      nameLabel: method == DeliveryMethod.branch ? l10n.recipientNamePickupLabel : l10n.recipientNameCourierLabel,
+                    ),
+                    const SizedBox(height: 12),
+                    PaymentMethodsSection(selected: _paymentMethod, onChanged: (m) => setState(() => _paymentMethod = m)),
+                    const SizedBox(height: 12),
+                    const BonusTicketsRow(ticketsToEarn: _kTicketsToEarn),
+                    const SizedBox(height: 12),
+                    OrderTotalSection(
+                      cartModel: widget.cartModel,
+                      deliveryPrice: deliveryPrice,
+                      // Расчёт есть, но способ ещё не выбран — цена зависит
+                      // от него, поэтому вместо суммы зовём выбрать.
+                      deliveryStatusText: statusText ?? l10n.chooseAction,
+                    ),
+                    const SizedBox(height: 16),
+                    // Пока считается доставка, кнопку не даём: иначе заказ
+                    // уйдёт раньше, чем покупатель увидит цену.
+                    BlocListener<CreateOrderCubit, CreateOrderState>(
+                      bloc: createOrderPage,
+                      listener: (context, state) {
+                        orderLog.state('cubit state', state.runtimeType.toString());
+                      },
+                      child: MainButton(
+                        onPressed: _submitting || isQuoting ? null : _onContinuePressed,
+                        text: _submitting ? l10n.processingAction : l10n.continueAction,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: ConsentText(text: l10n.orderConsentText, offerLabel: l10n.orderConsentOffer, privacyLabel: l10n.orderConsentPrivacy),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),

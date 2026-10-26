@@ -148,7 +148,7 @@ int countDealsInCart(List<CartItemModel> cartItems) {
         item.model != null &&
         item.model!.collections != null) {
       for (var collection in item.model!.collections!) {
-        if (collection['slug'] == 'lottery') {
+        if (collection.slug == 'lottery') {
           dealCount += item.quantity;
         }
       }

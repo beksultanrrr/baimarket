@@ -11,6 +11,12 @@ class OrderSuccessArgs {
   final String? deliveryPostalCode;
   final List<String> productImageUrls;
 
+  /// Цена доставки из заказа. У старых заказов 0 — тогда разбивку не показываем.
+  final int deliveryPrice;
+
+  /// Трек-номер Казпочты вида "AP081184854KZ". `null`, пока заказ не отправлен.
+  final String? trackingNumber;
+
   /// Бренд использованной карты (visa / mastercard) — для строки «Способ оплаты».
   /// `null`, если оплата картой не картой (e.g. kaspi/halyk).
   final PaymentCardBrand? cardBrand;
@@ -24,6 +30,8 @@ class OrderSuccessArgs {
     this.deliveryAddressLine,
     this.deliveryPostalCode,
     this.productImageUrls = const [],
+    this.deliveryPrice = 0,
+    this.trackingNumber,
     this.cardBrand,
   });
 }

@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../core/app_pallete.dart';
 import '../../../../core/urls.dart';
 import '../../../../core/widgets/show_image.dart';
 
@@ -25,11 +26,13 @@ class PhotoAvatarTile extends StatelessWidget {
       onTap: isUploading ? null : onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 72,
-        width: 72,
+        // Макет: 80×80, скругление 15, заливка #000000 3% и тонкая рамка.
+        height: 80,
+        width: 80,
         decoration: BoxDecoration(
-          color: const Color(0xFFF0F0F0),
-          borderRadius: BorderRadius.circular(16),
+          color: fieldFill,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: hairlineBorder, width: kHairlineWidth),
         ),
         clipBehavior: Clip.antiAlias,
         child: _buildContent(),
@@ -47,11 +50,11 @@ class PhotoAvatarTile extends StatelessWidget {
     if (imageUrl.isNotEmpty) {
       return NetworkImageWidget(url: '$imgUrl$imageUrl');
     }
-    return const Center(
-      child: Icon(
-        Icons.image_outlined,
-        color: Color(0xFFB5B5B5),
-        size: 28,
+    return Center(
+      child: SvgPicture.asset(
+        'assets/icons/gallery.svg',
+        height: 24,
+        width: 24,
       ),
     );
   }

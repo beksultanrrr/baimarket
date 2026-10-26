@@ -3,13 +3,6 @@ PODS:
     - Flutter
     - IosAwnCore (~> 0.10.0)
   - Flutter (1.0.0)
-  - flutter_inappwebview_ios (0.0.1):
-    - Flutter
-    - flutter_inappwebview_ios/Core (= 0.0.1)
-    - OrderedSet (~> 6.0.3)
-  - flutter_inappwebview_ios/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 6.0.3)
   - flutter_secure_storage (6.0.0):
     - Flutter
   - flutter_webrtc (1.2.0):
@@ -20,13 +13,11 @@ PODS:
     - Flutter
     - flutter_webrtc
     - WebRTC-SDK (= 137.7151.04)
-  - OrderedSet (6.0.3)
   - WebRTC-SDK (137.7151.04)
 
 DEPENDENCIES:
   - awesome_notifications (from `.symlinks/plugins/awesome_notifications/ios`)
   - Flutter (from `Flutter`)
-  - flutter_inappwebview_ios (from `.symlinks/plugins/flutter_inappwebview_ios/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
   - livekit_client (from `.symlinks/plugins/livekit_client/ios`)
@@ -34,7 +25,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - IosAwnCore
-    - OrderedSet
     - WebRTC-SDK
 
 EXTERNAL SOURCES:
@@ -42,8 +32,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/awesome_notifications/ios"
   Flutter:
     :path: Flutter
-  flutter_inappwebview_ios:
-    :path: ".symlinks/plugins/flutter_inappwebview_ios/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_webrtc:
@@ -54,12 +42,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   awesome_notifications: 0f432b28098d193920b11a44cfa9d2d9313a3888
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
   flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
   flutter_webrtc: c3e21fc0dcd9d8eb246ae4d5256fcbeb2f5ecd22
   IosAwnCore: 653786a911089012092ce831f2945cd339855a89
   livekit_client: 05903af3b321aa2703c661edcac1abfb4fc7e80c
-  OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   WebRTC-SDK: 40d4f5ba05cadff14e4db5614aec402a633f007e
 
 PODFILE CHECKSUM: b5864b920979e9733bd7c38d02f33690988569a2

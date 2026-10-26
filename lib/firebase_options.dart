@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCmoDxwg-aTaN6Oz0epo0JvAt5o2QNLxz4',
-    appId: '1:508941561573:android:68e0c7a72953d9db5cee0c',
-    messagingSenderId: '508941561573',
-    projectId: 'baimarket-a123a',
-    storageBucket: 'baimarket-a123a.firebasestorage.app',
+    apiKey: 'AIzaSyBXsd1A7buJFEALG4ijsbyMROrdpi_L8GA',
+    appId: '1:746121233690:android:d091604b2d70237cab58a3',
+    messagingSenderId: '746121233690',
+    projectId: 'hibai-8a160',
+    storageBucket: 'hibai-8a160.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyACcZh1QmrtF4riWIRITDhrMRqEGTuM_ZI',
-    appId: '1:508941561573:ios:65883ebf575d00155cee0c',
-    messagingSenderId: '508941561573',
-    projectId: 'baimarket-a123a',
-    storageBucket: 'baimarket-a123a.firebasestorage.app',
+    apiKey: 'AIzaSyDpJOdgtv68E7izULAH4F-5sUVhNjVJgJc',
+    appId: '1:746121233690:ios:884183aa99bb49c7ab58a3',
+    messagingSenderId: '746121233690',
+    projectId: 'hibai-8a160',
+    storageBucket: 'hibai-8a160.firebasestorage.app',
     iosBundleId: 'com.baimarket.baimarket',
   );
 

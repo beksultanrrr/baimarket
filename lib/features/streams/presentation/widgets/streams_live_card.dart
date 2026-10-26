@@ -1,124 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/widgets/show_image.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../live/data/livekit_config.dart';
-import '../../../live/data/models/live_stream_info.dart';
-import '../../../live/presentation/cubit/live_cubit.dart';
-import 'streams_avatar_list.dart';
+import '../../../live/data/models/live_media.dart';
+import '../../../live/data/models/live_stream_model.dart';
 
-/// Большая «Сейчас в эфире» карточка из Figma frame 10.
+/// Карточка идущего эфира в ленте.
 ///
-/// Размер 350×440 (как в макете). Если передан активный [live] — данные
-/// и бэйдж берутся из него и карточка кликабельна (→ `/live`). Иначе —
-/// чисто визуальная заглушка по моку (для каналов на которые подписан
-/// пользователь, но эфир не идёт).
+/// Всё, что приходит из `GET /live`, уже в статусе LIVE, поэтому отдельного
+/// «не в эфире» состояния у карточки нет — раньше оно существовало только
+/// потому, что список был выдуманным.
+///
+/// Видео здесь не играет: каждая играющая карточка — отдельное WebRTC-
+/// подключение и отдельный тарифицируемый участник комнаты, плюс свой запрос
+/// токена. Показываем обложку, а видео начинается после тапа.
 class StreamsLiveCard extends StatelessWidget {
-  const StreamsLiveCard({
-    super.key,
-    required this.stream,
-    this.live,
-  });
+  const StreamsLiveCard({super.key, required this.stream});
 
-  final StreamInfo stream;
-  final LiveState? live;
-
-  bool get _isLive =>
-      (live?.isStreamActive == true && live?.streamInfo != null) ||
-      kLiveKitDevEnabled;
-
-  /// Метаданные эфира: из стейта, либо синтетические dev-данные.
-  LiveStreamInfo? get _info =>
-      live?.streamInfo ?? (kLiveKitDevEnabled ? devLiveStreamInfo() : null);
+  final LiveStreamModel stream;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final info = _info;
-    final title = _isLive ? (info?.channelTitle ?? stream.name) : stream.name;
-    final desc = _isLive
-        ? '${l10n.viewersLabel}: ${live?.viewerCount ?? 0}'
-        : stream.description;
-    final image = _isLive
-        ? (info?.thumbnailUrl ?? stream.imageUrl)
-        : stream.imageUrl;
+    final image = liveCoverImageUrl(stream);
+    final title = (stream.title ?? '').trim();
+    final sellerName = stream.seller?.displayName ?? '';
 
-    final card = Container(
-      height: 440,
-      width: double.infinity,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          if (image.isNotEmpty)
-            Image.network(
-              image,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => const SizedBox.shrink(),
-            ),
-          // Низ-к-верху лёгкое затемнение для контраста подписи.
-          Positioned.fill(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0.5, 1.0],
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.55),
-                  ],
+    return GestureDetector(
+      onTap: () => context.push('/live/${stream.id}', extra: stream),
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 440,
+        width: double.infinity,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // У только что начатого эфира нет ни обложки, ни закреплённого
+            // товара — тогда остаётся брендовая заглушка и заголовок поверх.
+            NetworkImageWidget(url: image, dark: true, solidFallback: true),
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.5, 1.0],
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.55),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (_isLive) ...[
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   _OnAirBadge(label: l10n.onAirNow),
                   const SizedBox(height: 10),
+                  Text(
+                    title.isNotEmpty ? title : sellerName,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontFamily: 'Gilroy',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      height: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    '${l10n.viewersLabel}: ${stream.viewerCount}',
+                    style: const TextStyle(
+                      fontFamily: 'Gilroy',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      height: 1.2,
+                    ),
+                  ),
                 ],
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontFamily: 'Gilroy',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                    height: 1.2,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  desc,
-                  style: const TextStyle(
-                    fontFamily: 'Gilroy',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                    height: 1.2,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-
-    if (!_isLive) return card;
-    return GestureDetector(
-      onTap: () => context.push('/live'),
-      behavior: HitTestBehavior.opaque,
-      child: card,
     );
   }
 }

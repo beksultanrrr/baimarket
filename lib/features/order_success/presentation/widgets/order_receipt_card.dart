@@ -29,8 +29,31 @@ class _ReceiptBody extends StatelessWidget {
   final OrderSuccessArgs args;
   final AppLocalizations l10n;
 
+  /// Зачёркнутая цена ТОВАРОВ. `args.oldTotal` исторически считался вместе
+  /// с доставкой (в него закладывалась константа 900), а `itemsTotal` — без
+  /// неё, поэтому сравнивать их напрямую нельзя: «экономия» уехала бы на
+  /// цену доставки. Приводим обе величины к одной базе — к товарам:
+  /// до скидки товары стоили `itemsTotal + savings`.
+  int? get _oldItemsTotal {
+    if (args.savings > 0) return args.itemsTotal + args.savings;
+    final old = args.oldTotal;
+    if (old == null) return null;
+    // Подстраховка на случай, если скидку не прокинули: снимаем доставку,
+    // чтобы всё равно сравнивать товары с товарами.
+    final oldItems = old - args.deliveryPrice;
+    return oldItems > args.itemsTotal ? oldItems : null;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Разбивку показываем, только когда доставка реально стоит денег:
+    // у старых заказов и у заказов без способа доставки deliveryPrice == 0.
+    final deliveryPrice = args.deliveryPrice;
+    final showDelivery = deliveryPrice > 0;
+    // Трек-номер обычно ещё не известен (заказ только оформлен) — тогда
+    // строки просто нет.
+    final trackingNumber = args.trackingNumber?.trim() ?? '';
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -57,8 +80,23 @@ class _ReceiptBody extends StatelessWidget {
         const SizedBox(height: 18),
         _ReceiptRow(
           label: l10n.receiptItemsLabel,
-          child: _PriceWithOld(current: args.itemsTotal, old: args.oldTotal),
+          child: _PriceWithOld(current: args.itemsTotal, old: _oldItemsTotal),
         ),
+        if (showDelivery) ...[
+          const SizedBox(height: 10),
+          _ReceiptRow(
+            label: '${l10n.delivery}:',
+            child: Text(
+              formatTenge(deliveryPrice),
+              style: const TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
         const SizedBox(height: 10),
         _ReceiptRow(
           label: l10n.receiptSavedLabel,
@@ -85,6 +123,32 @@ class _ReceiptBody extends StatelessWidget {
             ),
           ),
         ),
+        // Итог: товары + доставка. Сумму не пересчитываем по корзине —
+        // обе величины приехали из заказа.
+        if (showDelivery) ...[
+          const SizedBox(height: 6),
+          const _DottedDivider(),
+          const SizedBox(height: 12),
+          _ReceiptRow(
+            label: '${l10n.amountToPay}:',
+            labelStyle: const TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+            child: Text(
+              formatTenge(args.itemsTotal + deliveryPrice),
+              style: const TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+        ],
 
         _ReceiptRow(
           label: l10n.receiptPaymentMethodLabel,
@@ -93,6 +157,21 @@ class _ReceiptBody extends StatelessWidget {
                   ? const SizedBox.shrink()
                   : BrandLogo(brand: args.cardBrand!, size: const Size(48, 32)),
         ),
+        if (trackingNumber.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _ReceiptRow(
+            label: '${l10n.trackingNumberLabel}:',
+            child: Text(
+              trackingNumber,
+              style: const TextStyle(
+                fontFamily: 'Gilroy',
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
       ],
     );
   }
@@ -229,9 +308,13 @@ class _DottedDivider extends StatelessWidget {
 }
 
 class _ReceiptRow extends StatelessWidget {
-  const _ReceiptRow({required this.label, required this.child});
+  const _ReceiptRow({required this.label, required this.child, this.labelStyle});
   final String label;
   final Widget child;
+
+  /// Переопределение стиля подписи — нужно итоговой строке «К оплате»,
+  /// она темнее и жирнее остальных.
+  final TextStyle? labelStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -241,12 +324,13 @@ class _ReceiptRow extends StatelessWidget {
         Expanded(
           child: Text(
             label,
-            style: const TextStyle(
-              fontFamily: 'Gilroy',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Color(0xFF8C8C8C),
-            ),
+            style: labelStyle ??
+                const TextStyle(
+                  fontFamily: 'Gilroy',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Color(0xFF8C8C8C),
+                ),
           ),
         ),
         child,

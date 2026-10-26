@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../../core/app_pallete.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'section_card.dart';
 
 class RecipientSection extends StatefulWidget {
@@ -9,12 +10,16 @@ class RecipientSection extends StatefulWidget {
     super.key,
     required this.nameController,
     required this.phoneController,
-    this.nameLabel = 'Кто встретит (ФИО)',
+    this.nameLabel,
   });
 
   final TextEditingController nameController;
   final TextEditingController phoneController;
-  final String nameLabel;
+
+  /// `null` — берём подпись «кто встретит курьера» из локализации.
+  /// Константу-строку по умолчанию поставить нельзя: перевод зависит от
+  /// `context`, которого в конструкторе нет.
+  final String? nameLabel;
 
   @override
   State<RecipientSection> createState() => _RecipientSectionState();
@@ -41,20 +46,21 @@ class _RecipientSectionState extends State<RecipientSection> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return SectionCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _FieldLabel(widget.nameLabel),
+          _FieldLabel(widget.nameLabel ?? l10n.recipientNameCourierLabel),
           const SizedBox(height: 8),
           _PlainField(
             controller: widget.nameController,
-            hint: 'Например: Асылбек Даниял',
+            hint: l10n.recipientNameHint,
             keyboardType: TextInputType.name,
             autofillHints: const [AutofillHints.name],
           ),
           const SizedBox(height: 16),
-          const _FieldLabel('Телефон номер'),
+          _FieldLabel(l10n.phoneNumber),
           const SizedBox(height: 8),
           _PhoneField(controller: widget.phoneController),
         ],

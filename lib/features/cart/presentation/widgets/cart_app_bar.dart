@@ -5,9 +5,18 @@ import '../../../../core/app_pallete.dart';
 import '../../../../l10n/app_localizations.dart';
 
 class CartAppBar extends StatelessWidget {
-  const CartAppBar({super.key, this.onClear, this.showClear = false});
+  const CartAppBar({
+    super.key,
+    this.onClear,
+    this.showClear = false,
+    this.isBusy = false,
+  });
   final VoidCallback? onClear;
   final bool showClear;
+
+  /// Летит `DELETE /cart` — вместо надписи показываем индикатор, повторный тап
+  /// невозможен.
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +63,18 @@ class CartAppBar extends StatelessWidget {
                 right: 8,
                 child: CupertinoButton(
                   padding: EdgeInsets.zero,
-                  onPressed: onClear,
-                  child: Text(
-                    l10n.clearCart,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: mainColorLight,
-                      fontFamily: 'Gilroy',
-                    ),
-                  ),
+                  onPressed: isBusy ? null : onClear,
+                  child: isBusy
+                      ? const CupertinoActivityIndicator(radius: 9)
+                      : Text(
+                          l10n.clearCart,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: mainColorLight,
+                            fontFamily: 'Gilroy',
+                          ),
+                        ),
                 ),
               ),
           ],

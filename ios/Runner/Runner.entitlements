@@ -4,5 +4,17 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<!-- Universal Links. iOS тянет /.well-known/apple-app-site-association с
+	     каждого домена и пускает в приложение только те пути, что там описаны.
+	     Оба домена обслуживает один сайт Firebase Hosting.
+
+	     ВАЖНО: возможность Associated Domains должна быть включена у App ID
+	     com.baimarket.baimarket в Apple Developer Portal, иначе профиль
+	     подписи не соберётся. -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:hibai-8a160.web.app</string>
+		<string>applinks:hibai-8a160.firebaseapp.com</string>
+	</array>
 </dict>
 </plist>

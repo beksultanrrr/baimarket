@@ -1,0 +1,22 @@
+{
+  "android": {
+    "latestVersion": "1.0.7",
+    "minSupportedVersion": "1.0.0",
+    "storeUrl": "https://play.google.com/store/apps/details?id=com.baimarket.baimarket",
+    "releaseNotes": {
+      "ru": "Ускорили каталог и починили мелочи в корзине.",
+      "en": "Faster catalog and a few cart fixes.",
+      "kk": "Каталогты жылдамдаттық және себеттегі ұсақ ақауларды түзеттік."
+    }
+  },
+  "ios": {
+    "latestVersion": "1.0.7",
+    "minSupportedVersion": "1.0.0",
+    "storeUrl": "https://apps.apple.com/app/id6744940738",
+    "releaseNotes": {
+      "ru": "Ускорили каталог и починили мелочи в корзине.",
+      "en": "Faster catalog and a few cart fixes.",
+      "kk": "Каталогты жылдамдаттық және себеттегі ұсақ ақауларды түзеттік."
+    }
+  }
+}

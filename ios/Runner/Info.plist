@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Bai Market</string>
+		<string>hibai</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>bai_market</string>
+		<string>hibai</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -24,10 +24,35 @@
 		<string>????</string>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<!-- Отдаёт входящую ссылку (Universal Link или baimarket://) встроенному
+		     роутеру Flutter, а тот — GoRouter'у. Без ключа FlutterAppDelegate
+		     проглатывает continueUserActivity и путь теряется. -->
+		<key>FlutterDeepLinkingEnabled</key>
+		<true/>
+		<!-- Запасная кастомная схема: WebView внутри мессенджеров не всегда
+		     умеет Universal Links, и кнопка «Открыть в приложении» на
+		     странице-заглушке уходит именно сюда. -->
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>com.baimarket.baimarket</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>baimarket</string>
+				</array>
+			</dict>
+		</array>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>whatsapp</string>
 			<string>tg</string>
+			<!-- Кнопка «Обновить» открывает App Store нативной схемой: без
+			     записи здесь canOpenURL вернёт false и url_launcher откатится
+			     на https-ссылку через Safari. -->
+			<string>itms-apps</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
@@ -39,6 +64,9 @@
 		<array>
 			<string>fetch</string>
 			<string>remote-notification</string>
+			<!-- Без audio iOS сносит аудио-юнит WebRTC при уходе в фон и вместе
+			     с ним рвёт всю комнату LiveKit. voip намеренно не добавляем. -->
+			<string>audio</string>
 		</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
@@ -66,7 +94,7 @@
 		<key>FirebaseAppDelegateProxyEnabled</key>
 		<false/>
 		<key>NSCameraUsageDescription</key>
-		<string>This app needs camera access to take profile photos</string>
+		<string>This app needs camera access so you can broadcast live streams and take profile photos</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>This app needs microphone access for live streams</string>
 		<key>NSPhotoLibraryUsageDescription</key>

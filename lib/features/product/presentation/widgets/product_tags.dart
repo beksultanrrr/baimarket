@@ -18,25 +18,27 @@ class ProductTags extends StatelessWidget {
       for (final col in model.collections!) {
         final name = TranslationUtils.getLocalizedDescription(
           context: context,
-          descriptionKz: (col['nameKz'] ?? col['name'] ?? '') as String,
-          descriptionRu: (col['nameRu'] ?? col['name'] ?? '') as String,
-          descriptionEn: (col['nameEn'] ?? col['name'] ?? '') as String,
+          descriptionKz: col.nameKz ?? col.name ?? '',
+          descriptionRu: col.nameRu ?? col.name ?? '',
+          descriptionEn: col.nameEn ?? col.name ?? '',
         );
         if (name.isNotEmpty) {
-          tags.add(_TagData(name, mainColorLight));
+          tags.add(_TagData(name, darkButtonColor, Colors.white));
         }
       }
     }
 
     // Add "New" tag if deal is true
     if (model.deal == true) {
-      tags.add(_TagData(l10n.newTag, const Color(0xFF2ECC71)));
+      tags.add(_TagData(l10n.newTag, accentSoftPink, darkButtonColor));
     }
 
     // Add discount tag
     if (model.oldPrice != null && model.price != null && model.oldPrice! > model.price!) {
       final discount = ((1 - model.price! / model.oldPrice!) * 100).round();
-      tags.add(_TagData('${l10n.discount} -$discount%', const Color(0xFFFF6B6B)));
+      tags.add(
+        _TagData('${l10n.discount} -$discount%', accentSoftGreen, darkButtonColor),
+      );
     }
 
     if (tags.isEmpty) return const SizedBox.shrink();
@@ -51,8 +53,9 @@ class ProductTags extends StatelessWidget {
 
 class _TagData {
   final String label;
-  final Color color;
-  _TagData(this.label, this.color);
+  final Color background;
+  final Color foreground;
+  _TagData(this.label, this.background, this.foreground);
 }
 
 class _TagChip extends StatelessWidget {
@@ -62,17 +65,17 @@ class _TagChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
-        color: tag.color,
-        borderRadius: BorderRadius.circular(6),
+        color: tag.background,
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Text(
         tag.label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 10,
           fontWeight: FontWeight.w500,
-          color: Colors.white,
+          color: tag.foreground,
           fontFamily: 'Gilroy',
         ),
       ),

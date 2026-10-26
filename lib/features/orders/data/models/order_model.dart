@@ -8,7 +8,7 @@ part 'order_model.g.dart';
 class OrderModel {
   final int id;
   final int userId;
-  final int? trackingNumber;
+  final String? trackingNumber;
   final String? paymentUrl;
   final String? paymentTypeSlug;
   final String? paymentFailureReason;
@@ -17,12 +17,18 @@ class OrderModel {
   final Map<String, dynamic>? deliveryInfo;
   final String createdAt;
   final int totalPrice;
+
+  /// Цена доставки. Бэк всегда присылает ключ (@default(0), NOT NULL),
+  /// дефолт оставлен страховкой — без него null уронил бы парсинг.
+  @JsonKey(defaultValue: 0)
+  final int deliveryPrice;
   final String? status;
 
   OrderModel({
     required this.id,
     required this.cartItems,
     required this.totalPrice,
+    required this.deliveryPrice,
     required this.userId,
     required this.deliveryInfo,
     required this.createdAt,

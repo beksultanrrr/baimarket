@@ -59,7 +59,7 @@ class _CartRecommendedState extends State<CartRecommended> {
               ),
               const SizedBox(height: 14),
               SizedBox(
-                height: 339,
+                height: 342,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   padding: const EdgeInsets.symmetric(horizontal: 16),

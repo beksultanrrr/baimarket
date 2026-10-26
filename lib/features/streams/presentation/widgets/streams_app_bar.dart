@@ -20,42 +20,23 @@ class StreamsAppBar extends StatelessWidget {
           children: [
             Text(
               l10n.streams,
-              style: const TextStyle(
-                fontFamily: 'Gilroy',
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-                letterSpacing: 0.48,
-                height: 1.0,
-              ),
+              style: const TextStyle(fontFamily: 'Gilroy', fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white, letterSpacing: 0.48, height: 1.0),
             ),
             const Spacer(),
             CupertinoButton(
               padding: EdgeInsets.zero,
               minimumSize: const Size(30, 30),
-              onPressed:
-                  onSearch ?? () => context.push('/search'),
-              child: SvgPicture.asset(
-                'assets/icons/stream/search.svg',
-                width: 24,
-                height: 24,
-                colorFilter: const ColorFilter.mode(
-                  Colors.white,
-                  BlendMode.srcIn,
-                ),
-              ),
+              onPressed: onSearch ?? () => context.push('/search'),
+              child: SvgPicture.asset('assets/icons/stream/search.svg', width: 24, height: 24, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
             ),
-            const SizedBox(width: 4),
+            // const SizedBox(width: 20),
             // Plus-кнопка как на главной — тот же SVG, тот же роут.
-            CupertinoButton(
-              padding: EdgeInsets.zero,
-              minimumSize: const Size(30, 30),
-              onPressed: () => context.push('/plus'),
-              child: SvgPicture.asset(
-                'assets/icons/main_page/main_page_plus_icon.svg',
-                height: 30,
-              ),
-            ),
+            // CupertinoButton(
+            //   padding: EdgeInsets.zero,
+            //   minimumSize: const Size(30, 30),
+            //   onPressed: () => context.push('/plus'),
+            //   child: SvgPicture.asset('assets/icons/main_page/main_page_plus_icon.svg', height: 30),
+            // ),
           ],
         ),
       ),

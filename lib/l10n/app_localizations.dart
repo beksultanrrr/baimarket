@@ -100,7 +100,7 @@ abstract class AppLocalizations {
   /// The name of the application
   ///
   /// In en, this message translates to:
-  /// **'Bai Market'**
+  /// **'hibai'**
   String get appName;
 
   /// Welcome message
@@ -622,13 +622,13 @@ abstract class AppLocalizations {
   /// Sort by price ascending option
   ///
   /// In en, this message translates to:
-  /// **'Cheapest first'**
+  /// **'Cheap'**
   String get sortCheap;
 
   /// Sort by price descending option
   ///
   /// In en, this message translates to:
-  /// **'Most expensive first'**
+  /// **'Expensive'**
   String get sortExpensive;
 
   /// My data page title
@@ -799,10 +799,10 @@ abstract class AppLocalizations {
   /// **'On the Way'**
   String get orderStatusWay;
 
-  /// Order status: Ready for Pickup
+  /// Order status: the parcel is waiting at the Kazpost branch
   ///
   /// In en, this message translates to:
-  /// **'Ready for Pickup'**
+  /// **'Waiting at branch'**
   String get orderStatusPickup;
 
   /// Order status: Delivered
@@ -919,11 +919,89 @@ abstract class AppLocalizations {
   /// **'Get Code'**
   String get getCode;
 
+  /// Consent notice under the checkout button. Must contain orderConsentOffer and orderConsentPrivacy verbatim — they are turned into tappable links
+  ///
+  /// In en, this message translates to:
+  /// **'By tapping the button, you agree to the Offer terms and the Privacy policy'**
+  String get orderConsentText;
+
+  /// Public offer link label inside orderConsentText
+  ///
+  /// In en, this message translates to:
+  /// **'Offer terms'**
+  String get orderConsentOffer;
+
+  /// Privacy policy link label inside orderConsentText
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy policy'**
+  String get orderConsentPrivacy;
+
   /// Terms and privacy policy text
   ///
   /// In en, this message translates to:
   /// **'By clicking the \"Get Code\" button, you accept the terms of use and privacy policy'**
   String get termsAndPrivacy;
+
+  /// User agreement link label inside termsAndPrivacy
+  ///
+  /// In en, this message translates to:
+  /// **'terms of use'**
+  String get userAgreement;
+
+  /// Privacy policy link label inside termsAndPrivacy
+  ///
+  /// In en, this message translates to:
+  /// **'privacy policy'**
+  String get privacyPolicy;
+
+  /// PIN lock screen greeting
+  ///
+  /// In en, this message translates to:
+  /// **'Hello!'**
+  String get greeting;
+
+  /// Can't log in link on the PIN lock screen
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t log in?'**
+  String get cannotLogin;
+
+  /// Create PIN screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Create a PIN'**
+  String get createPinTitle;
+
+  /// Confirm PIN screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat the PIN'**
+  String get confirmPinTitle;
+
+  /// Error when the two entered PINs differ
+  ///
+  /// In en, this message translates to:
+  /// **'PINs don\'t match'**
+  String get pinMismatch;
+
+  /// Toast shown when the entered PIN is incorrect
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong PIN code'**
+  String get wrongPin;
+
+  /// Registration / fill-in-details screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in your details'**
+  String get fillInData;
+
+  /// City picker placeholder
+  ///
+  /// In en, this message translates to:
+  /// **'Select city'**
+  String get selectCity;
 
   /// Enter verification code title
   ///
@@ -1063,6 +1141,18 @@ abstract class AppLocalizations {
   /// **'Contacts'**
   String get contacts;
 
+  /// No description provided for @sattyJuldyz.
+  ///
+  /// In en, this message translates to:
+  /// **'Satty juldyz'**
+  String get sattyJuldyz;
+
+  /// No description provided for @techSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Tech support'**
+  String get techSupport;
+
   /// No description provided for @inviteFriends.
   ///
   /// In en, this message translates to:
@@ -1177,6 +1267,180 @@ abstract class AppLocalizations {
   /// **'You don\'t have any saved addresses yet'**
   String get noSavedAddresses;
 
+  /// No description provided for @deliveryAddressesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery addresses'**
+  String get deliveryAddressesTitle;
+
+  /// No description provided for @deliveryAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery address'**
+  String get deliveryAddressTitle;
+
+  /// No description provided for @addMoreAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Add another address'**
+  String get addMoreAddress;
+
+  /// No description provided for @saveAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Save address'**
+  String get saveAddress;
+
+  /// No description provided for @newAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'New address'**
+  String get newAddress;
+
+  /// Saved address card title
+  ///
+  /// In en, this message translates to:
+  /// **'“{label}” address'**
+  String addressLabeled(String label);
+
+  /// No description provided for @addressAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Address added'**
+  String get addressAdded;
+
+  /// No description provided for @addressDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Address deleted'**
+  String get addressDeleted;
+
+  /// No description provided for @deleteAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete address?'**
+  String get deleteAddressTitle;
+
+  /// No description provided for @deleteAddressMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this address?'**
+  String get deleteAddressMessage;
+
+  /// No description provided for @deleteAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get deleteAction;
+
+  /// No description provided for @addAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get addAction;
+
+  /// No description provided for @savingInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get savingInProgress;
+
+  /// No description provided for @addressNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address name'**
+  String get addressNameLabel;
+
+  /// No description provided for @addressNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: Home or work'**
+  String get addressNameHint;
+
+  /// No description provided for @enterAddressName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a name'**
+  String get enterAddressName;
+
+  /// No description provided for @streetAndHouseHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Street and house number'**
+  String get streetAndHouseHint;
+
+  /// No description provided for @enterAddressLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the address'**
+  String get enterAddressLine;
+
+  /// No description provided for @apartmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Apartment'**
+  String get apartmentLabel;
+
+  /// No description provided for @entranceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Entrance'**
+  String get entranceLabel;
+
+  /// No description provided for @floorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Floor'**
+  String get floorLabel;
+
+  /// No description provided for @postalIndexHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Index'**
+  String get postalIndexHint;
+
+  /// No description provided for @enterPostalIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the index'**
+  String get enterPostalIndex;
+
+  /// No description provided for @selectCityFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a city'**
+  String get selectCityFirst;
+
+  /// No description provided for @selectRegion.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a region'**
+  String get selectRegion;
+
+  /// No description provided for @addressesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load addresses'**
+  String get addressesLoadError;
+
+  /// No description provided for @addressAddError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add the address'**
+  String get addressAddError;
+
+  /// No description provided for @addressSaveError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save the address'**
+  String get addressSaveError;
+
+  /// No description provided for @addressDeleteError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete the address'**
+  String get addressDeleteError;
+
   /// No description provided for @addAddress.
   ///
   /// In en, this message translates to:
@@ -1200,6 +1464,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Whole catalog'**
   String get wholeCatalogTab;
+
+  /// Catalog grid tile label. \n is a hard line break tuned to the 110pt tile
+  ///
+  /// In en, this message translates to:
+  /// **'Raffle\nproducts'**
+  String get catalogTileLottery;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Discounted\nproducts'**
+  String get catalogTileDiscount;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Makeup'**
+  String get catalogTileMakeup;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Perfumery'**
+  String get catalogTilePerfume;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Body\ncare'**
+  String get catalogTileBodyCare;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Hair\ncare'**
+  String get catalogTileHairCare;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Cosmetic\nsets'**
+  String get catalogTileCosmeticSets;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Face\ncare'**
+  String get catalogTileFaceCare;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Sun\ncare'**
+  String get catalogTileSunCare;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Personal\nhygiene'**
+  String get catalogTileHygiene;
+
+  /// Catalog grid tile label
+  ///
+  /// In en, this message translates to:
+  /// **'Oral\ncare'**
+  String get catalogTileOralCare;
 
   /// Fallback title when a raffle has no seller
   ///
@@ -1818,6 +2148,774 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pay again'**
   String get kaspiPayAgain;
+
+  /// No description provided for @sellerRaffleDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Raffle: {date}'**
+  String sellerRaffleDate(String date);
+
+  /// No description provided for @sellersEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No shops yet'**
+  String get sellersEmpty;
+
+  /// No description provided for @sellersLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load shops'**
+  String get sellersLoadError;
+
+  /// No description provided for @sellerProductsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'This shop has no products yet'**
+  String get sellerProductsEmpty;
+
+  /// No description provided for @sellerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'This shop is no longer available'**
+  String get sellerNotFound;
+
+  /// No description provided for @sellerStoreTitleFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'Shop'**
+  String get sellerStoreTitleFallback;
+
+  /// No description provided for @ticketsBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count}'**
+  String ticketsBadge(String count);
+
+  /// No description provided for @productUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'This product is no longer available'**
+  String get productUnavailable;
+
+  /// No description provided for @plusPriceActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Plus price'**
+  String get plusPriceActive;
+
+  /// No description provided for @reviewsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get reviewsEmpty;
+
+  /// No description provided for @reviewAnonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Buyer'**
+  String get reviewAnonymous;
+
+  /// No description provided for @reviewComposerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your impressions of the product'**
+  String get reviewComposerHint;
+
+  /// No description provided for @reviewSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get reviewSend;
+
+  /// No description provided for @reviewSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks for your review!'**
+  String get reviewSubmitted;
+
+  /// No description provided for @reviewAlreadyLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'You have already reviewed this product'**
+  String get reviewAlreadyLeft;
+
+  /// No description provided for @reviewTooManyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many attempts. Try again in a minute'**
+  String get reviewTooManyRequests;
+
+  /// No description provided for @reviewSubmitError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t send the review'**
+  String get reviewSubmitError;
+
+  /// No description provided for @reviewsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load reviews'**
+  String get reviewsLoadError;
+
+  /// No description provided for @shareProductMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} — {price}. Found it in Bai Market.'**
+  String shareProductMessage(String name, String price);
+
+  /// No description provided for @shareProductMessageNoPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}. Found it in Bai Market.'**
+  String shareProductMessageNoPrice(String name);
+
+  /// No description provided for @cartItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{{count} item} other{{count} items}}'**
+  String cartItemsCount(int count);
+
+  /// No description provided for @checkoutShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkoutShort;
+
+  /// No description provided for @cartClearFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t clear the cart'**
+  String get cartClearFailed;
+
+  /// No description provided for @cartNotEnoughStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough items in stock'**
+  String get cartNotEnoughStock;
+
+  /// No description provided for @cartQuantityChangeFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t change the quantity — the item was removed, please add it again'**
+  String get cartQuantityChangeFailed;
+
+  /// No description provided for @cartItemRemovedByStock.
+  ///
+  /// In en, this message translates to:
+  /// **'«{name}» is out of stock and was removed'**
+  String cartItemRemovedByStock(String name);
+
+  /// No description provided for @cartItemPriceChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'«{name}» price has changed'**
+  String cartItemPriceChanged(String name);
+
+  /// No description provided for @cartItemQuantityReduced.
+  ///
+  /// In en, this message translates to:
+  /// **'«{name}» quantity reduced to {quantity}'**
+  String cartItemQuantityReduced(String name, String quantity);
+
+  /// No description provided for @cartRefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t refresh the cart'**
+  String get cartRefreshFailed;
+
+  /// No description provided for @pushPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get pushPermissionTitle;
+
+  /// No description provided for @pushPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll let you know about order status, raffle results and new arrivals'**
+  String get pushPermissionBody;
+
+  /// No description provided for @pushPermissionAllow.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get pushPermissionAllow;
+
+  /// No description provided for @pushPermissionLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get pushPermissionLater;
+
+  /// No description provided for @pushDisabledBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are turned off'**
+  String get pushDisabledBanner;
+
+  /// No description provided for @pushEnableAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on'**
+  String get pushEnableAction;
+
+  /// No description provided for @notificationsSettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsSettingsTitle;
+
+  /// No description provided for @notificationsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get notificationsOn;
+
+  /// No description provided for @notificationsOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get notificationsOff;
+
+  /// No description provided for @notificationsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load notifications'**
+  String get notificationsLoadError;
+
+  /// No description provided for @commonCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get commonCancel;
+
+  /// No description provided for @addedToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to cart'**
+  String get addedToCart;
+
+  /// No description provided for @outOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get outOfStock;
+
+  /// No description provided for @pullToRefreshHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down to refresh'**
+  String get pullToRefreshHint;
+
+  /// No description provided for @streamsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load streams'**
+  String get streamsLoadError;
+
+  /// No description provided for @streamsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No streams right now'**
+  String get streamsEmptyTitle;
+
+  /// No description provided for @streamsEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Come back a bit later'**
+  String get streamsEmptySubtitle;
+
+  /// No description provided for @streamErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get streamErrorGeneric;
+
+  /// No description provided for @streamEndedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The stream has ended'**
+  String get streamEndedTitle;
+
+  /// No description provided for @streamEndedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick another broadcast'**
+  String get streamEndedSubtitle;
+
+  /// No description provided for @streamReconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get streamReconnecting;
+
+  /// No description provided for @streamConnectionLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection lost'**
+  String get streamConnectionLost;
+
+  /// No description provided for @streamRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get streamRetry;
+
+  /// No description provided for @streamChatTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'The message is too long'**
+  String get streamChatTooLong;
+
+  /// No description provided for @streamChatRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many messages, slow down'**
+  String get streamChatRateLimited;
+
+  /// No description provided for @streamProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Products in the stream'**
+  String get streamProductsTitle;
+
+  /// No description provided for @streamGiftsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gifts'**
+  String get streamGiftsTitle;
+
+  /// No description provided for @pinnedProductBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'On air'**
+  String get pinnedProductBadge;
+
+  /// No description provided for @streamHostCameraPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'The host paused the camera'**
+  String get streamHostCameraPaused;
+
+  /// No description provided for @streamStartCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Go live'**
+  String get streamStartCta;
+
+  /// No description provided for @streamResumeCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to your stream'**
+  String get streamResumeCta;
+
+  /// No description provided for @startStreamSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New stream'**
+  String get startStreamSheetTitle;
+
+  /// No description provided for @startStreamTitleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stream title'**
+  String get startStreamTitleLabel;
+
+  /// No description provided for @startStreamTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: Sneaker sale'**
+  String get startStreamTitleHint;
+
+  /// No description provided for @startStreamTitleTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a longer title'**
+  String get startStreamTitleTooShort;
+
+  /// No description provided for @startStreamSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startStreamSubmit;
+
+  /// No description provided for @startStreamFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t start the stream'**
+  String get startStreamFailed;
+
+  /// No description provided for @streamAccessDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Streams are unavailable, please contact support'**
+  String get streamAccessDenied;
+
+  /// No description provided for @streamAlreadyLiveTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a live stream'**
+  String get streamAlreadyLiveTitle;
+
+  /// No description provided for @streamAlreadyLiveMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You can only run one stream at a time. End the current one or open it as a viewer.'**
+  String get streamAlreadyLiveMessage;
+
+  /// No description provided for @streamEndAndRestart.
+  ///
+  /// In en, this message translates to:
+  /// **'End and restart'**
+  String get streamEndAndRestart;
+
+  /// No description provided for @streamOpenAsViewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Open as viewer'**
+  String get streamOpenAsViewer;
+
+  /// No description provided for @streamStopConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'End the stream?'**
+  String get streamStopConfirmTitle;
+
+  /// No description provided for @streamStopConfirmAction.
+  ///
+  /// In en, this message translates to:
+  /// **'End'**
+  String get streamStopConfirmAction;
+
+  /// No description provided for @hostCameraPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera is off'**
+  String get hostCameraPaused;
+
+  /// No description provided for @hostPickProductTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show a product'**
+  String get hostPickProductTitle;
+
+  /// No description provided for @hostPinProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get hostPinProduct;
+
+  /// No description provided for @hostUnpinProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the product'**
+  String get hostUnpinProduct;
+
+  /// No description provided for @hostNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No products yet'**
+  String get hostNoProducts;
+
+  /// No description provided for @hostPermissionDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera and microphone are required'**
+  String get hostPermissionDeniedTitle;
+
+  /// No description provided for @hostPermissionDeniedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow access in settings to go live.'**
+  String get hostPermissionDeniedMessage;
+
+  /// No description provided for @hostOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get hostOpenSettings;
+
+  /// No description provided for @storyOpenProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'View product'**
+  String get storyOpenProduct;
+
+  /// Remaining stock badge on a product card
+  ///
+  /// In en, this message translates to:
+  /// **'{count} left!'**
+  String stockLeft(int count);
+
+  /// Title of the blocking force-update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateForcedTitle;
+
+  /// Body of the blocking force-update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'This version of Bai Market is no longer supported. Install the latest one to keep shopping — it only takes a moment.'**
+  String get updateForcedMessage;
+
+  /// Title of the dismissible recommended-update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is out'**
+  String get updateRecommendedTitle;
+
+  /// Body of the dismissible recommended-update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'We have added new features and ironed out a few things. Updating takes less than a minute.'**
+  String get updateRecommendedMessage;
+
+  /// Primary button of the update dialog — opens the store
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateNow;
+
+  /// Secondary button of the recommended-update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// Heading above the release notes in the update dialog
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s new'**
+  String get updateWhatsNew;
+
+  /// App version line at the bottom of the profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String profileVersion(String version);
+
+  /// Badge showing the version available in the store
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String updateVersionBadge(String version);
+
+  /// Shown when neither the native store scheme nor the web link opens
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the app store. Please try again.'**
+  String get updateStoreOpenFailed;
+
+  /// No description provided for @checkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkoutTitle;
+
+  /// No description provided for @savedAddressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved address'**
+  String get savedAddressTitle;
+
+  /// Checkout: the city comes only from the address book, so a saved address must be picked before the order can be created
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a saved address'**
+  String get selectSavedAddressFirst;
+
+  /// No description provided for @chooseAction.
+  ///
+  /// In en, this message translates to:
+  /// **'choose'**
+  String get chooseAction;
+
+  /// No description provided for @changeAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get changeAction;
+
+  /// No description provided for @addressFallbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addressFallbackTitle;
+
+  /// Pickup branch line with its address
+  ///
+  /// In en, this message translates to:
+  /// **'Branch: {address}'**
+  String branchWithAddress(String address);
+
+  /// No description provided for @cityFallbackName.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get cityFallbackName;
+
+  /// No description provided for @recipientNameCourierLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who will meet the courier (full name)'**
+  String get recipientNameCourierLabel;
+
+  /// No description provided for @recipientNamePickupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Who will pick up the order (full name)'**
+  String get recipientNamePickupLabel;
+
+  /// No description provided for @recipientNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For example: Asylbek Daniyal'**
+  String get recipientNameHint;
+
+  /// No description provided for @processingAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing…'**
+  String get processingAction;
+
+  /// No description provided for @kaspiPaymentStartFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the Kaspi payment'**
+  String get kaspiPaymentStartFailed;
+
+  /// No description provided for @paymentMethodsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment methods'**
+  String get paymentMethodsTitle;
+
+  /// No description provided for @deliveryByCourier.
+  ///
+  /// In en, this message translates to:
+  /// **'By courier'**
+  String get deliveryByCourier;
+
+  /// No description provided for @deliverySelfPickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Self-pickup'**
+  String get deliverySelfPickup;
+
+  /// No description provided for @filialDistrict.
+  ///
+  /// In en, this message translates to:
+  /// **'Bostandyk district'**
+  String get filialDistrict;
+
+  /// No description provided for @filialAddressLine.
+  ///
+  /// In en, this message translates to:
+  /// **'112 Abdully Rozybakieva street'**
+  String get filialAddressLine;
+
+  /// Delivery method: to the Kazpost branch
+  ///
+  /// In en, this message translates to:
+  /// **'To a Kazpost branch'**
+  String get deliveryMethodBranch;
+
+  /// Hint under the branch delivery method
+  ///
+  /// In en, this message translates to:
+  /// **'You will pick it up at the post office with the tracking number'**
+  String get deliveryMethodBranchHint;
+
+  /// Delivery method: courier to the door
+  ///
+  /// In en, this message translates to:
+  /// **'To the door'**
+  String get deliveryMethodDoor;
+
+  /// Hint under the door delivery method
+  ///
+  /// In en, this message translates to:
+  /// **'A Go Post courier will bring it home'**
+  String get deliveryMethodDoorHint;
+
+  /// Label of the house and apartment field on checkout
+  ///
+  /// In en, this message translates to:
+  /// **'House and apartment'**
+  String get houseNumberLabel;
+
+  /// Hint of the house and apartment field on checkout
+  ///
+  /// In en, this message translates to:
+  /// **'150, apt. 25'**
+  String get houseNumberHint;
+
+  /// Validation message for the empty house and apartment field
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the house and apartment'**
+  String get enterHouseNumber;
+
+  /// Validation message for a postal code that is not 6 digits long
+  ///
+  /// In en, this message translates to:
+  /// **'The postal code must be 6 digits'**
+  String get postalCodeInvalidLength;
+
+  /// Placeholder shown instead of the delivery price until the postal code is filled in
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the postal code to see the delivery price'**
+  String get enterPostalForDelivery;
+
+  /// Placeholder shown instead of the delivery price when the postal code is ready but no saved address is picked yet — the quote needs the city too
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an address to see the delivery price'**
+  String get selectAddressForDelivery;
+
+  /// Shown while the delivery price is being requested
+  ///
+  /// In en, this message translates to:
+  /// **'Calculating…'**
+  String get deliveryPriceCalculating;
+
+  /// Label of the total amount: items plus delivery
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get amountToPay;
+
+  /// Label of the Kazpost tracking number
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking number'**
+  String get trackingNumberLabel;
+
+  /// Action that opens the parcel tracking page on post.kz
+  ///
+  /// In en, this message translates to:
+  /// **'Track on post.kz'**
+  String get trackOnKazpost;
+
+  /// Snackbar shown after the tracking number is copied
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking number copied'**
+  String get trackingNumberCopied;
+
+  /// Explanation of the PICKUP order status
+  ///
+  /// In en, this message translates to:
+  /// **'The parcel is waiting at the Kazpost branch. Pick it up with the tracking number'**
+  String get orderStatusPickupKazpostMessage;
+
+  /// Shown when the delivery price request failed
+  ///
+  /// In en, this message translates to:
+  /// **'Could not calculate the delivery. Please try again'**
+  String get deliveryQuoteFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

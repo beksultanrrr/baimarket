@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/live/presentation/widgets/live_shopping_scope.dart';
 
 import '../../l10n/app_localizations.dart';
 import '../app_pallete.dart';
@@ -85,6 +86,8 @@ Future<void> _showLoginRequiredSheet(BuildContext context) async {
                   borderRadius: BorderRadius.circular(12),
                   onPressed: () {
                     Navigator.of(sheetCtx).pop();
+                    // Иначе шиты эфира остаются поверх экрана авторизации.
+                    closeLiveSheetsFrom(sheetCtx);
                     sheetCtx.go('/auth');
                   },
                   child: Text(

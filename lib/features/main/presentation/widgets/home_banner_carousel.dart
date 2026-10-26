@@ -14,12 +14,7 @@ class HomeBannerCarousel extends StatefulWidget {
 }
 
 class _HomeBannerCarouselState extends State<HomeBannerCarousel> {
-  static const _assets = [
-    'assets/images/baner1.png',
-    'assets/images/baner2.png',
-    'assets/images/baner3.png',
-  ];
-  static const _height = 350.0;
+  static const _assets = ['assets/images/baner1.png', 'assets/images/baner2.png', 'assets/images/baner3.png'];
 
   late final PageController _pageController;
   Timer? _autoSlideTimer;
@@ -42,17 +37,14 @@ class _HomeBannerCarouselState extends State<HomeBannerCarousel> {
   void _startAutoSlide() {
     _autoSlideTimer = Timer.periodic(const Duration(seconds: 5), (_) {
       if (!mounted) return;
-      _pageController.nextPage(
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-      );
+      _pageController.nextPage(duration: const Duration(milliseconds: 600), curve: Curves.easeInOut);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: _height,
+      height: MediaQuery.of(context).size.height * 0.29,
       child: Stack(
         children: [
           PageView.builder(
@@ -64,20 +56,12 @@ class _HomeBannerCarouselState extends State<HomeBannerCarousel> {
               final asset = _assets[index % _assets.length];
               return Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxWidth: double.infinity,
-                    maxHeight: _height,
-                  ),
+                  constraints: BoxConstraints(maxWidth: double.infinity, maxHeight: MediaQuery.of(context).size.height * 0.29),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.asset(
-                        asset,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: double.infinity,
-                      ),
+                      child: Image.asset(asset, fit: BoxFit.fill, width: double.infinity, height: double.infinity),
                     ),
                   ),
                 ),
@@ -97,13 +81,7 @@ class _HomeBannerCarouselState extends State<HomeBannerCarousel> {
                   margin: const EdgeInsets.symmetric(horizontal: 3),
                   width: 10,
                   height: 10,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color:
-                        _currentIndex == i
-                            ? Colors.white
-                            : Colors.white.withValues(alpha: 0.5),
-                  ),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(100), color: _currentIndex == i ? Colors.white : Colors.white.withValues(alpha: 0.5)),
                 ),
               ),
             ),

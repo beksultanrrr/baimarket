@@ -12,10 +12,9 @@ RaffleModel _$RaffleModelFromJson(Map<String, dynamic> json) => RaffleModel(
   endDate: json['endDate'] as String?,
   isActive: json['isActive'] as bool,
   createdAt: json['createdAt'] as String?,
-  seller:
-      json['seller'] == null
-          ? null
-          : SellerModel.fromJson(json['seller'] as Map<String, dynamic>),
+  seller: json['seller'] == null
+      ? null
+      : SellerModel.fromJson(json['seller'] as Map<String, dynamic>),
   gifts:
       (json['gifts'] as List<dynamic>?)
           ?.map((e) => GiftModel.fromJson(e as Map<String, dynamic>))

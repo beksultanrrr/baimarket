@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/auth/sign_out.dart';
+import '../../../../core/firebase_service.dart';
+import '../../../../core/ui/root_messenger.dart';
+import '../../../../core/urls.dart';
 import '../../../../core/widgets/app_refresh_indicator.dart';
+import '../widgets/app_version_label.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../widgets/profile_cart_banner.dart';
@@ -25,6 +30,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  /// Разрешены ли уведомления системой — подпись пункта меню. `null` пока
+  /// не проверено.
+  bool? _pushAllowed;
+
   @override
   void initState() {
     super.initState();
@@ -32,14 +41,35 @@ class _ProfilePageState extends State<ProfilePage> {
       if (!mounted) return;
       context.read<ProfileCubit>().getProfileData();
       context.read<CartCubit>().getCart();
+      _refreshPushStatus();
     });
   }
 
+  Future<void> _refreshPushStatus() async {
+    final allowed = await FirebaseMessagingService.isAllowed();
+    if (!mounted) return;
+    setState(() => _pushAllowed = allowed);
+  }
+
   Future<void> _onRefresh() async {
-    await Future.wait([
-      context.read<ProfileCubit>().getProfileData(),
-      context.read<CartCubit>().getCart(),
-    ]);
+    await Future.wait([context.read<ProfileCubit>().getProfileData(), context.read<CartCubit>().getCart(), _refreshPushStatus()]);
+  }
+
+  /// «Мои билеты» ведут во внешний кабинет Satty juldyz, а не на внутренний
+  /// экран `/tickets`. Открываем во внешнем браузере, как и остальные внешние
+  /// ссылки приложения.
+  Future<void> _openSattyJuldyz() async {
+    final l10n = AppLocalizations.of(context)!;
+    try {
+      final ok = await launchUrl(Uri.parse(sattyJuldyzLoginUrl), mode: LaunchMode.externalApplication);
+      if (ok) return;
+    } catch (_) {
+      // Открывать нечем — ниже покажем снекбар.
+    }
+    showRootSnackBar(
+      SnackBar(content: Text(l10n.failedToOpen('sz.kz')), backgroundColor: Colors.redAccent),
+      fallbackContext: mounted ? context : null,
+    );
   }
 
   @override
@@ -59,20 +89,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     Text(
                       l10n.error(''),
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                        fontFamily: 'Gilroy',
-                      ),
+                      style: const TextStyle(fontSize: 16, color: Colors.black54, fontFamily: 'Gilroy'),
                     ),
                     const SizedBox(height: 16),
                     CupertinoButton(
-                      onPressed: () =>
-                          context.read<ProfileCubit>().getProfileData(),
-                      child: Text(
-                        l10n.confirm,
-                        style: const TextStyle(fontFamily: 'Gilroy'),
-                      ),
+                      onPressed: () => context.read<ProfileCubit>().getProfileData(),
+                      child: Text(l10n.confirm, style: const TextStyle(fontFamily: 'Gilroy')),
                     ),
                   ],
                 ),
@@ -86,144 +108,126 @@ class _ProfilePageState extends State<ProfilePage> {
             body: AppRefreshIndicator(
               onRefresh: _onRefresh,
               child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics(),
-                ),
+                physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
                 child: Column(
-                children: [
-                  const ProfileHeader(),
-                  const SizedBox(height: 8),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
+                  children: [
+                    // По макету экран собран не из карточек с отступами, а из
+                    // трёх белых секций во всю ширину, разделённых серым фоном.
+                    Container(
+                      width: double.infinity,
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      child: Column(
+                        children: [
+                          const ProfileHeader(),
+                          ProfileUserCard(profile: state.profile),
+                          const ProfileCartBanner(),
+                        ],
+                      ),
                     ),
-                    child: ProfileUserCard(profile: state.profile),
-                  ),
-                  const SizedBox(height: 12),
-                  const ProfileCartBanner(),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      child: Column(
+                        children: [
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/like.svg',
+                            title: l10n.favorites,
+                            subtitle: '${state.profile.favoritesCount ?? 0} ${l10n.products}',
+                            onTap: () => context.push('/favorites'),
+                          ),
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/profile_page/ticket-star.svg',
+                            title: l10n.myTickets,
+                            subtitle: l10n.sattyJuldyz,
+                            onTap: _openSattyJuldyz,
+                          ),
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/profile_page/location-2.svg',
+                            title: l10n.myAddresses,
+                            subtitle: l10n.specifyDeliveryAddress,
+                            onTap: () => context.push('/my_address'),
+                          ),
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/profile_page/bag.svg',
+                            title: l10n.myOrders,
+                            subtitle: l10n.orderStatus,
+                            onTap: () => context.push('/orders'),
+                          ),
+                          // TODO(cards): «Мои карты» временно убраны из меню.
+                          // Экран и маршрут `/my_cards` на месте — чтобы
+                          // вернуть пункт, достаточно раскомментировать.
+                          // ProfileMenuItem(
+                          //   svgAsset: 'assets/icons/profile_page/profile_page_card.svg',
+                          //   title: l10n.myCard,
+                          //   subtitle: l10n.orderStatus,
+                          //   onTap: () => context.push('/my_cards'),
+                          //   showDivider: true,
+                          // ),
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/profile_page/headphone.svg',
+                            title: l10n.contacts,
+                            subtitle: l10n.techSupport,
+                            onTap: () {
+                              showModalBottomSheet(elevation: 0, backgroundColor: Colors.white, isScrollControlled: true, useSafeArea: true, context: context, builder: (_) => const SupportPage());
+                            },
+                          ),
+                          ProfileMenuItem(
+                            svgAsset: 'assets/icons/profile_page/headphone.svg',
+                            title: l10n.notificationsSettingsTitle,
+                            subtitle: _pushAllowed == null ? '' : (_pushAllowed! ? l10n.notificationsOn : l10n.notificationsOff),
+                            onTap: FirebaseMessagingService.openSystemSettings,
+                            // Скрытый вход в диагностику пушей — им пользуется
+                            // разработчик, обычному пользователю он не нужен.
+                            onLongPress: () => context.push('/debug/push'),
+                          ),
+                          const ProfileLanguageSelector(),
+                        ],
+                      ),
                     ),
-                    child: Column(
-                      children: [
-                        ProfileMenuItem(
-                          svgAsset: 'assets/icons/like.svg',
-                          title: l10n.favorites,
-                          subtitle:
-                              '${state.profile.favoritesCount ?? 0} ${l10n.products}',
-                          onTap: () => context.push('/favorites'),
-                          showDivider: true,
-                        ),
-                        ProfileMenuItem(
-                          svgAsset:
-                              'assets/icons/profile_page/profile_page_tickets.svg',
-                          title: l10n.myTickets,
-                          subtitle: l10n.specifyDeliveryAddress,
-                          onTap: () => context.push('/tickets'),
-                          showDivider: true,
-                        ),
-                        ProfileMenuItem(
-                          svgAsset:
-                              'assets/icons/profile_page/profile_page_location.svg',
-                          title: l10n.myAddresses,
-                          subtitle: l10n.specifyDeliveryAddress,
-                          onTap: () => context.push('/my_address'),
-                          showDivider: true,
-                        ),
-                        ProfileMenuItem(
-                          svgAsset:
-                              'assets/icons/profile_page/profile_page_orders.svg',
-                          title: l10n.myOrders,
-                          subtitle: l10n.orderStatus,
-                          onTap: () => context.push('/orders'),
-                          showDivider: true,
-                        ),
-                        ProfileMenuItem(
-                          svgAsset:
-                              'assets/icons/profile_page/profile_page_card.svg',
-                          title: l10n.myCard,
-                          subtitle: l10n.orderStatus,
-                          onTap: () => context.push('/my_cards'),
-                          showDivider: true,
-                        ),
-                        ProfileMenuItem(
-                          svgAsset:
-                              'assets/icons/profile_page/profile_page_contacts.svg',
-                          title: l10n.contacts,
-                          subtitle: l10n.orderStatus,
-                          onTap: () {
-                            showModalBottomSheet(
-                              elevation: 0,
-                              backgroundColor: Colors.white,
-                              isScrollControlled: true,
-                              useSafeArea: true,
-                              context: context,
-                              builder: (_) => const SupportPage(),
-                            );
-                          },
-                          showDivider: true,
-                        ),
-                        const ProfileLanguageSelector(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  const ProfileInviteBanner(),
-                  const SizedBox(height: 12),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
+                    const SizedBox(height: 12),
+                    const ProfileInviteBanner(),
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: CupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () => _confirmLogout(context, l10n),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 16,
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 26,
-                              height: 26,
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  'assets/icons/arrow_left.svg',
-                                  width: 22,
-                                  height: 22,
-                                  colorFilter: const ColorFilter.mode(
-                                    Color(0xFFE53935),
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
+                      child: CupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () => _confirmLogout(context, l10n),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 26,
+                                height: 26,
+                                // По макету «Выйти» оформлен как обычный пункт:
+                                // зелёная иконка и чёрная подпись, а не красный
+                                // разрушающий стиль. Подтверждение в диалоге
+                                // остаётся.
+                                child: Center(child: SvgPicture.asset('assets/icons/profile_page/logout.svg', width: 22, height: 22)),
                               ),
-                            ),
-                            const SizedBox(width: 14),
-                            Text(
-                              l10n.logout,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFFE53935),
-                                fontFamily: 'Gilroy',
+                              const SizedBox(width: 14),
+                              Text(
+                                l10n.logout,
+                                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: 'Gilroy'),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 40),
-                ],
-              ),
+                    Container(
+                      width: double.infinity,
+                      color: Colors.white,
+                      child: const Padding(
+                        padding: EdgeInsets.only(bottom: 16),
+                        child: AppVersionLabel(),
+                      ),
+                    ),
+                    const SizedBox(height: 200),
+                  ],
+                ),
               ),
             ),
           );
@@ -240,21 +244,12 @@ class _ProfilePageState extends State<ProfilePage> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text(
-          l10n.exitApp,
-          style: const TextStyle(fontFamily: 'Gilroy'),
-        ),
-        content: Text(
-          l10n.exitConfirmation,
-          style: const TextStyle(fontFamily: 'Gilroy'),
-        ),
+        title: Text(l10n.exitApp, style: const TextStyle(fontFamily: 'Gilroy')),
+        content: Text(l10n.exitConfirmation, style: const TextStyle(fontFamily: 'Gilroy')),
         actions: [
           CupertinoDialogAction(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: Text(
-              l10n.cancel,
-              style: const TextStyle(fontFamily: 'Gilroy'),
-            ),
+            child: Text(l10n.cancel, style: const TextStyle(fontFamily: 'Gilroy')),
           ),
           CupertinoDialogAction(
             isDestructiveAction: true,
@@ -262,10 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Navigator.of(ctx).pop();
               await signOutAndCleanup(context);
             },
-            child: Text(
-              l10n.logout,
-              style: const TextStyle(fontFamily: 'Gilroy'),
-            ),
+            child: Text(l10n.logout, style: const TextStyle(fontFamily: 'Gilroy')),
           ),
         ],
       ),

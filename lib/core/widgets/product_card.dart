@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../auth/auth_gate.dart';
+import '../models/collection_badge_model.dart';
 import '../urls.dart';
 import 'plus_price_badge.dart';
+import '../utils/hex_color.dart';
+import '../utils/product_mappers.dart';
 import '../utils/translation_utils.dart';
 import 'show_image.dart';
 import '../../l10n/app_localizations.dart';
@@ -15,16 +17,23 @@ import '../../features/catalog/data/models/category_product_model.dart';
 import '../../features/favorites/presentation/cubit/favorites_cubit.dart';
 import '../../features/live/presentation/widgets/live_shopping_scope.dart';
 import '../../features/main/presentation/widgets/favorite_button.dart';
-import '../../features/product/data/models/product_model.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
   final CategoryProductModel product;
 
-  bool _hasSlug(String slug) =>
-      product.collections?.any((c) => c['slug'] == slug) ?? false;
+  CollectionBadgeModel? _bySlug(String slug) {
+    final list = product.collections;
+    if (list == null) return null;
+    for (final c in list) {
+      if (c.slug == slug) return c;
+    }
+    return null;
+  }
 
+  /// Реальная скидка — это `oldPrice` против `price`. `collections[].discount`
+  /// это лейбл и на цену не влияет, поэтому в расчёт не идёт.
   int? get _discountPercent {
     final old = product.oldPrice;
     final cur = product.price;
@@ -35,21 +44,20 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final plusPrice =
-        product.price != null ? (product.price! * 0.7).round() : null;
-    final isNew = _hasSlug('new');
-    final discount = _discountPercent;
+    final plusPrice = product.plusPrice;
+    final newCollection = _bySlug('new');
+    final discountCollection = _bySlug('discount');
+    // Процент на бейдже: сначала лейбл из админки, иначе считаем из цен.
+    final discount = discountCollection?.discount ?? _discountPercent;
+    final tickets = product.ticketsCount ?? 0;
+    // Зачёркнутая цена показывается только если она реально больше текущей.
+    final hasOldPrice = _discountPercent != null;
     final isOutOfStock =
         product.inStockCount != null && product.inStockCount == 0;
 
     return GestureDetector(
       onTap: () {
-        final scope = LiveShoppingScope.maybeOf(context);
-        if (scope != null) {
-          scope.openProduct(context, product.id);
-        } else {
-          context.push('/product/${product.id}');
-        }
+        liveAwarePush(context, '/product/${product.id}');
       },
       child: Container(
         decoration: BoxDecoration(
@@ -95,7 +103,8 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Badge — bottom left
+                // Badge — bottom left. Цвет берём из админки (`collections[].color`),
+                // при отсутствии — исторический градиент.
                 if (discount != null)
                   Positioned(
                     bottom: 0,
@@ -103,13 +112,26 @@ class ProductCard extends StatelessWidget {
                     child: _DiscountBadge(
                       label: l10n.discount,
                       percent: discount,
+                      color: colorFromHex(discountCollection?.color),
                     ),
                   )
-                else if (isNew)
+                else if (newCollection != null)
                   Positioned(
                     bottom: 0,
                     left: 5,
-                    child: _NewBadge(label: l10n.newTag),
+                    child: _NewBadge(
+                      label: l10n.newTag,
+                      color: colorFromHex(newCollection.color),
+                    ),
+                  ),
+                // Билеты за покупку одной единицы — bottom right.
+                if (tickets > 0)
+                  Positioned(
+                    bottom: 0,
+                    right: 5,
+                    child: _TicketsBadge(
+                      label: l10n.ticketsBadge(tickets.toString()),
+                    ),
                   ),
               ],
             ),
@@ -133,7 +155,7 @@ class ProductCard extends StatelessWidget {
                           fontFamily: GoogleFonts.inter().fontFamily,
                         ),
                       ),
-                      if (product.oldPrice != null) ...[
+                      if (hasOldPrice) ...[
                         const SizedBox(width: 6),
                         Text(
                           l10n.oldPrice(product.oldPrice.toString()),
@@ -190,20 +212,30 @@ class ProductCard extends StatelessWidget {
 // ── Badge widgets ───────────────────────────────────────────────────────────
 
 class _DiscountBadge extends StatelessWidget {
-  const _DiscountBadge({required this.label, required this.percent});
+  const _DiscountBadge({
+    required this.label,
+    required this.percent,
+    this.color,
+  });
   final String label;
   final int percent;
+
+  /// Цвет из `collections[].color`. `null` — исторический градиент.
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFF73030), Color(0xFFFF6D6D)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        color: color,
+        gradient: color != null
+            ? null
+            : const LinearGradient(
+                colors: [Color(0xFFF73030), Color(0xFFFF6D6D)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Row(
@@ -235,19 +267,25 @@ class _DiscountBadge extends StatelessWidget {
 }
 
 class _NewBadge extends StatelessWidget {
-  const _NewBadge({required this.label});
+  const _NewBadge({required this.label, this.color});
   final String label;
+
+  /// Цвет из `collections[].color`. `null` — исторический градиент.
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF28A673), Color(0xFF47CD97)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
+        color: color,
+        gradient: color != null
+            ? null
+            : const LinearGradient(
+                colors: [Color(0xFF28A673), Color(0xFF47CD97)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Text(
@@ -263,6 +301,42 @@ class _NewBadge extends StatelessWidget {
   }
 }
 
+/// «+2 🎟» — билеты за покупку ОДНОЙ единицы товара.
+///
+/// На checkout билеты считаются по сумме всей корзины, поэтому итог в заказе
+/// может отличаться от суммы бейджей — это ожидаемо, бейдж рекламный.
+class _TicketsBadge extends StatelessWidget {
+  const _TicketsBadge({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.92),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF00520B),
+              fontFamily: 'Gilroy',
+            ),
+          ),
+          const SizedBox(width: 3),
+          SvgPicture.asset('assets/icons/green_ticket.svg', height: 11),
+        ],
+      ),
+    );
+  }
+}
+
 // ── Cart button ─────────────────────────────────────────────────────────────
 
 class _CartButton extends StatelessWidget {
@@ -270,14 +344,13 @@ class _CartButton extends StatelessWidget {
   final CategoryProductModel product;
   final bool isOutOfStock;
 
-  static const _teal = Color(0xFF21C7A3);
   static const _buttonStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w600,
-    color: Colors.white,
+    color: Color(0xFF00520B),
     fontFamily: 'Gilroy',
   );
-  static const _radius = BorderRadius.all(Radius.circular(7));
+  static const _radius = BorderRadius.all(Radius.circular(15));
 
   @override
   Widget build(BuildContext context) {
@@ -360,13 +433,13 @@ class _CartButton extends StatelessWidget {
                           context,
                           pendingAction: () => cubit.addCart(
                             id: product.id,
-                            product: _toProductModel(product),
+                            product: productModelFrom(product),
                           ),
                         );
                         if (!ok) return;
                         cubit.addCart(
                           id: product.id,
-                          product: _toProductModel(product),
+                          product: productModelFrom(product),
                         );
                       },
                       child: SvgPicture.asset(
@@ -388,35 +461,20 @@ class _CartButton extends StatelessWidget {
               context,
               pendingAction: () => cubit.addCart(
                 id: product.id,
-                product: _toProductModel(product),
+                product: productModelFrom(product),
               ),
             );
             if (!ok) return;
             cubit.addCart(
               id: product.id,
-              product: _toProductModel(product),
+              product: productModelFrom(product),
             );
           },
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 7),
-            decoration: const BoxDecoration(color: _teal, borderRadius: _radius),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/cart.svg',
-                  width: 18,
-                  height: 18,
-                  colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Text(l10n.buy, style: _buttonStyle),
-              ],
-            ),
+            decoration: const BoxDecoration(color: Color(0xFF71CD32), borderRadius: _radius),
+            child: Center(child: Text(l10n.buy, style: _buttonStyle)),
           ),
         );
       },
@@ -424,24 +482,3 @@ class _CartButton extends StatelessWidget {
   }
 }
 
-// ── Helpers ─────────────────────────────────────────────────────────────────
-
-ProductModel _toProductModel(CategoryProductModel c) => ProductModel(
-      id: c.id,
-      name: c.name,
-      price: c.price,
-      oldPrice: c.oldPrice,
-      photoUrls: c.photoUrls,
-      descriptionKz: c.descriptionKz,
-      descriptionRu: c.descriptionRu,
-      descriptionEn: c.descriptionEn,
-      collections: c.collections,
-      inStockCount: c.inStockCount,
-      isInFavorite: c.isInFavorite,
-      deal: null,
-      detailedDescriptionEn: null,
-      detailedDescriptionKz: null,
-      detailedDescriptionRu: null,
-      weightInKg: null,
-      product: null,
-    );

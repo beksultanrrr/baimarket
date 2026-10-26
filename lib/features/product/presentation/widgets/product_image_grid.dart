@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import '../../../../core/urls.dart';
 import '../../../../core/widgets/show_image.dart';
 import '../../data/models/product_model.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
+
+/// Высота блока с фото товара. Квадратное фото рисуется внутри по contain,
+/// т.е. 210×210 по центру — ровно как в макете (бутылёк 200pt в высоту).
+const double _kHeroHeight = 210;
 
 class ProductImageGrid extends StatelessWidget {
   const ProductImageGrid({super.key, required this.model});
   final ProductModel model;
 
   void _openFullScreen(BuildContext context, int index) {
-    Navigator.push(
+    // Внутри эфира сырой Navigator.push лёг бы поверх стрима нетегированным
+    // маршрутом и обрубил бы closeAll всему, что открыто выше.
+    liveAwarePushWidget(
       context,
-      MaterialPageRoute(
-        builder: (_) => _FullScreenViewer(
-          urls: model.photoUrls ?? [],
-          initialIndex: index,
-        ),
+      _FullScreenViewer(
+        urls: model.photoUrls ?? [],
+        initialIndex: index,
       ),
     );
   }
@@ -24,32 +29,24 @@ class ProductImageGrid extends StatelessWidget {
     final urls = model.photoUrls ?? [];
     if (urls.isEmpty) {
       return const SizedBox(
-        height: 260,
+        height: _kHeroHeight,
         child: Center(child: Icon(Icons.image_not_supported, size: 48, color: Colors.grey)),
       );
     }
 
     return SizedBox(
-      height: 260,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
+      height: _kHeroHeight,
+      child: PageView.builder(
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: urls.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () => _openFullScreen(context, index),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: SizedBox(
-                width: 260,
-                height: 260,
-                child: NetworkImageWidget(
-                  url: '$imgUrl${urls[index]}',
-                  fit: BoxFit.cover,
-                ),
-              ),
+            child: NetworkImageWidget(
+              url: '$imgUrl${urls[index]}',
+              fit: BoxFit.contain,
+              fallbackColor: Colors.white,
+              fallbackScale: 1,
             ),
           );
         },

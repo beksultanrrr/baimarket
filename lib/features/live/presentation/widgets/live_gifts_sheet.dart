@@ -1,41 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/utils/product_mappers.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../catalog/data/models/category_product_model.dart';
-import '../../../collection/presentation/cubit/collection_cubit.dart';
 import '../../../favorites/presentation/cubit/favorites_cubit.dart';
+import '../../../seller/data/datasources/seller_services.dart';
+import '../../../seller/domain/repositories/seller_repository.dart';
+import '../../live_flags.dart';
 import 'live_gift_card.dart';
 import 'live_product_card.dart';
 import 'live_shopping_scope.dart';
 import 'sheet_close_button.dart';
 
-/// Bottom-sheet с двумя секциями: «Товары в стриме» (frame 37) и
-/// «Подарки» (frame 38). Открывается по тапу на красную кнопку «Подарок»
-/// в шапке стрима.
+/// Шит «Товары в стриме».
+///
+/// Раньше сюда приезжала захардкоженная коллекция `new`, никак не связанная с
+/// эфиром. Теперь это витрина продавца, который сейчас вещает, — `GET
+/// /seller/:id/models`, та же ручка, что и у экрана магазина.
 Future<void> showLiveGiftsSheet({
   required BuildContext context,
-  required CollectionCubit collectionCubit,
+  required int sellerId,
+  int? pinnedProductId,
 }) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.4),
-    builder: (sheetCtx) {
-      return BlocProvider.value(
-        value: collectionCubit,
-        child: const _LiveGiftsSheet(),
-      );
-    },
+    // Тег обязателен: без него closeAll упирается в этот шит и молча
+    // перестаёт работать для всего, что открыто над ним.
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
+    builder: (sheetCtx) => _LiveProductsSheet(
+      sellerId: sellerId,
+      pinnedProductId: pinnedProductId,
+    ),
   );
 }
 
-class _LiveGiftsSheet extends StatelessWidget {
-  const _LiveGiftsSheet();
+class _LiveProductsSheet extends StatefulWidget {
+  const _LiveProductsSheet({required this.sellerId, this.pinnedProductId});
+
+  final int sellerId;
+  final int? pinnedProductId;
+
+  @override
+  State<_LiveProductsSheet> createState() => _LiveProductsSheetState();
+}
+
+class _LiveProductsSheetState extends State<_LiveProductsSheet> {
+  final SellerRepository _repo = SellerServices();
+
+  List<CategoryProductModel>? _products;
+  bool _failed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final result = await _repo.getSellerProducts(
+      id: widget.sellerId,
+      sort: 'popular',
+      limit: 20,
+      skip: 0,
+    );
+    if (!mounted) return;
+    switch (result) {
+      case SellerProductsLoaded(:final data):
+        setState(() => _products = _pinnedFirst(data.models));
+      case SellerProductsNotFound():
+      case SellerProductsFailed():
+        setState(() => _failed = true);
+    }
+  }
+
+  /// Закреплённый товар — первым: иначе шит и оверлей поверх видео
+  /// показывают разное, и непонятно, о чём именно говорит продавец.
+  List<CategoryProductModel> _pinnedFirst(List<CategoryProductModel> models) {
+    final pinnedId = widget.pinnedProductId;
+    if (pinnedId == null) return models;
+    final index = models.indexWhere((m) => m.id == pinnedId);
+    if (index <= 0) return models;
+    final copy = [...models];
+    copy.insert(0, copy.removeAt(index));
+    return copy;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return DraggableScrollableSheet(
       initialChildSize: 0.85,
       minChildSize: 0.5,
@@ -68,10 +125,10 @@ class _LiveGiftsSheet extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(4, 4, 4, 16),
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Text(
-                              'Товары в стриме',
-                              style: TextStyle(
+                              l10n.streamProductsTitle,
+                              style: const TextStyle(
                                 fontFamily: 'Gilroy',
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -80,43 +137,31 @@ class _LiveGiftsSheet extends StatelessWidget {
                             ),
                           ),
                           SheetCloseButton(
-                              onPressed: () => Navigator.pop(context)),
+                            onPressed: () => Navigator.pop(context),
+                          ),
                         ],
                       ),
                     ),
-                    BlocBuilder<CollectionCubit, CollectionState>(
-                      builder: (context, cs) {
-                        if (cs is CollectionGot &&
-                            cs.collection.products.isNotEmpty) {
-                          return _ProductGrid(products: cs.collection.products);
-                        }
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 32),
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                    _body(l10n),
+                    if (kLiveGiftsEnabled) ...[
+                      const SizedBox(height: 28),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
+                        child: Text(
+                          l10n.streamGiftsTitle,
+                          style: const TextStyle(
+                            fontFamily: 'Gilroy',
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
                           ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 28),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(4, 0, 4, 16),
-                      child: Text(
-                        'Подарки',
-                        style: TextStyle(
-                          fontFamily: 'Gilroy',
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
                         ),
                       ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4),
-                      child: LiveGiftCard(
-                        title: 'Бриллиант\n5 адамға',
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4),
+                        child: LiveGiftCard(title: ''),
                       ),
-                    ),
+                    ],
                   ],
                 ),
               ),
@@ -124,6 +169,46 @@ class _LiveGiftsSheet extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _body(AppLocalizations l10n) {
+    if (_failed) {
+      return _Message(text: l10n.streamsLoadError);
+    }
+    final products = _products;
+    if (products == null) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 32),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    if (products.isEmpty) {
+      return _Message(text: l10n.hostNoProducts);
+    }
+    return _ProductGrid(products: products);
+  }
+}
+
+class _Message extends StatelessWidget {
+  const _Message({required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32),
+      child: Center(
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontFamily: 'Gilroy',
+            fontSize: 14,
+            color: Color(0xFF8C8C8C),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -137,15 +222,16 @@ class _ProductGrid extends StatelessWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 0.46,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 0.52,
       ),
       itemCount: products.length,
-      itemBuilder: (context, i) {
-        final p = products[i];
+      itemBuilder: (context, index) {
+        final p = products[index];
         return BlocBuilder<FavoritesCubit, FavoritesState>(
           builder: (context, fs) {
             final isFav = _isFavorite(p, fs) || p.isInFavorite;
@@ -162,9 +248,7 @@ class _ProductGrid extends StatelessWidget {
   }
 
   bool _isFavorite(CategoryProductModel p, FavoritesState s) {
-    if (s is FavoritesGot) {
-      return s.favorites.any((f) => f.id == p.id);
-    }
+    if (s is FavoritesGot) return s.favorites.any((f) => f.id == p.id);
     return false;
   }
 
@@ -183,11 +267,12 @@ class _ProductGrid extends StatelessWidget {
 
   void _addToCart(BuildContext context, CategoryProductModel p) {
     final cart = context.read<CartCubit>();
-    // Грабим контекст рут-навигатора, потому что после Navigator.pop
-    // локальный контекст внутри gifts-sheet будет размонтирован, а
-    // открыть cart-sheet нужно поверх /live.
+    // Контекст рут-навигатора берём заранее: после Navigator.pop локальный
+    // контекст шита размонтирован, а корзину надо открыть поверх эфира.
     final rootContext = Navigator.of(context, rootNavigator: true).context;
-    cart.addCart(id: p.id);
+    // product: обязателен — без него позиции нет в локальном кэше и счётчик
+    // корзины не шевельнётся до ответа сервера.
+    cart.addCart(id: p.id, product: productModelFrom(p));
     Navigator.pop(context);
     openLiveCartSheet(rootContext);
   }

@@ -1,656 +1,871 @@
 {
-    "@@locale": "ru",
-    "appName": "Bai Market",
-    "welcome": "Добро пожаловать",
-    "login": "Войти",
-    "register": "Регистрация",
-    "email": "Электронная почта",
-    "password": "Пароль",
-    "confirmPassword": "Подтвердите пароль",
-    "forgotPassword": "Забыли пароль?",
-    "dontHaveAccount": "Нет аккаунта?",
-    "alreadyHaveAccount": "Уже есть аккаунт?",
-    "phone": "Телефон",
-    "name": "Имя",
-    "surname": "Фамилия",
-    "cart": "Корзина",
-    "favorites": "Избранное",
-    "profile": "Профиль",
-    "settings": "Настройки",
-    "language": "Язык",
-    "notifications": "Уведомления",
-    "logout": "Выйти",
-    "catalog": "Каталог",
-    "@catalog": {
-        "description": "Catalog menu item text"
-    },
-    "freeDelivery": "Бесплатная доставка",
-    "enterName": "Введите имя",
-    "enterSurname": "Введите фамилию",
-    "phoneNumber": "Номер телефона",
-    "enterPhone": "Введите номер телефона",
-    "enterEmail": "Введите email",
-    "enterPassword": "Введите пароль",
-    "enterConfirmPassword": "Подтвердите пароль",
-    "deliveryAddress": "Адрес доставки:",
-    "addressExample": "Например: Ауезова 34",
-    "postalCode": "Почтовый индекс",
-    "cardNumber": "Номер карты",
-    "enterCardNumber": "Введите номер карты",
-    "cvv": "CVV",
-    "whoWillMeet": "Кто встретит курьера?",
-    "nameExample": "Например: Абзал",
-    "tryAgain": "Попробовать снова",
-    "emptyCityList": "Список городов пуст",
-    "productName": "Название продукта",
-    "productDescription": "Описание продукта",
-    "@productDescription": {
-        "description": "Default product description text"
-    },
-    "homeAddress": "Адрес \"Дом\"",
-    "@homeAddress": {
-        "description": "Home address label"
-    },
-    "postalIndex": "индекс: {index}",
-    "myAddresses": "Мои адреса",
-    "orderHistory": "История заказов",
-    "@orderHistory": {
-        "description": "Order history page title"
-    },
-    "orderDetails": "О заказе",
-    "@orderDetails": {
-        "description": "Order details page title"
-    },
-    "support": "Поддержка",
-    "@support": {
-        "description": "Support section title"
-    },
-    "supportTitle": "Поддержка",
-    "@supportTitle": {
-        "description": "Support page title"
-    },
-    "supportWorkingHours": "Мы готовы помогать вам\nкаждый день с 9:00 - 22:00",
-    "@supportWorkingHours": {
-        "description": "Support working hours message"
-    },
-    "whatsapp": "WhatsApp",
-    "@whatsapp": {
-        "description": "WhatsApp button text"
-    },
-    "telegram": "Telegram",
-    "@telegram": {
-        "description": "Telegram button text"
-    },
-    "faq": "Часто задаваемые вопросы",
-    "@faq": {
-        "description": "FAQ section title"
-    },
-    "failedToOpen": "Не удалось открыть {url}",
-    "@failedToOpen": {
-        "description": "Error message when URL cannot be opened",
-        "placeholders": {
-            "url": {
-                "type": "String"
-            }
-        }
-    },
-    "exitApp": "Выход из приложения",
-    "exitConfirmation": "Вы действительно хотите выйти из приложения?",
-    "cancel": "Отмена",
-    "notInStock": "Нет в продаже",
-    "@notInStock": {
-        "description": "Product out of stock label"
-    },
-    "youWon": "Вы победили!",
-    "@youWon": {
-        "description": "Prize won message"
-    },
-    "weWillContactYou": "Скоро свяжемся с вами",
-    "@weWillContactYou": {
-        "description": "Contact message after winning"
-    },
-    "index": "Индекс: {index}",
-    "@index": {
-        "description": "Postal index text with placeholder",
-        "placeholders": {
-            "index": {
-                "type": "String"
-            }
-        }
-    },
-    "price": "{price} ₸",
-    "@price": {
-        "description": "Price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "oldPrice": "{price} ₸",
-    "@oldPrice": {
-        "description": "Old price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "productDescriptionShort": "Обеспечивает легкость и комфорт в макияжа весь...",
-    "home": "Главная",
-    "products": "товаров",
-    "@products": {
-        "description": "Products count text"
-    },
-    "more": "Подробнее",
-    "in_sale": "В продаже",
-    "not_in_sale": "Нет в продаже",
-    "purchases": "Покупку",
-    "orderAgain": "Заказать снова",
-    "myPrizes": "Мои призы",
-    "noPrizes": "Нет призов",
-    "cartEmpty": "В корзине пусто",
-    "addedItemsWillAppearHere": "Добавленные товары будут\nотображаться тут",
-    "goToShopping": "К покупкам",
-    "proceedToCheckout": "Перейти к оформлению",
-    "pricePerItem": "{price} тг/шт",
-    "@pricePerItem": {
-        "description": "Price per item text",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "cannotAddMore": "Больше нельзя добавить. Это максимум.",
-    "prize_goods": "Призовые товары",
-    "number_of_tickets": "Номер для участия в Акции",
-    "tickets": "билеты",
-    "description": "Описание",
-    "@description": {
-        "description": "Product description section title"
-    },
-    "addToCart": "В корзину",
-    "@addToCart": {
-        "description": "Add to cart button text"
-    },
-    "productOutOfStock": "Товара нет в наличии!",
-    "@productOutOfStock": {
-        "description": "Product out of stock message"
-    },
-    "productAddedToCart": "Товар успешно сохранен в корзине!",
-    "@productAddedToCart": {
-        "description": "Product added to cart success message"
-    },
-    "goToCart": "В корзину",
-    "@goToCart": {
-        "description": "Go to cart button text"
-    },
-    "showFirst": "Вначале показывать",
-    "@showFirst": {
-        "description": "Sorting modal title"
-    },
-    "sortPopular": "Популярное",
-    "@sortPopular": {
-        "description": "Sort by popularity option"
-    },
-    "sortCheap": "Сначала дешевые",
-    "@sortCheap": {
-        "description": "Sort by price ascending option"
-    },
-    "sortExpensive": "Сначала дорогие",
-    "@sortExpensive": {
-        "description": "Sort by price descending option"
-    },
-    "myData": "Мои данные",
-    "@myData": {
-        "description": "My data page title"
-    },
-    "save": "Сохранить",
-    "@save": {
-        "description": "Save button text"
-    },
-    "deleteAccount": "Удалить аккаунт",
-    "@deleteAccount": {
-        "description": "Delete account button text"
-    },
-    "fillAllFields": "Пожалуйста, заполните все поля",
-    "@fillAllFields": {
-        "description": "Validation message for empty fields"
-    },
-    "profileUpdateError": "Ошибка при обновлении профиля: {message}",
-    "@profileUpdateError": {
-        "description": "Profile update error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "error": "Ошибка: {message}",
-    "@error": {
-        "description": "Generic error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "errorTitle": "Ошибка",
-    "@errorTitle": {
-        "description": "Error title for snackbar"
-    },
-    "success": "Успех!",
-    "@success": {
-        "description": "Success title for snackbar"
-    },
-    "faqTicketAfterPayment": "Как выдается номерок после оплаты?",
-    "@faqTicketAfterPayment": {
-        "description": "FAQ question about ticket issuance"
-    },
-    "faqTicketAfterPaymentAnswer": "После оплаты номерок выдается автоматически. Вы можете увидеть его в разделе Мой профиль.",
-    "@faqTicketAfterPaymentAnswer": {
-        "description": "FAQ answer about ticket issuance"
-    },
-    "faqDeliveryMethod": "Как осуществляется доставка?",
-    "@faqDeliveryMethod": {
-        "description": "FAQ question about delivery method"
-    },
-    "faqDeliveryMethodAnswer": "Доставка осуществляется через КазПочту. Вы получите уведомление, когда заказ будет отправлен.",
-    "@faqDeliveryMethodAnswer": {
-        "description": "FAQ answer about delivery method"
-    },
-    "faqDeliveryTime": "Сколько времени занимает доставка?",
-    "@faqDeliveryTime": {
-        "description": "FAQ question about delivery time"
-    },
-    "faqDeliveryTimeAnswer": "Обычно доставка занимает от 3 до 7 рабочих дней, в зависимости от вашего региона.",
-    "@faqDeliveryTimeAnswer": {
-        "description": "FAQ answer about delivery time"
-    },
-    "faqCancelOrder": "Можно ли отменить заказ после оплаты?",
-    "@faqCancelOrder": {
-        "description": "FAQ question about order cancellation"
-    },
-    "faqCancelOrderAnswer": "Да, вы можете отменить заказ до момента отправки. Для этого свяжитесь с нашей поддержкой.",
-    "@faqCancelOrderAnswer": {
-        "description": "FAQ answer about order cancellation"
-    },
-    "faqTrackOrder": "Как отследить мой заказ?",
-    "@faqTrackOrder": {
-        "description": "FAQ question about order tracking"
-    },
-    "faqTrackOrderAnswer": "После отправки вы получите трек-номер. Вы можете отследить посылку на сайте КазПочты или в разделе Мои заказы.",
-    "@faqTrackOrderAnswer": {
-        "description": "FAQ answer about order tracking"
-    },
-    "@deliveryAddress": {
-        "description": "Delivery address label"
-    },
-    "noData": "Нет данных",
-    "@noData": {
-        "description": "No data available message"
-    },
-    "recipient": "Получатель:",
-    "@recipient": {
-        "description": "Recipient label"
-    },
-    "noName": "Нет имени",
-    "@noName": {
-        "description": "No name available message"
-    },
-    "noPhone": "Нет номера телефона",
-    "@noPhone": {
-        "description": "No phone number available message"
-    },
-    "deliveryDate": "Дата доставки:",
-    "@deliveryDate": {
-        "description": "Delivery date label"
-    },
-    "orderId": "ID Заказа: {id}",
-    "@orderId": {
-        "description": "Order ID text with placeholder",
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "orderStatusPaymentPending": "Ожидает оплаты",
-    "@orderStatusPaymentPending": {
-        "description": "Order status: Payment Pending"
-    },
-    "orderStatusProcessing": "Формируется",
-    "@orderStatusProcessing": {
-        "description": "Order status: Processing"
-    },
-    "orderStatusWay": "В пути",
-    "@orderStatusWay": {
-        "description": "Order status: On the Way"
-    },
-    "orderStatusPickup": "Готов к выдаче",
-    "@orderStatusPickup": {
-        "description": "Order status: Ready for Pickup"
-    },
-    "orderStatusDelivered": "Доставлен",
-    "@orderStatusDelivered": {
-        "description": "Order status: Delivered"
-    },
-    "orderStatusCanceled": "Отменен",
-    "@orderStatusCanceled": {
-        "description": "Order status: Canceled"
-    },
-    "orderStatusAssembling": "Собирается",
-    "@orderStatusAssembling": {
-        "description": "Order status: Assembling"
-    },
-    "orderStatusAbandoned": "Отменен",
-    "@orderStatusAbandoned": {
-        "description": "Order status: Abandoned"
-    },
-    "orderStatusPaymentFailed": "Ошибка оплаты",
-    "@orderStatusPaymentFailed": {
-        "description": "Order status: Payment Failed"
-    },
-    "orderProcessingMessage": "Ваши товары забронированы, заказ в обработке. Вам придет уведомление, когда заказ будет передан на сборку",
-    "@orderProcessingMessage": {
-        "description": "Order processing status message"
-    },
-    "ticketsWillBeAwarded": "Будет начислено билетов",
-    "@ticketsWillBeAwarded": {
-        "description": "Tickets award message"
-    },
-    "totalAmount": "Общая сумма",
-    "@totalAmount": {
-        "description": "Total amount label"
-    },
-    "items": "Товары",
-    "@items": {
-        "description": "Items label"
-    },
-    "discount": "Скидка",
-    "@discount": {
-        "description": "Discount label"
-    },
-    "promotionalNumbers": "Акционные номера",
-    "@promotionalNumbers": {
-        "description": "Promotional numbers label"
-    },
-    "delivery": "Доставка",
-    "@delivery": {
-        "description": "Delivery label"
-    },
-    "free": "Бесплатно",
-    "@free": {
-        "description": "Free delivery text"
-    },
-    "total": "Итого",
-    "@total": {
-        "description": "Total label"
-    },
-    "paid": "Оплачен",
-    "@paid": {
-        "description": "Paid status"
-    },
-    "unpaid": "Не оплачен",
-    "@unpaid": {
-        "description": "Unpaid status"
-    },
-    "enterPhoneNumber": "Введите \nномер телефона",
-    "@enterPhoneNumber": {
-        "description": "Phone number input title"
-    },
-    "weWillSendSms": "Отправим СМС с кодом подтверждения",
-    "@weWillSendSms": {
-        "description": "SMS verification message"
-    },
-    "getCode": "Получить код",
-    "@getCode": {
-        "description": "Get verification code button"
-    },
-    "termsAndPrivacy": "Нажимая на кнопку \"Получить код\", вы принимаете пользовательское соглашение и политику конфиденциальности",
-    "@termsAndPrivacy": {
-        "description": "Terms and privacy policy text"
-    },
-    "enterCode": "Введите код",
-    "@enterCode": {
-        "description": "Enter verification code title"
-    },
-    "sentToNumber": "Отправили его на номер \n+7 {phoneNumber}",
-    "@sentToNumber": {
-        "description": "SMS sent confirmation message",
-        "placeholders": {
-            "phoneNumber": {
-                "type": "String"
-            }
-        }
-    },
-    "signIn": "Войти",
-    "@signIn": {
-        "description": "Sign in button text"
-    },
-    "market": "Маркет",
-    "streams": "Эфиры",
-    "orders": "Заказы",
-    "searchHomeHint": "Что вы искали?",
-    "all": "Все",
-    "plusPrice": "Plus пен алсаңыз",
-    "sellerOrders": "{count} заказа",
-    "@sellerOrders": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "reviews": "Отзывы",
-    "reviewsCount": "{count} отзывы",
-    "@reviewsCount": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "readAll": "Читать все",
-    "relatedProducts": "Еще может подойти",
-    "buy": "Купить",
-    "newTag": "Новинка",
-    "hitTag": "Хит",
-    "myTickets": "Мой билеты",
-    "specifyDeliveryAddress": "Укажите адрес доставки",
-    "myOrders": "Мои заказы",
-    "orderStatus": "Статус заказы",
-    "myCard": "Мой карта",
-    "contacts": "Контакты",
-    "inviteFriends": "Приглашайте друзей",
-    "goToPayment": "Перейти в оплате",
-    "clearCart": "Очистить",
-    "youSaved": "Вы экономили",
-    "recommended": "Рекомендуем",
-    "notAvailable": "Нет в наличии",
-    "defaultDescription": "Высококачественный продукт, разработанный для ежедневного ухода. Тщательно подобранные компоненты обеспечивают эффективный результат. Подходит для всех типов кожи. Рекомендован специалистами.",
-    "liveNow": "Сейчас в эфире",
-    "otpSubtitle": "Мы отправили 4 значный код\nна ваш телефон",
-    "resendCode": "Отправить код повторно",
-    "confirm": "Подтвердить",
-    "continueAction": "Продолжить",
-    "notificationCategoryPurchase": "Покупка",
-    "notificationCategoryDelivery": "Доставка",
-    "notificationCategoryStream": "Эфиры",
-    "notificationCategorySubscription": "Подписка",
-    "noNotifications": "Нет уведомлений",
-    "selectAddress": "Выберите адрес",
-    "noSavedAddresses": "У вас пока нет сохранённых адресов",
-    "raffleTab": "Розыгрыши",
-    "allShopsTab": "Все магазины",
-    "wholeCatalogTab": "Весь каталог",
-    "raffleDefaultTitle": "Розыгрыш",
-    "raffleDateLabel": "Дата: {date}",
-    "@raffleDateLabel": {
-        "placeholders": {
-            "date": {
-                "type": "String"
-            }
-        }
-    },
-    "raffleDateTbd": "Дата: уточняется",
-    "raffleGiftsCount": "{count} подарков",
-    "@raffleGiftsCount": {
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "raffleGiftsAction": "Обзор подарков",
-    "raffleGiftsTitle": "Подарки розыгрыша",
-    "raffleGiftsEmpty": "Подарков пока нет",
-    "raffleEmpty": "Активных розыгрышей пока нет",
-    "raffleLoadError": "Не удалось загрузить розыгрыш",
-    "raffleProductsEmpty": "В этом розыгрыше пока нет товаров",
-    "sortDiscount": "Скидка",
-    "addAddress": "Добавить адрес",
-    "baseAvatar": "Базовый",
-    "@baseAvatar": {
-        "description": "Label for the base avatar option (initial letter)"
-    },
-    "selectAvatar": "Выбрать",
-    "@selectAvatar": {
-        "description": "Label for the custom photo avatar option"
-    },
-    "dateOfBirth": "Дата рождения",
-    "@dateOfBirth": {
-        "description": "Date of birth field label"
-    },
-    "birthDateHint": "дд-мм-гггг",
-    "@birthDateHint": {
-        "description": "Date of birth placeholder"
-    },
-    "phoneNumberHint": "(000) - 00 - 00",
-    "@phoneNumberHint": {
-        "description": "Phone number field placeholder"
-    },
-    "addPhoto": "Добавить фото",
-    "@addPhoto": {
-        "description": "Add photo bottom sheet title"
-    },
-    "gallery": "Галлерея",
-    "@gallery": {
-        "description": "Gallery option in the photo picker sheet"
-    },
-    "camera": "Камера",
-    "@camera": {
-        "description": "Camera option in the photo picker sheet"
-    },
-    "shareAppMessage": "Привет! Я использую это крутое приложение. Присоединяйся: {link}",
-    "@shareAppMessage": {
-        "description": "Message pre-filled in the system share sheet when inviting friends",
-        "placeholders": {
-            "link": {
-                "type": "String"
-            }
-        }
-    },
-    "shareAppError": "Не удалось открыть окно \"Поделиться\"",
-    "@shareAppError": {
-        "description": "Error shown when the native share sheet fails to open"
-    },
-    "ordersTabAll": "Все",
-    "ordersTabActive": "Активные",
-    "ordersTabCompleted": "Завершенные",
-    "ordersTabReturn": "Возврат",
-    "ordersEmptyTitle": "Нет заказов",
-    "ordersEmptyMessage": "Заказы будут отображаться тут",
-    "orderTagActive": "Активный",
-    "orderTagCompleted": "Завершен",
-    "orderTagReturn": "Возврат",
-    "orderLeaveReview": "Оставить отзыв",
-    "orderInTransitMessage": "Ваш заказ передан на отправку. Немного терпения, товар уже в пути.",
-    "orderDeliveredMessage": "Поздравляем! Курьер доставил заказ. Будем рады, если оцените нашу работу.",
-    "orderReturnMessage": "Заказ был возвращен или отменен.",
-    "priceTenge": "{price}₸",
-    "@priceTenge": {
-        "description": "Price with tenge symbol (no space)",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "favoritesEmptyTitle": "Пока тут пусто",
-    "favoritesEmptySubtitle": "Добавляйте товары в избранное, чтобы легко вернуться к ним позже!",
-    "goShopping": "К покупкам",
-    "myCards": "Мои карта",
-    "paymentCard": "Платёжная карта",
-    "addCard": "Добавить карта",
-    "cardsEmptyTitle": "Нет карта",
-    "cardsEmptySubtitle": "У вас пока нет сохранённых карт",
-    "contactsTitle": "Контакты",
-    "callCenter": "Колл-центр",
-    "callCenterSubtitle": "Проконсультируем и поможем\nв оформлении заказа",
-    "acceptCallsHours": "Принимаем звонки с 10:00 до 20:00",
-    "respondHours": "Отвечаем с 10:00 до 20:00",
-    "writeOnWhatsapp": "Написать на Whatsapp",
-    "writeOnTelegram": "Написать на Telegram",
-    "deliverySectionTitle": "Доставка",
-    "deliverySectionSubtitle": "Победитли будеть на наш телеграм каналы",
-    "selfPickupSectionTitle": "Адрес самавывоз",
-    "branches": "Филиалы",
-    "loginRequired": "Войдите в аккаунт",
-    "loginRequiredHint": "Чтобы продолжить, войдите в свой аккаунт",
-    "addToCartFailed": "Не удалось добавить в корзину",
-    "pullToRefresh": "Потяните вниз, чтобы обновить",
-    "refreshing": "Обновление…",
-    "removeFromCartFailed": "Не удалось удалить из корзины",
-    "paymentAmountTitle": "Сумма платежа:",
-    "paymentSumLabel": "Сумма:",
-    "paymentCommissionLabel": "Комиссия:",
-    "paymentTermsPart1": "Совершая платёж, вы автоматически",
-    "paymentTermsLinkText": "соглашаетесь",
-    "paymentTermsPart2": "с условиями",
-    "payButton": "Оплатить",
-    "fromTitle": "Откуда",
-    "fromOtherCard": "С другой карты",
-    "removeCardTitle": "Удалить карту?",
-    "removeCardSubtitle": "Вы точно хотите удалить эту карту",
-    "removeAction": "Удалить",
-    "enterCardDataTitle": "Введите данные карты",
-    "cardExpiryLabel": "Срок действия",
-    "cardExpiryHint": "Срок",
-    "cardCvvLabel": "CVV-код",
-    "saveCardData": "Сохранить данные карты",
-    "cardWarning": "Убедитесь, что карта открыта для интернет-транзакций и лимита достаточно",
-    "orderAcceptedTitle": "Ваш заказ принят!",
-    "orderIdLabel": "ID заказа: {id}",
-    "@orderIdLabel": {
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "receiptItemsLabel": "Товары:",
-    "receiptSavedLabel": "Сэкономлено:",
-    "receiptTicketsLabel": "Билеты:",
-    "receiptPaymentMethodLabel": "Способ оплаты:",
-    "viewOrderStatus": "Посмотреть статус",
-    "viewersLabel": "Зрителей",
-    "streamInactiveTitle": "Стрим сейчас неактивен",
-    "streamInactiveSubtitle": "Ожидайте начала трансляции",
-    "searchHint": "Поиск товара…",
-    "searchPrompt": "Начните вводить, чтобы найти товар",
-    "searchEmpty": "Ничего не найдено",
-    "searchError": "Не удалось выполнить поиск. Попробуйте ещё раз",
-    "onAirNow": "Сейчас в эфире",
-    "giftButton": "Подарок",
-    "commentInputHint": "Введите комментарии...",
-    "inCart": "В корзине",
-    "kaspiPayTitle": "Оплата Kaspi",
-    "kaspiAmountToPay": "К оплате: {amount}",
-    "kaspiScanOrPay": "Отсканируйте QR-код или нажмите «Оплатить», чтобы открыть Kaspi",
-    "kaspiWaitingPayment": "Ожидаем оплату…",
-    "kaspiPaymentFailed": "Оплата не прошла",
-    "kaspiLinkExpired": "Срок действия ссылки истёк",
-    "kaspiPayAgain": "Повторить оплату"
+  "@@locale": "ru",
+  "appName": "hibai",
+  "welcome": "Добро пожаловать",
+  "login": "Войти",
+  "register": "Регистрация",
+  "email": "Электронная почта",
+  "password": "Пароль",
+  "confirmPassword": "Подтвердите пароль",
+  "forgotPassword": "Забыли пароль?",
+  "dontHaveAccount": "Нет аккаунта?",
+  "alreadyHaveAccount": "Уже есть аккаунт?",
+  "phone": "Телефон",
+  "name": "Имя",
+  "surname": "Фамилия",
+  "cart": "Корзина",
+  "favorites": "Избранное",
+  "profile": "Профиль",
+  "settings": "Настройки",
+  "language": "Язык",
+  "notifications": "Уведомления",
+  "logout": "Выйти",
+  "catalog": "Каталог",
+  "@catalog": {
+    "description": "Catalog menu item text"
+  },
+  "freeDelivery": "Бесплатная доставка",
+  "enterName": "Введите имя",
+  "enterSurname": "Введите фамилию",
+  "phoneNumber": "Номер телефона",
+  "enterPhone": "Введите номер телефона",
+  "enterEmail": "Введите email",
+  "enterPassword": "Введите пароль",
+  "enterConfirmPassword": "Подтвердите пароль",
+  "deliveryAddress": "Адрес доставки:",
+  "addressExample": "Например: Ауезова 34",
+  "postalCode": "Почтовый индекс",
+  "cardNumber": "Номер карты",
+  "enterCardNumber": "Введите номер карты",
+  "cvv": "CVV",
+  "whoWillMeet": "Кто встретит курьера?",
+  "nameExample": "Например: Абзал",
+  "tryAgain": "Попробовать снова",
+  "emptyCityList": "Список городов пуст",
+  "productName": "Название продукта",
+  "productDescription": "Описание продукта",
+  "@productDescription": {
+    "description": "Default product description text"
+  },
+  "homeAddress": "Адрес \"Дом\"",
+  "@homeAddress": {
+    "description": "Home address label"
+  },
+  "postalIndex": "индекс: {index}",
+  "myAddresses": "Мои адреса",
+  "orderHistory": "История заказов",
+  "@orderHistory": {
+    "description": "Order history page title"
+  },
+  "orderDetails": "О заказе",
+  "@orderDetails": {
+    "description": "Order details page title"
+  },
+  "support": "Поддержка",
+  "@support": {
+    "description": "Support section title"
+  },
+  "supportTitle": "Поддержка",
+  "@supportTitle": {
+    "description": "Support page title"
+  },
+  "supportWorkingHours": "Мы готовы помогать вам\nкаждый день с 9:00 - 22:00",
+  "@supportWorkingHours": {
+    "description": "Support working hours message"
+  },
+  "whatsapp": "WhatsApp",
+  "@whatsapp": {
+    "description": "WhatsApp button text"
+  },
+  "telegram": "Telegram",
+  "@telegram": {
+    "description": "Telegram button text"
+  },
+  "faq": "Часто задаваемые вопросы",
+  "@faq": {
+    "description": "FAQ section title"
+  },
+  "failedToOpen": "Не удалось открыть {url}",
+  "@failedToOpen": {
+    "description": "Error message when URL cannot be opened",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "exitApp": "Выход из приложения",
+  "exitConfirmation": "Вы действительно хотите выйти из приложения?",
+  "cancel": "Отмена",
+  "notInStock": "Нет в продаже",
+  "@notInStock": {
+    "description": "Product out of stock label"
+  },
+  "youWon": "Вы победили!",
+  "@youWon": {
+    "description": "Prize won message"
+  },
+  "weWillContactYou": "Скоро свяжемся с вами",
+  "@weWillContactYou": {
+    "description": "Contact message after winning"
+  },
+  "index": "Индекс: {index}",
+  "@index": {
+    "description": "Postal index text with placeholder",
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "price": "{price} ₸",
+  "@price": {
+    "description": "Price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "oldPrice": "{price} ₸",
+  "@oldPrice": {
+    "description": "Old price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "productDescriptionShort": "Обеспечивает легкость и комфорт в макияжа весь...",
+  "home": "Главная",
+  "products": "товаров",
+  "@products": {
+    "description": "Products count text"
+  },
+  "more": "Подробнее",
+  "in_sale": "В продаже",
+  "not_in_sale": "Нет в продаже",
+  "purchases": "Покупку",
+  "orderAgain": "Заказать снова",
+  "myPrizes": "Мои призы",
+  "noPrizes": "Нет призов",
+  "cartEmpty": "В корзине пусто",
+  "addedItemsWillAppearHere": "Добавленные товары будут\nотображаться тут",
+  "goToShopping": "К покупкам",
+  "proceedToCheckout": "Перейти к оформлению",
+  "pricePerItem": "{price} тг/шт",
+  "@pricePerItem": {
+    "description": "Price per item text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "cannotAddMore": "Больше нельзя добавить. Это максимум.",
+  "prize_goods": "Призовые товары",
+  "number_of_tickets": "Номер для участия в Акции",
+  "tickets": "билеты",
+  "description": "Описание",
+  "@description": {
+    "description": "Product description section title"
+  },
+  "addToCart": "В корзину",
+  "@addToCart": {
+    "description": "Add to cart button text"
+  },
+  "productOutOfStock": "Товара нет в наличии!",
+  "@productOutOfStock": {
+    "description": "Product out of stock message"
+  },
+  "productAddedToCart": "Товар успешно сохранен в корзине!",
+  "@productAddedToCart": {
+    "description": "Product added to cart success message"
+  },
+  "goToCart": "В корзину",
+  "@goToCart": {
+    "description": "Go to cart button text"
+  },
+  "showFirst": "Вначале показывать",
+  "@showFirst": {
+    "description": "Sorting modal title"
+  },
+  "sortPopular": "Популярное",
+  "@sortPopular": {
+    "description": "Sort by popularity option"
+  },
+  "sortCheap": "Дешевые",
+  "@sortCheap": {
+    "description": "Sort by price ascending option"
+  },
+  "sortExpensive": "Дорогие",
+  "@sortExpensive": {
+    "description": "Sort by price descending option"
+  },
+  "myData": "Мои данные",
+  "@myData": {
+    "description": "My data page title"
+  },
+  "save": "Сохранить",
+  "@save": {
+    "description": "Save button text"
+  },
+  "deleteAccount": "Удалить аккаунт",
+  "@deleteAccount": {
+    "description": "Delete account button text"
+  },
+  "fillAllFields": "Пожалуйста, заполните все поля",
+  "@fillAllFields": {
+    "description": "Validation message for empty fields"
+  },
+  "profileUpdateError": "Ошибка при обновлении профиля: {message}",
+  "@profileUpdateError": {
+    "description": "Profile update error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "error": "Ошибка: {message}",
+  "@error": {
+    "description": "Generic error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "errorTitle": "Ошибка",
+  "@errorTitle": {
+    "description": "Error title for snackbar"
+  },
+  "success": "Успех!",
+  "@success": {
+    "description": "Success title for snackbar"
+  },
+  "faqTicketAfterPayment": "Как выдается номерок после оплаты?",
+  "@faqTicketAfterPayment": {
+    "description": "FAQ question about ticket issuance"
+  },
+  "faqTicketAfterPaymentAnswer": "После оплаты номерок выдается автоматически. Вы можете увидеть его в разделе Мой профиль.",
+  "@faqTicketAfterPaymentAnswer": {
+    "description": "FAQ answer about ticket issuance"
+  },
+  "faqDeliveryMethod": "Как осуществляется доставка?",
+  "@faqDeliveryMethod": {
+    "description": "FAQ question about delivery method"
+  },
+  "faqDeliveryMethodAnswer": "Доставка осуществляется через КазПочту. Вы получите уведомление, когда заказ будет отправлен.",
+  "@faqDeliveryMethodAnswer": {
+    "description": "FAQ answer about delivery method"
+  },
+  "faqDeliveryTime": "Сколько времени занимает доставка?",
+  "@faqDeliveryTime": {
+    "description": "FAQ question about delivery time"
+  },
+  "faqDeliveryTimeAnswer": "Обычно доставка занимает от 3 до 7 рабочих дней, в зависимости от вашего региона.",
+  "@faqDeliveryTimeAnswer": {
+    "description": "FAQ answer about delivery time"
+  },
+  "faqCancelOrder": "Можно ли отменить заказ после оплаты?",
+  "@faqCancelOrder": {
+    "description": "FAQ question about order cancellation"
+  },
+  "faqCancelOrderAnswer": "Да, вы можете отменить заказ до момента отправки. Для этого свяжитесь с нашей поддержкой.",
+  "@faqCancelOrderAnswer": {
+    "description": "FAQ answer about order cancellation"
+  },
+  "faqTrackOrder": "Как отследить мой заказ?",
+  "@faqTrackOrder": {
+    "description": "FAQ question about order tracking"
+  },
+  "faqTrackOrderAnswer": "После отправки вы получите трек-номер. Вы можете отследить посылку на сайте КазПочты или в разделе Мои заказы.",
+  "@faqTrackOrderAnswer": {
+    "description": "FAQ answer about order tracking"
+  },
+  "@deliveryAddress": {
+    "description": "Delivery address label"
+  },
+  "noData": "Нет данных",
+  "@noData": {
+    "description": "No data available message"
+  },
+  "recipient": "Получатель:",
+  "@recipient": {
+    "description": "Recipient label"
+  },
+  "noName": "Нет имени",
+  "@noName": {
+    "description": "No name available message"
+  },
+  "noPhone": "Нет номера телефона",
+  "@noPhone": {
+    "description": "No phone number available message"
+  },
+  "deliveryDate": "Дата доставки:",
+  "@deliveryDate": {
+    "description": "Delivery date label"
+  },
+  "orderId": "ID Заказа: {id}",
+  "@orderId": {
+    "description": "Order ID text with placeholder",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatusPaymentPending": "Ожидает оплаты",
+  "@orderStatusPaymentPending": {
+    "description": "Order status: Payment Pending"
+  },
+  "orderStatusProcessing": "Формируется",
+  "@orderStatusProcessing": {
+    "description": "Order status: Processing"
+  },
+  "orderStatusWay": "В пути",
+  "@orderStatusWay": {
+    "description": "Order status: On the Way"
+  },
+  "orderStatusPickup": "Ждёт в отделении",
+  "@orderStatusPickup": {
+    "description": "Order status: the parcel is waiting at the Kazpost branch"
+  },
+  "orderStatusDelivered": "Доставлен",
+  "@orderStatusDelivered": {
+    "description": "Order status: Delivered"
+  },
+  "orderStatusCanceled": "Отменен",
+  "@orderStatusCanceled": {
+    "description": "Order status: Canceled"
+  },
+  "orderStatusAssembling": "Собирается",
+  "@orderStatusAssembling": {
+    "description": "Order status: Assembling"
+  },
+  "orderStatusAbandoned": "Отменен",
+  "@orderStatusAbandoned": {
+    "description": "Order status: Abandoned"
+  },
+  "orderStatusPaymentFailed": "Ошибка оплаты",
+  "@orderStatusPaymentFailed": {
+    "description": "Order status: Payment Failed"
+  },
+  "orderProcessingMessage": "Ваши товары забронированы, заказ в обработке. Вам придет уведомление, когда заказ будет передан на сборку",
+  "@orderProcessingMessage": {
+    "description": "Order processing status message"
+  },
+  "ticketsWillBeAwarded": "Будет начислено билетов",
+  "@ticketsWillBeAwarded": {
+    "description": "Tickets award message"
+  },
+  "totalAmount": "Общая сумма",
+  "@totalAmount": {
+    "description": "Total amount label"
+  },
+  "items": "Товары",
+  "@items": {
+    "description": "Items label"
+  },
+  "discount": "Скидка",
+  "@discount": {
+    "description": "Discount label"
+  },
+  "promotionalNumbers": "Акционные номера",
+  "@promotionalNumbers": {
+    "description": "Promotional numbers label"
+  },
+  "delivery": "Доставка",
+  "@delivery": {
+    "description": "Delivery label"
+  },
+  "free": "Бесплатно",
+  "@free": {
+    "description": "Free delivery text"
+  },
+  "total": "Итого",
+  "@total": {
+    "description": "Total label"
+  },
+  "paid": "Оплачен",
+  "@paid": {
+    "description": "Paid status"
+  },
+  "unpaid": "Не оплачен",
+  "@unpaid": {
+    "description": "Unpaid status"
+  },
+  "enterPhoneNumber": "Введите \nномер телефона",
+  "@enterPhoneNumber": {
+    "description": "Phone number input title"
+  },
+  "weWillSendSms": "Отправим СМС с кодом подтверждения",
+  "@weWillSendSms": {
+    "description": "SMS verification message"
+  },
+  "getCode": "Получить код",
+  "@getCode": {
+    "description": "Get verification code button"
+  },
+  "orderConsentText": "Нажимая на кнопку, вы соглашаетесь с Условиями оферты и Политикой конфиденциальности",
+  "orderConsentOffer": "Условиями оферты",
+  "orderConsentPrivacy": "Политикой конфиденциальности",
+  "termsAndPrivacy": "Нажимая на кнопку \"Получить код\", вы принимаете пользовательское соглашение и политику конфиденциальности",
+  "@termsAndPrivacy": {
+    "description": "Terms and privacy policy text"
+  },
+  "userAgreement": "пользовательское соглашение",
+  "@userAgreement": {
+    "description": "User agreement link label inside termsAndPrivacy"
+  },
+  "privacyPolicy": "политику конфиденциальности",
+  "@privacyPolicy": {
+    "description": "Privacy policy link label inside termsAndPrivacy"
+  },
+  "greeting": "Здравствуйте!",
+  "@greeting": {
+    "description": "PIN lock screen greeting"
+  },
+  "cannotLogin": "Не можете войти?",
+  "@cannotLogin": {
+    "description": "Can't log in link on the PIN lock screen"
+  },
+  "createPinTitle": "Придумайте PIN-код",
+  "@createPinTitle": {
+    "description": "Create PIN screen title"
+  },
+  "confirmPinTitle": "Повторите PIN-код",
+  "@confirmPinTitle": {
+    "description": "Confirm PIN screen title"
+  },
+  "pinMismatch": "PIN-коды не совпадают",
+  "@pinMismatch": {
+    "description": "Error when the two entered PINs differ"
+  },
+  "wrongPin": "Неверный PIN-код",
+  "@wrongPin": {
+    "description": "Toast shown when the entered PIN is incorrect"
+  },
+  "fillInData": "Заполните данные",
+  "@fillInData": {
+    "description": "Registration / fill-in-details screen title"
+  },
+  "selectCity": "Выберите город",
+  "@selectCity": {
+    "description": "City picker placeholder"
+  },
+  "enterCode": "Введите код",
+  "@enterCode": {
+    "description": "Enter verification code title"
+  },
+  "sentToNumber": "Отправили его на номер \n+7 {phoneNumber}",
+  "@sentToNumber": {
+    "description": "SMS sent confirmation message",
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "signIn": "Войти",
+  "@signIn": {
+    "description": "Sign in button text"
+  },
+  "market": "Маркет",
+  "streams": "Эфиры",
+  "orders": "Заказы",
+  "searchHomeHint": "Что вы искали?",
+  "all": "Все",
+  "plusPrice": "Plus пен алсаңыз",
+  "sellerOrders": "{count} заказа",
+  "@sellerOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reviews": "Отзывы",
+  "reviewsCount": "{count} отзывы",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "readAll": "Читать все",
+  "relatedProducts": "Еще может подойти",
+  "buy": "Купить",
+  "newTag": "Новинка",
+  "hitTag": "Хит",
+  "myTickets": "Мои билеты",
+  "specifyDeliveryAddress": "Укажите адрес доставки",
+  "myOrders": "Мои заказы",
+  "orderStatus": "Статус заказы",
+  "myCard": "Мой карта",
+  "contacts": "Контакты",
+  "sattyJuldyz": "Satty juldyz",
+  "techSupport": "Тех поддержка",
+  "inviteFriends": "Приглашайте друзей",
+  "goToPayment": "Перейти в оплате",
+  "clearCart": "Очистить",
+  "youSaved": "Вы экономили",
+  "recommended": "Рекомендуем",
+  "notAvailable": "Нет в наличии",
+  "defaultDescription": "Высококачественный продукт, разработанный для ежедневного ухода. Тщательно подобранные компоненты обеспечивают эффективный результат. Подходит для всех типов кожи. Рекомендован специалистами.",
+  "liveNow": "Сейчас в эфире",
+  "otpSubtitle": "Мы отправили 4 значный код\nна ваш телефон",
+  "resendCode": "Отправить код повторно",
+  "confirm": "Подтвердить",
+  "continueAction": "Продолжить",
+  "notificationCategoryPurchase": "Покупка",
+  "notificationCategoryDelivery": "Доставка",
+  "notificationCategoryStream": "Эфиры",
+  "notificationCategorySubscription": "Подписка",
+  "noNotifications": "Нет уведомлений",
+  "selectAddress": "Выберите адрес",
+  "noSavedAddresses": "У вас пока нет сохранённых адресов",
+  "deliveryAddressesTitle": "Адреса доставки",
+  "deliveryAddressTitle": "Адрес доставки",
+  "addMoreAddress": "Добавить еще адрес",
+  "saveAddress": "Сохранить адрес",
+  "newAddress": "Новый адрес",
+  "addressLabeled": "Адрес «{label}»",
+  "addressAdded": "Адрес успешно добавлен",
+  "addressDeleted": "Адрес удалён",
+  "deleteAddressTitle": "Удалить адрес?",
+  "deleteAddressMessage": "Вы уверены, что хотите удалить этот адрес?",
+  "deleteAction": "Удалить",
+  "addAction": "Добавить",
+  "savingInProgress": "Сохраняем...",
+  "addressNameLabel": "Название адреса",
+  "addressNameHint": "Например: Дом или работа",
+  "enterAddressName": "Введите название",
+  "streetAndHouseHint": "Улица и номер дома",
+  "enterAddressLine": "Введите адрес",
+  "apartmentLabel": "Квартира",
+  "entranceLabel": "Подъезд",
+  "floorLabel": "Этаж",
+  "postalIndexHint": "Индекс",
+  "enterPostalIndex": "Введите индекс",
+  "selectCityFirst": "Выберите город",
+  "selectRegion": "Выберите регион",
+  "addressesLoadError": "Ошибка загрузки адресов",
+  "addressAddError": "Ошибка добавления адреса",
+  "addressSaveError": "Не удалось сохранить адрес",
+  "addressDeleteError": "Ошибка удаления адреса",
+  "raffleTab": "Розыгрыши",
+  "allShopsTab": "Все магазины",
+  "wholeCatalogTab": "Весь каталог",
+  "catalogTileLottery": "Розыгрыш-\nные товары",
+  "catalogTileDiscount": "Товары со\nскидками",
+  "catalogTileMakeup": "Для\nмакияжа",
+  "catalogTilePerfume": "Парфюме-\nрия",
+  "catalogTileBodyCare": "Уход за\nтелом",
+  "catalogTileHairCare": "Уход за\nволосами",
+  "catalogTileCosmeticSets": "Наборы\nкосметики",
+  "catalogTileFaceCare": "Уход за\nлицом",
+  "catalogTileSunCare": "Солнечная\nлиния",
+  "catalogTileHygiene": "Личная\nгигиена",
+  "catalogTileOralCare": "Уход за\nполостью рта",
+  "raffleDefaultTitle": "Розыгрыш",
+  "raffleDateLabel": "Дата: {date}",
+  "@raffleDateLabel": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "raffleDateTbd": "Дата: уточняется",
+  "raffleGiftsCount": "{count} подарков",
+  "@raffleGiftsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "raffleGiftsAction": "Обзор подарков",
+  "raffleGiftsTitle": "Подарки розыгрыша",
+  "raffleGiftsEmpty": "Подарков пока нет",
+  "raffleEmpty": "Активных розыгрышей пока нет",
+  "raffleLoadError": "Не удалось загрузить розыгрыш",
+  "raffleProductsEmpty": "В этом розыгрыше пока нет товаров",
+  "sortDiscount": "Скидка",
+  "addAddress": "Добавить адрес",
+  "baseAvatar": "Базовый",
+  "@baseAvatar": {
+    "description": "Label for the base avatar option (initial letter)"
+  },
+  "selectAvatar": "Выбрать",
+  "@selectAvatar": {
+    "description": "Label for the custom photo avatar option"
+  },
+  "dateOfBirth": "Дата рождения",
+  "@dateOfBirth": {
+    "description": "Date of birth field label"
+  },
+  "birthDateHint": "дд-мм-гггг",
+  "@birthDateHint": {
+    "description": "Date of birth placeholder"
+  },
+  "phoneNumberHint": "(000) - 00 - 00",
+  "@phoneNumberHint": {
+    "description": "Phone number field placeholder"
+  },
+  "addPhoto": "Добавить фото",
+  "@addPhoto": {
+    "description": "Add photo bottom sheet title"
+  },
+  "gallery": "Галлерея",
+  "@gallery": {
+    "description": "Gallery option in the photo picker sheet"
+  },
+  "camera": "Камера",
+  "@camera": {
+    "description": "Camera option in the photo picker sheet"
+  },
+  "shareAppMessage": "Привет! Я использую это крутое приложение. Присоединяйся: {link}",
+  "@shareAppMessage": {
+    "description": "Message pre-filled in the system share sheet when inviting friends",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAppError": "Не удалось открыть окно \"Поделиться\"",
+  "@shareAppError": {
+    "description": "Error shown when the native share sheet fails to open"
+  },
+  "ordersTabAll": "Все",
+  "ordersTabActive": "Активные",
+  "ordersTabCompleted": "Завершенные",
+  "ordersTabReturn": "Возврат",
+  "ordersEmptyTitle": "Нет заказов",
+  "ordersEmptyMessage": "Заказы будут отображаться тут",
+  "orderTagActive": "Активный",
+  "orderTagCompleted": "Завершен",
+  "orderTagReturn": "Возврат",
+  "orderLeaveReview": "Оставить отзыв",
+  "orderInTransitMessage": "Ваш заказ передан на отправку. Немного терпения, товар уже в пути.",
+  "orderDeliveredMessage": "Поздравляем! Курьер доставил заказ. Будем рады, если оцените нашу работу.",
+  "orderReturnMessage": "Заказ был возвращен или отменен.",
+  "priceTenge": "{price}₸",
+  "@priceTenge": {
+    "description": "Price with tenge symbol (no space)",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "favoritesEmptyTitle": "Пока тут пусто",
+  "favoritesEmptySubtitle": "Добавляйте товары в избранное, чтобы легко вернуться к ним позже!",
+  "goShopping": "К покупкам",
+  "myCards": "Мои карта",
+  "paymentCard": "Платёжная карта",
+  "addCard": "Добавить карта",
+  "cardsEmptyTitle": "Нет карта",
+  "cardsEmptySubtitle": "У вас пока нет сохранённых карт",
+  "contactsTitle": "Контакты",
+  "callCenter": "Колл-центр",
+  "callCenterSubtitle": "Проконсультируем и поможем\nв оформлении заказа",
+  "acceptCallsHours": "Принимаем звонки с 10:00 до 20:00",
+  "respondHours": "Отвечаем с 10:00 до 20:00",
+  "writeOnWhatsapp": "Написать на Whatsapp",
+  "writeOnTelegram": "Написать на Telegram",
+  "deliverySectionTitle": "Доставка",
+  "deliverySectionSubtitle": "Победитли будеть на наш телеграм каналы",
+  "selfPickupSectionTitle": "Адрес самавывоз",
+  "branches": "Филиалы",
+  "loginRequired": "Войдите в аккаунт",
+  "loginRequiredHint": "Чтобы продолжить, войдите в свой аккаунт",
+  "addToCartFailed": "Не удалось добавить в корзину",
+  "pullToRefresh": "Потяните вниз, чтобы обновить",
+  "refreshing": "Обновление…",
+  "removeFromCartFailed": "Не удалось удалить из корзины",
+  "paymentAmountTitle": "Сумма платежа:",
+  "paymentSumLabel": "Сумма:",
+  "paymentCommissionLabel": "Комиссия:",
+  "paymentTermsPart1": "Совершая платёж, вы автоматически",
+  "paymentTermsLinkText": "соглашаетесь",
+  "paymentTermsPart2": "с условиями",
+  "payButton": "Оплатить",
+  "fromTitle": "Откуда",
+  "fromOtherCard": "С другой карты",
+  "removeCardTitle": "Удалить карту?",
+  "removeCardSubtitle": "Вы точно хотите удалить эту карту",
+  "removeAction": "Удалить",
+  "enterCardDataTitle": "Введите данные карты",
+  "cardExpiryLabel": "Срок действия",
+  "cardExpiryHint": "Срок",
+  "cardCvvLabel": "CVV-код",
+  "saveCardData": "Сохранить данные карты",
+  "cardWarning": "Убедитесь, что карта открыта для интернет-транзакций и лимита достаточно",
+  "orderAcceptedTitle": "Ваш заказ принят!",
+  "orderIdLabel": "ID заказа: {id}",
+  "@orderIdLabel": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptItemsLabel": "Товары:",
+  "receiptSavedLabel": "Сэкономлено:",
+  "receiptTicketsLabel": "Билеты:",
+  "receiptPaymentMethodLabel": "Способ оплаты:",
+  "viewOrderStatus": "Посмотреть статус",
+  "viewersLabel": "Зрителей",
+  "streamInactiveTitle": "Стрим сейчас неактивен",
+  "streamInactiveSubtitle": "Ожидайте начала трансляции",
+  "searchHint": "Поиск товара…",
+  "searchPrompt": "Начните вводить, чтобы найти товар",
+  "searchEmpty": "Ничего не найдено",
+  "searchError": "Не удалось выполнить поиск. Попробуйте ещё раз",
+  "onAirNow": "Сейчас в эфире",
+  "giftButton": "Подарок",
+  "commentInputHint": "Введите комментарии...",
+  "inCart": "В корзине",
+  "kaspiPayTitle": "Оплата Kaspi",
+  "kaspiAmountToPay": "К оплате: {amount}",
+  "kaspiScanOrPay": "Отсканируйте QR-код или нажмите «Оплатить», чтобы открыть Kaspi",
+  "kaspiWaitingPayment": "Ожидаем оплату…",
+  "kaspiPaymentFailed": "Оплата не прошла",
+  "kaspiLinkExpired": "Срок действия ссылки истёк",
+  "kaspiPayAgain": "Повторить оплату",
+  "sellerRaffleDate": "Розыгрыш: {date}",
+  "sellersEmpty": "Магазинов пока нет",
+  "sellersLoadError": "Не удалось загрузить магазины",
+  "sellerProductsEmpty": "В этом магазине пока нет товаров",
+  "sellerNotFound": "Магазин больше не доступен",
+  "sellerStoreTitleFallback": "Магазин",
+  "ticketsBadge": "+{count}",
+  "productUnavailable": "Товар больше не доступен",
+  "plusPriceActive": "Ваша цена с Plus",
+  "reviewsEmpty": "Отзывов пока нет",
+  "reviewAnonymous": "Покупатель",
+  "reviewComposerHint": "Расскажите о впечатлениях о товаре",
+  "reviewSend": "Отправить",
+  "reviewSubmitted": "Спасибо за отзыв!",
+  "reviewAlreadyLeft": "Вы уже оставляли отзыв на этот товар",
+  "reviewTooManyRequests": "Слишком много попыток. Попробуйте через минуту",
+  "reviewSubmitError": "Не удалось отправить отзыв",
+  "reviewsLoadError": "Не удалось загрузить отзывы",
+  "shareProductMessage": "{name} — {price}. Нашёл в Bai Market.",
+  "shareProductMessageNoPrice": "{name}. Нашёл в Bai Market.",
+  "cartItemsCount": "{count, plural, one{{count} товар} few{{count} товара} many{{count} товаров} other{{count} товара}}",
+  "checkoutShort": "Оформить",
+  "cartClearFailed": "Не удалось очистить корзину",
+  "cartNotEnoughStock": "Не хватает товара на складе",
+  "cartQuantityChangeFailed": "Не удалось изменить количество — товар удалён из корзины, добавьте заново",
+  "cartItemRemovedByStock": "«{name}» закончился и удалён из корзины",
+  "cartItemPriceChanged": "Цена «{name}» изменилась",
+  "cartItemQuantityReduced": "Количество «{name}» уменьшено до {quantity}",
+  "cartRefreshFailed": "Не удалось обновить корзину",
+  "pushPermissionTitle": "Включите уведомления",
+  "pushPermissionBody": "Сообщим о статусе заказа, результатах розыгрыша и новинках",
+  "pushPermissionAllow": "Включить",
+  "pushPermissionLater": "Позже",
+  "pushDisabledBanner": "Уведомления отключены",
+  "pushEnableAction": "Включить",
+  "notificationsSettingsTitle": "Уведомления",
+  "notificationsOn": "Включены",
+  "notificationsOff": "Отключены",
+  "notificationsLoadError": "Не удалось загрузить уведомления",
+  "commonCancel": "Отмена",
+  "addedToCart": "Добавлено в корзину",
+  "outOfStock": "Нет в наличии",
+  "pullToRefreshHint": "Потяните вниз, чтобы обновить",
+  "streamsLoadError": "Не удалось загрузить эфиры",
+  "streamsEmptyTitle": "Сейчас нет эфиров",
+  "streamsEmptySubtitle": "Загляните чуть позже",
+  "streamErrorGeneric": "Что-то пошло не так",
+  "streamEndedTitle": "Эфир завершён",
+  "streamEndedSubtitle": "Выберите другую трансляцию",
+  "streamReconnecting": "Переподключаемся…",
+  "streamConnectionLost": "Связь потеряна",
+  "streamRetry": "Повторить",
+  "streamChatTooLong": "Сообщение слишком длинное",
+  "streamChatRateLimited": "Слишком много сообщений, подождите",
+  "streamProductsTitle": "Товары в стриме",
+  "streamGiftsTitle": "Подарки",
+  "pinnedProductBadge": "В эфире",
+  "streamHostCameraPaused": "Продавец отключил камеру",
+  "streamStartCta": "Начать эфир",
+  "streamResumeCta": "Вернуться в свой эфир",
+  "startStreamSheetTitle": "Новый эфир",
+  "startStreamTitleLabel": "Название эфира",
+  "startStreamTitleHint": "Например: Распродажа кроссовок",
+  "startStreamTitleTooShort": "Введите название подлиннее",
+  "startStreamSubmit": "Начать",
+  "startStreamFailed": "Не удалось начать эфир",
+  "streamAccessDenied": "Эфиры недоступны, обратитесь в поддержку",
+  "streamAlreadyLiveTitle": "У вас уже идёт эфир",
+  "streamAlreadyLiveMessage": "Одновременно можно вести только один эфир. Завершите текущий или откройте его как зритель.",
+  "streamEndAndRestart": "Завершить и начать заново",
+  "streamOpenAsViewer": "Открыть как зритель",
+  "streamStopConfirmTitle": "Завершить эфир?",
+  "streamStopConfirmAction": "Завершить",
+  "hostCameraPaused": "Камера выключена",
+  "hostPickProductTitle": "Показать товар",
+  "hostPinProduct": "Показать",
+  "hostUnpinProduct": "Убрать товар с экрана",
+  "hostNoProducts": "Товаров пока нет",
+  "hostPermissionDeniedTitle": "Нужен доступ к камере и микрофону",
+  "hostPermissionDeniedMessage": "Разрешите доступ в настройках, чтобы выйти в эфир.",
+  "hostOpenSettings": "Настройки",
+  "storyOpenProduct": "Перейти к товару",
+  "stockLeft": "Осталось {count} шт.!",
+  "amount": "Сумма",
+  "quantity": "Количество",
+  "updateForcedTitle": "Требуется обновление",
+  "updateForcedMessage": "Эта версия Bai Market больше не поддерживается. Установите свежую — это займёт меньше минуты, и все покупки останутся на месте.",
+  "updateRecommendedTitle": "Вышла новая версия",
+  "updateRecommendedMessage": "Мы добавили новые возможности и починили пару мелочей. Обновление займёт меньше минуты.",
+  "updateNow": "Обновить",
+  "updateLater": "Позже",
+  "updateWhatsNew": "Что нового",
+  "profileVersion": "Версия: {version}",
+  "updateVersionBadge": "Версия {version}",
+  "updateStoreOpenFailed": "Не удалось открыть магазин приложений. Попробуйте ещё раз.",
+  "checkoutTitle": "Оформление заказа",
+  "savedAddressTitle": "Сохраненный адрес",
+  "selectSavedAddressFirst": "Выберите адрес из сохранённых",
+  "chooseAction": "выбрать",
+  "changeAction": "Изменить",
+  "addressFallbackTitle": "Адрес",
+  "branchWithAddress": "Филиал: {address}",
+  "cityFallbackName": "Город",
+  "recipientNameCourierLabel": "Кто встретит (ФИО)",
+  "recipientNamePickupLabel": "Кто придет (ФИО)",
+  "recipientNameHint": "Например: Асылбек Даниял",
+  "processingAction": "Обработка\u2026",
+  "kaspiPaymentStartFailed": "Не удалось начать оплату Kaspi",
+  "paymentMethodsTitle": "Способы оплаты",
+  "deliveryByCourier": "Курьером",
+  "deliverySelfPickup": "Самовывоз",
+  "filialDistrict": "Бостандыкский район",
+  "filialAddressLine": "улица Абдуллы Розыбакиева, 112",
+  "deliveryMethodBranch": "До отделения Казпочты",
+  "deliveryMethodBranchHint": "Заберёте на почте по трек-номеру",
+  "deliveryMethodDoor": "До двери",
+  "deliveryMethodDoorHint": "Курьер Go Post привезёт домой",
+  "houseNumberLabel": "Дом и квартира",
+  "houseNumberHint": "150, кв. 25",
+  "enterHouseNumber": "Укажите дом и квартиру",
+  "postalCodeInvalidLength": "Индекс должен быть из 6 цифр",
+  "enterPostalForDelivery": "Введите индекс, чтобы узнать стоимость доставки",
+  "selectAddressForDelivery": "Выберите адрес, чтобы узнать стоимость доставки",
+  "deliveryPriceCalculating": "Рассчитываем\u2026",
+  "amountToPay": "К оплате",
+  "trackingNumberLabel": "Трек-номер",
+  "trackOnKazpost": "Отследить на post.kz",
+  "trackingNumberCopied": "Трек-номер скопирован",
+  "orderStatusPickupKazpostMessage": "Посылка ждёт в отделении Казпочты. Заберите её по трек-номеру",
+  "deliveryQuoteFailed": "Не удалось рассчитать доставку. Попробуйте ещё раз"
 }

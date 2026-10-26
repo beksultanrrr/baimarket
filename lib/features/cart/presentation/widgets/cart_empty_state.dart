@@ -1,7 +1,13 @@
-import 'package:bai_market/core/app_pallete.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../core/app_pallete.dart';
 import '../../../../l10n/app_localizations.dart';
+
+/// Подпись под заголовком — `#000000` при 40% (в записи Figma `#00000066`).
+/// Во Flutter альфа идёт первой, поэтому `0x66000000`.
+const Color _subtitleColor = Color(0x66000000);
 
 class CartEmptyState extends StatelessWidget {
   const CartEmptyState({super.key, required this.onGoShopping});
@@ -10,63 +16,37 @@ class CartEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+    return Padding(
       padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF5FAF8),
-        borderRadius: BorderRadius.circular(24),
-      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(
-            'assets/icons/cart_page/cart_page_empty.png',
-            width: 100,
-            height: 100,
-          ),
-          const SizedBox(height: 20),
+          SvgPicture.asset('assets/icons/bag-2.svg', height: 85, width: 85),
+          const SizedBox(height: 10),
           Text(
             l10n.cartEmpty,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              color: Colors.black,
-            ),
+            style: const TextStyle(fontFamily: 'Gilroy', fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 10),
           Text(
             l10n.addedItemsWillAppearHere,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey.shade500,
-            ),
             textAlign: TextAlign.center,
+            style: const TextStyle(fontFamily: 'Gilroy', fontSize: 14, fontWeight: FontWeight.w400, color: _subtitleColor, height: 1.3),
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 10),
           CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: onGoShopping,
             child: Container(
-              height: 48,
-              width: 220,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                border: Border.all(
-                  color: mainColorLight,
-                  width: 1.5,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  l10n.goToShopping,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: mainColorLight,
-                  ),
-                ),
+              height: 56,
+              // Ширина по контенту, а не фиксированная: в kk подпись длиннее
+              // русской и в 220pt уже не помещалась.
+              padding: const EdgeInsets.symmetric(horizontal: 48),
+              decoration: BoxDecoration(color: darkButtonColor, borderRadius: BorderRadius.circular(14)),
+              alignment: Alignment.center,
+              child: Text(
+                l10n.goToShopping,
+                style: const TextStyle(fontFamily: 'Gilroy', fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
               ),
             ),
           ),

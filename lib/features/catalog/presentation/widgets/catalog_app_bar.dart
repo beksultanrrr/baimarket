@@ -12,8 +12,7 @@ class CatalogAppBar extends StatefulWidget {
   State<CatalogAppBar> createState() => _CatalogAppBarState();
 }
 
-class _CatalogAppBarState extends State<CatalogAppBar>
-    with WidgetsBindingObserver {
+class _CatalogAppBarState extends State<CatalogAppBar> with WidgetsBindingObserver {
   String _city = 'Алматы';
 
   @override
@@ -53,12 +52,7 @@ class _CatalogAppBarState extends State<CatalogAppBar>
     return Padding(
       // Figma frame 16271: header сидит на y=70 от верха экрана
       // (статусбар iPhone 15 = 47), внизу до табов остаётся ~23px.
-      padding: EdgeInsets.only(
-        top: MediaQuery.of(context).padding.top + 23,
-        left: 20,
-        right: 20,
-        bottom: 23,
-      ),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 23, left: 20, right: 20, bottom: 23),
       child: Row(
         children: [
           // Location
@@ -67,57 +61,28 @@ class _CatalogAppBarState extends State<CatalogAppBar>
             onTap: _openAddresses,
             child: Row(
               children: [
-                SvgPicture.asset(
-                  'assets/icons/catalog_page_location.svg',
-                  height: 24,
-                  width: 24,
-                ),
+                SvgPicture.asset('assets/icons/location.svg', height: 24, width: 24),
                 const SizedBox(width: 6),
                 Text(
                   _city,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                    fontFamily: 'Gilroy',
-                  ),
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black, fontFamily: 'Gilroy'),
                 ),
                 const SizedBox(width: 4),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  size: 22,
-                  color: Colors.black54,
-                ),
+                const Icon(Icons.keyboard_arrow_down_rounded, size: 22, color: Colors.black54),
               ],
             ),
           ),
           const Spacer(),
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () => context.push('/plus'),
-            child: SvgPicture.asset(
-              'assets/icons/main_plus_big.svg',
-              height: 30,
-            ),
-          ),
-          const SizedBox(width: 8),
+          // CupertinoButton(padding: EdgeInsets.zero, onPressed: () => context.push('/plus'), child: SvgPicture.asset('assets/icons/main_page/main_page_plus_icon.svg', height: 30)),
+          const SizedBox(width: 10),
           CupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: () => context.push('/notification'),
             child: Container(
               height: 40,
               width: 40,
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.05),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: SvgPicture.asset(
-                  'assets/icons/main_page/main_page_chat.svg',
-                  height: 24,
-                  width: 24,
-                ),
-              ),
+              decoration: BoxDecoration(color: Colors.black.withValues(alpha: 0.05), shape: BoxShape.circle),
+              child: Center(child: SvgPicture.asset('assets/icons/main_page/main_page_chat.svg', height: 24, width: 24)),
             ),
           ),
         ],

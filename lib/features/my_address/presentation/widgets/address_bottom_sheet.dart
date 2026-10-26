@@ -60,7 +60,7 @@ class AddressBottomSheet extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 16),
-            MainButton(onPressed: onAdd, text: l10n.addAddress),
+            MainButton(onPressed: onAdd, text: l10n.addAddress, color: mainColorLight),
           ],
         ),
       ),

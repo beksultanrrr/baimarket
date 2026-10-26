@@ -2,23 +2,41 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../live/presentation/widgets/live_shopping_scope.dart';
 import '../../../payment/presentation/widgets/payment_pay_button.dart';
 import '../../data/models/order_success_args.dart';
 import '../widgets/order_receipt_card.dart';
 
-class OrderSuccessPage extends StatelessWidget {
+class OrderSuccessPage extends StatefulWidget {
   const OrderSuccessPage({super.key, required this.args});
   final OrderSuccessArgs args;
 
   @override
+  State<OrderSuccessPage> createState() => _OrderSuccessPageState();
+}
+
+class _OrderSuccessPageState extends State<OrderSuccessPage> {
+  @override
+  void initState() {
+    super.initState();
+    // Все четыре пути оплаты (наличные, Kaspi, webview, фолбэк) сходятся сюда,
+    // поэтому один хук закрывает их все. На сервере корзина уже удалена —
+    // её позиции переехали в заказ.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      context.read<CartCubit>().refreshAfterOrder();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final args = widget.args;
     final l10n = AppLocalizations.of(context)!;
-    final scope = LiveShoppingScope.maybeOf(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
@@ -36,13 +54,9 @@ class OrderSuccessPage extends StatelessWidget {
                   left: 12,
                   top: 12,
                   child: _CloseButton(
-                    onTap: () {
-                      if (scope != null) {
-                        scope.closeAll(context);
-                      } else {
-                        context.go('/main');
-                      }
-                    },
+                    // Заказ оформлен — возвращаемся туда, откуда пришли:
+                    // внутри эфира это сам эфир, снаружи — главная.
+                    onTap: () => liveAwareDismiss(context),
                   ),
                 ),
                 Padding(
@@ -99,13 +113,9 @@ class OrderSuccessPage extends StatelessWidget {
                           width: 300,
                           child: PaymentPayButton(
                             label: l10n.viewOrderStatus,
-                            onPressed: () {
-                              if (scope != null) {
-                                scope.closeAllAndGo(context, '/orders');
-                              } else {
-                                context.go('/orders');
-                              }
-                            },
+                            // Осознанный выход из эфира: покупка уже
+                            // завершена, статус заказа — отдельный экран.
+                            onPressed: () => liveAwareGo(context, '/orders'),
                           ),
                         ),
                       ),

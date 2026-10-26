@@ -31,9 +31,10 @@ class LabeledTextField extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
+            fontFamily: 'Gilroy',
             fontSize: 13,
             fontWeight: FontWeight.w500,
-            color: Color(0xFF8A8A8A),
+            color: Colors.black,
           ),
         ),
         const SizedBox(height: 8),
@@ -44,6 +45,7 @@ class LabeledTextField extends StatelessWidget {
           autofillHints: autofillHints,
           textCapitalization: textCapitalization,
           style: const TextStyle(
+            fontFamily: 'Gilroy',
             fontSize: 16,
             color: Colors.black,
             fontWeight: FontWeight.w500,
@@ -51,26 +53,27 @@ class LabeledTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: const TextStyle(
+              fontFamily: 'Gilroy',
               fontSize: 16,
-              color: Color(0xFFB5B5B5),
+              color: secondaryText,
               fontWeight: FontWeight.w400,
             ),
             filled: true,
-            fillColor: lightGray,
+            fillColor: fieldFill,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 16,
               vertical: 18,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
             ),
           ),

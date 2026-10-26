@@ -39,10 +39,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<void> _onRefresh() async {
-    await Future.wait([
-      _bannerCubit.getBanners(),
-      _collectionCubit.getCollection(slug: _slug, sort: 'popular'),
-    ]);
+    await Future.wait([_bannerCubit.getBanners(), _collectionCubit.getCollection(slug: _slug, sort: 'popular')]);
   }
 
   @override
@@ -58,28 +55,21 @@ class _MainPageState extends State<MainPage> {
               child: AppRefreshIndicator(
                 onRefresh: _onRefresh,
                 child: CustomScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics(),
-                  ),
+                  physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
                   slivers: [
                     // Banner Carousel — локальные ассеты, без сетевой загрузки.
                     const SliverToBoxAdapter(child: HomeBannerCarousel()),
 
                     // Search Bar
                     const SliverToBoxAdapter(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: HomeSearchBar(),
-                      ),
+                      child: Padding(padding: EdgeInsets.only(top: 24), child: HomeSearchBar()),
                     ),
 
                     // Category Grid
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 16),
-                        child: HomeCategoryGrid(
-                          onAllCatalog: widget.onAllCatalog,
-                        ),
+                        child: HomeCategoryGrid(onAllCatalog: widget.onAllCatalog),
                       ),
                     ),
 
@@ -91,12 +81,7 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                         child: Text(
                           AppLocalizations.of(context)!.recommended,
-                          style: const TextStyle(
-                            fontFamily: 'Gilroy',
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                          ),
+                          style: const TextStyle(fontFamily: 'Gilroy', fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),
                         ),
                       ),
                     ),
@@ -109,25 +94,15 @@ class _MainPageState extends State<MainPage> {
                           bloc: _collectionCubit,
                           builder: (context, state) {
                             if (state is CollectionGot) {
-                              return HomeProductGrid(
-                                products: state.collection.products,
-                              );
+                              return HomeProductGrid(products: state.collection.products);
                             }
                             return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
                               child: GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: 4,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 10,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: 0.65,
-                                    ),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 0.65),
                                 itemBuilder: (context, index) {
                                   return SimpleShimmer(borderRadius: 16);
                                 },

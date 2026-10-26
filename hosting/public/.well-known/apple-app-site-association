@@ -1,0 +1,25 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "77A4WCPK29.com.baimarket.baimarket",
+        "appIDs": ["77A4WCPK29.com.baimarket.baimarket"],
+        "paths": [
+          "/product/*",
+          "/seller/*",
+          "/collection/*",
+          "/raffle/*",
+          "/live/*"
+        ],
+        "components": [
+          { "/": "/product/*", "comment": "Карточка товара" },
+          { "/": "/seller/*", "comment": "Витрина магазина" },
+          { "/": "/collection/*", "comment": "Подборка" },
+          { "/": "/raffle/*", "comment": "Розыгрыш" },
+          { "/": "/live/*", "comment": "Эфир" }
+        ]
+      }
+    ]
+  }
+}

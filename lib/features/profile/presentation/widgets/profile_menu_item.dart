@@ -10,6 +10,7 @@ class ProfileMenuItem extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
     this.showDivider = false,
+    this.onLongPress,
   });
 
   final String svgAsset;
@@ -18,11 +19,16 @@ class ProfileMenuItem extends StatelessWidget {
   final VoidCallback onTap;
   final bool showDivider;
 
+  /// Скрытый вход — используется для экрана диагностики пушей.
+  final VoidCallback? onLongPress;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CupertinoButton(
+        GestureDetector(
+          onLongPress: onLongPress,
+          child: CupertinoButton(
           padding: EdgeInsets.zero,
           onPressed: onTap,
           child: Padding(
@@ -64,6 +70,7 @@ class ProfileMenuItem extends StatelessWidget {
                 ),
               ],
             ),
+          ),
           ),
         ),
         if (showDivider)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import '../../../cart/data/models/cart_item_model.dart';
 import '../../../cart/data/models/cart_model.dart';
 import 'section_card.dart';
@@ -11,29 +12,68 @@ class OrderTotalSection extends StatelessWidget {
     super.key,
     required this.cartModel,
     required this.deliveryPrice,
+    this.deliveryStatusText,
   });
 
   final CartModel cartModel;
-  final int deliveryPrice;
+
+  /// Цена доставки из котировки. `null` — расчёта ещё нет: в строке доставки
+  /// показываем [deliveryStatusText], а в итог доставку не кладём.
+  final int? deliveryPrice;
+
+  /// Что писать вместо цены, пока её нет («введите индекс», «рассчитываем…»,
+  /// ошибка расчёта).
+  final String? deliveryStatusText;
 
   @override
   Widget build(BuildContext context) {
     final items = cartModel.cartItems ?? const <CartItemModel>[];
-    final goodsBeforeDiscount = _goodsBeforeDiscount(items);
-    final discount = calculateTotalDiscount(items);
-    final goodsAfterDiscount = goodsBeforeDiscount - discount;
-    final totalBefore = goodsBeforeDiscount + deliveryPrice;
-    final totalAfter = goodsAfterDiscount + deliveryPrice;
+
+    // Сумма товаров берётся С СЕРВЕРА (`CartModel.totalPrice`), а не считается
+    // локально. Бэк спишет ровно `order.totalPrice + order.deliveryPrice`, где
+    // totalPrice — это и есть серверный итог по товарам. Локальный fold по
+    // `oldPrice ?? price` давал другое число (oldPrice — цена ДО скидки, а на
+    // части позиций она вообще ниже актуальной), и пользователь видел на
+    // чекауте не ту сумму, которая спишется. Не «оптимизировать» обратно.
+    final serverGoods = cartModel.totalPrice;
+
+    // Фолбэк: сервер итог не прислал — экран ронять нельзя, считаем как раньше.
+    final goods =
+        serverGoods ?? (_goodsBeforeDiscount(items) - calculateTotalDiscount(items));
+
+    // Сумма до скидок берётся из ТОГО ЖЕ источника, что и `goods`. Смешивать
+    // серверный итог с локальным fold нельзя: именно так рядом оказывались две
+    // величины, посчитанные по разным основаниям.
+    final goodsBeforeDiscount =
+        serverGoods != null ? cartModel.oldTotalPrice : _goodsBeforeDiscount(items);
+
+    // Скидка — информационная величина: она уже учтена сервером в `goods`
+    // и в итог «К оплате» НЕ входит.
+    final discount = (goodsBeforeDiscount != null && goodsBeforeDiscount > goods)
+        ? goodsBeforeDiscount - goods
+        : 0;
     final hasDiscount = discount > 0;
+
+    final delivery = deliveryPrice ?? 0;
+
+    // К оплате = серверные товары + доставка. Ровно эту сумму спишет бэк.
+    final totalAfter = goods + delivery;
+
+    // Зачёркнутая цена допустима только на той же базе, что и итог:
+    // «товары до скидок + доставка». Нет серверной суммы до скидок —
+    // зачёркивать нечего.
+    final totalBefore = hasDiscount ? goodsBeforeDiscount! + delivery : null;
+
+    final l10n = AppLocalizations.of(context)!;
 
     return SectionCard(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Общая сумма',
-            style: TextStyle(
+          Text(
+            l10n.totalAmount,
+            style: const TextStyle(
               fontFamily: 'Gilroy',
               fontSize: 22,
               fontWeight: FontWeight.w700,
@@ -41,24 +81,29 @@ class OrderTotalSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          _line(label: 'Товары', value: _formatTenge(goodsBeforeDiscount)),
+          _line(label: l10n.items, value: _formatTenge(goods)),
           const SizedBox(height: 10),
           _line(
-            label: 'Скидка',
+            label: l10n.discount,
             value: hasDiscount ? '-${_formatTenge(discount)}' : '0₸',
             valueColor: hasDiscount ? const Color(0xFFFF3B47) : Colors.black,
           ),
           const SizedBox(height: 10),
-          _line(label: 'Доставка', value: _formatTenge(deliveryPrice)),
+          _line(
+            label: l10n.delivery,
+            value: deliveryPrice != null ? _formatTenge(deliveryPrice!) : (deliveryStatusText ?? ''),
+            valueColor: deliveryPrice != null ? Colors.black : const Color(0xFF8A8A8A),
+            valueIsHint: deliveryPrice == null,
+          ),
           const SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFEDEDED)),
           const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Итого',
-                style: TextStyle(
+              Text(
+                l10n.amountToPay,
+                style: const TextStyle(
                   fontFamily: 'Gilroy',
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
@@ -66,7 +111,7 @@ class OrderTotalSection extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              if (hasDiscount) ...[
+              if (totalBefore != null) ...[
                 Text(
                   _formatTenge(totalBefore),
                   style: const TextStyle(
@@ -103,9 +148,10 @@ class OrderTotalSection extends StatelessWidget {
     required String label,
     required String value,
     Color valueColor = Colors.black,
+    bool valueIsHint = false,
   }) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
@@ -116,19 +162,31 @@ class OrderTotalSection extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        Text(
-          value,
-          style: TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-            color: valueColor,
+        const SizedBox(width: 12),
+        // Вместо цены доставки тут может стоять целая фраза-подсказка,
+        // поэтому значение переносится, а не вылезает за карточку.
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              // Подсказка вместо цены — фраза на пару строк, набирать её
+              // цифровым весом не надо.
+              fontSize: valueIsHint ? 13 : 16,
+              fontWeight: valueIsHint ? FontWeight.w500 : FontWeight.w700,
+              color: valueColor,
+              height: 1.3,
+            ),
           ),
         ),
       ],
     );
   }
 
+  /// Локальный подсчёт суммы товаров до скидок. Используется ТОЛЬКО как
+  /// фолбэк, когда сервер не прислал `CartModel.totalPrice`: на реальных
+  /// данных он расходится с серверным итогом.
   int _goodsBeforeDiscount(List<CartItemModel> items) {
     int sum = 0;
     for (final item in items) {
@@ -161,10 +219,10 @@ class _SavedPill extends StatelessWidget {
             width: 28,
           ),
           const SizedBox(width: 10),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Вы экономили',
-              style: TextStyle(
+              AppLocalizations.of(context)!.youSaved,
+              style: const TextStyle(
                 fontFamily: 'Gilroy',
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

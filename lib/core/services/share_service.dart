@@ -11,10 +11,17 @@ class ShareService {
   ///
   /// [sharePositionOrigin] is required on iPad to anchor the popover; on
   /// phones it can be left null.
-  Future<ShareResult> shareApp({
+  Future<ShareResult> share({
     required String message,
     Rect? sharePositionOrigin,
   }) {
     return Share.share(message, sharePositionOrigin: sharePositionOrigin);
   }
+
+  /// Обратная совместимость для баннера-приглашения в профиле.
+  Future<ShareResult> shareApp({
+    required String message,
+    Rect? sharePositionOrigin,
+  }) =>
+      share(message: message, sharePositionOrigin: sharePositionOrigin);
 }

@@ -22,16 +22,12 @@ class SearchServices implements SearchRepository {
         return const [];
       }
       final data = response.data as List;
+      // `isInFavorite` дефолтится в самой модели через
+      // `@JsonKey(defaultValue: false)`, поэтому подставлять его здесь руками
+      // больше не нужно — генератор выдаёт `as bool? ?? false`.
       final list = data
           .whereType<Map>()
-          .map((e) {
-            final m = Map<String, dynamic>.from(e);
-            // Бэк на /model?q=... не всегда присылает `isInFavorite`,
-            // а в модели поле non-nullable bool — дефолтим, чтобы
-            // .g.dart-генератор не упал на `as bool`.
-            m['isInFavorite'] ??= false;
-            return CategoryProductModel.fromJson(m);
-          })
+          .map((e) => CategoryProductModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
       searchLog.api('search "$q" → ${list.length} items');
       return list;

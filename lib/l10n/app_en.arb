@@ -1,853 +1,1288 @@
 {
-    "@@locale": "en",
-    "appName": "Bai Market",
-    "@appName": {
-        "description": "The name of the application"
-    },
-    "welcome": "Welcome",
-    "@welcome": {
-        "description": "Welcome message"
-    },
-    "login": "Login",
-    "@login": {
-        "description": "Login button text"
-    },
-    "register": "Register",
-    "@register": {
-        "description": "Register button text"
-    },
-    "email": "Email",
-    "@email": {
-        "description": "Email field label"
-    },
-    "password": "Password",
-    "@password": {
-        "description": "Password field label"
-    },
-    "confirmPassword": "Confirm Password",
-    "@confirmPassword": {
-        "description": "Confirm password field label"
-    },
-    "forgotPassword": "Forgot Password?",
-    "@forgotPassword": {
-        "description": "Forgot password button text"
-    },
-    "dontHaveAccount": "Don't have an account?",
-    "@dontHaveAccount": {
-        "description": "Don't have an account text"
-    },
-    "alreadyHaveAccount": "Already have an account?",
-    "@alreadyHaveAccount": {
-        "description": "Already have an account text"
-    },
-    "phone": "Phone",
-    "@phone": {
-        "description": "Phone field label"
-    },
-    "name": "Name",
-    "@name": {
-        "description": "Name field label"
-    },
-    "surname": "Surname",
-    "@surname": {
-        "description": "Surname field label"
-    },
-    "phoneNumber": "Phone Number",
-    "@phoneNumber": {
-        "description": "Phone number field label"
-    },
-    "enterName": "Enter your name",
-    "@enterName": {
-        "description": "Name field hint"
-    },
-    "enterSurname": "Enter your surname",
-    "@enterSurname": {
-        "description": "Surname field hint"
-    },
-    "enterPhone": "Enter your phone number",
-    "@enterPhone": {
-        "description": "Phone number field hint"
-    },
-    "enterEmail": "Enter your email",
-    "@enterEmail": {
-        "description": "Email field hint"
-    },
-    "enterPassword": "Enter your password",
-    "@enterPassword": {
-        "description": "Password field hint"
-    },
-    "enterConfirmPassword": "Confirm your password",
-    "@enterConfirmPassword": {
-        "description": "Confirm password field hint"
-    },
-    "cart": "Cart",
-    "@cart": {
-        "description": "Cart menu item text"
-    },
-    "favorites": "Favorites",
-    "@favorites": {
-        "description": "Favorites section title"
-    },
-    "profile": "Profile",
-    "@profile": {
-        "description": "Profile menu item text"
-    },
-    "settings": "Settings",
-    "@settings": {
-        "description": "Settings section title"
-    },
-    "language": "Language",
-    "@language": {
-        "description": "Language setting"
-    },
-    "notifications": "Notifications",
-    "@notifications": {
-        "description": "Notifications setting"
-    },
-    "logout": "Logout",
-    "@logout": {
-        "description": "Logout button text"
-    },
-    "catalog": "Catalog",
-    "@catalog": {
-        "description": "Catalog menu item text"
-    },
-    "freeDelivery": "Free delivery",
-    "@freeDelivery": {
-        "description": "Free delivery text"
-    },
-    "deliveryAddress": "Delivery Address:",
-    "@deliveryAddress": {
-        "description": "Delivery address label"
-    },
-    "addressExample": "Example: Auezova 34",
-    "@addressExample": {
-        "description": "Address field hint"
-    },
-    "postalCode": "Postal Code",
-    "@postalCode": {
-        "description": "Postal code field label"
-    },
-    "cardNumber": "Card number",
-    "@cardNumber": {
-        "description": "Card number field label"
-    },
-    "enterCardNumber": "Enter card number",
-    "@enterCardNumber": {
-        "description": "Card number field hint"
-    },
-    "cvv": "CVV",
-    "@cvv": {
-        "description": "CVV field label"
-    },
-    "whoWillMeet": "Who will meet the courier?",
-    "@whoWillMeet": {
-        "description": "Name field label for delivery"
-    },
-    "nameExample": "Example: Abzal",
-    "@nameExample": {
-        "description": "Name field hint for delivery"
-    },
-    "tryAgain": "Try again",
-    "@tryAgain": {
-        "description": "Try again button text"
-    },
-    "emptyCityList": "City list is empty",
-    "@emptyCityList": {
-        "description": "Empty city list message"
-    },
-    "productName": "Product name",
-    "@productName": {
-        "description": "Default product name"
-    },
-    "productDescription": "Product description",
-    "@productDescription": {
-        "description": "Default product description text"
-    },
-    "homeAddress": "Home Address",
-    "@homeAddress": {
-        "description": "Home address label"
-    },
-    "postalIndex": "Postal index: {index}",
-    "@postalIndex": {
-        "description": "Postal index text with placeholder",
-        "placeholders": {
-            "index": {
-                "type": "String"
-            }
-        }
-    },
-    "myAddresses": "My Addresses",
-    "@myAddresses": {
-        "description": "My addresses section title"
-    },
-    "orderHistory": "Order History",
-    "@orderHistory": {
-        "description": "Order history page title"
-    },
-    "support": "Support",
-    "@support": {
-        "description": "Support section title"
-    },
-    "supportTitle": "Support",
-    "@supportTitle": {
-        "description": "Support page title"
-    },
-    "supportWorkingHours": "We are ready to help you\nevery day from 9:00 - 22:00",
-    "@supportWorkingHours": {
-        "description": "Support working hours message"
-    },
-    "whatsapp": "WhatsApp",
-    "@whatsapp": {
-        "description": "WhatsApp button text"
-    },
-    "telegram": "Telegram",
-    "@telegram": {
-        "description": "Telegram button text"
-    },
-    "faq": "Frequently Asked Questions",
-    "@faq": {
-        "description": "FAQ section title"
-    },
-    "failedToOpen": "Failed to open {url}",
-    "@failedToOpen": {
-        "description": "Error message when URL cannot be opened",
-        "placeholders": {
-            "url": {
-                "type": "String"
-            }
-        }
-    },
-    "exitApp": "Exit Application",
-    "@exitApp": {
-        "description": "Exit application button text"
-    },
-    "exitConfirmation": "Are you sure you want to exit the application?",
-    "@exitConfirmation": {
-        "description": "Exit application confirmation message"
-    },
-    "cancel": "Cancel",
-    "@cancel": {
-        "description": "Cancel button text"
-    },
-    "notInStock": "Out of stock",
-    "@notInStock": {
-        "description": "Product out of stock label"
-    },
-    "youWon": "You won!",
-    "@youWon": {
-        "description": "Prize won message"
-    },
-    "weWillContactYou": "We will contact you soon",
-    "@weWillContactYou": {
-        "description": "Contact message after winning"
-    },
-    "index": "Index: {index}",
-    "@index": {
-        "description": "Postal index text with placeholder",
-        "placeholders": {
-            "index": {
-                "type": "String"
-            }
-        }
-    },
-    "price": "{price} ₸",
-    "@price": {
-        "description": "Price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "oldPrice": "{price} ₸",
-    "@oldPrice": {
-        "description": "Old price with currency",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "productDescriptionShort": "Provides ease and comfort in makeup all...",
-    "home": "Home",
-    "@home": {
-        "description": "Home menu item text"
-    },
-    "products": "products",
-    "@products": {
-        "description": "Products count text"
-    },
-    "more": "More",
-    "in_sale": "In Sale",
-    "not_in_sale": "Not in sale",
-    "purchases": "Purchases",
-    "orderAgain": "Order again",
-    "myPrizes": "My prizes",
-    "noPrizes": "No prizes",
-    "cartEmpty": "Cart is empty",
-    "@cartEmpty": {
-        "description": "Empty cart message"
-    },
-    "addedItemsWillAppearHere": "Added items will appear here",
-    "@addedItemsWillAppearHere": {
-        "description": "Empty cart hint message"
-    },
-    "goToShopping": "Go shopping",
-    "@goToShopping": {
-        "description": "Go to shopping button text"
-    },
-    "proceedToCheckout": "Proceed to checkout",
-    "@proceedToCheckout": {
-        "description": "Proceed to checkout button text"
-    },
-    "pricePerItem": "{price} ₸/item",
-    "@pricePerItem": {
-        "description": "Price per item text",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "cannotAddMore": "Cannot add more. This is the maximum.",
-    "@cannotAddMore": {
-        "description": "Maximum items reached message"
-    },
-    "prize_goods": "Prize goods",
-    "number_of_tickets": "Number for participation",
-    "tickets": "tickets",
-    "description": "Description",
-    "@description": {
-        "description": "Product description section title"
-    },
-    "addToCart": "Add to Cart",
-    "@addToCart": {
-        "description": "Add to cart button text"
-    },
-    "productOutOfStock": "Product is out of stock!",
-    "@productOutOfStock": {
-        "description": "Product out of stock message"
-    },
-    "productAddedToCart": "Product successfully added to cart!",
-    "@productAddedToCart": {
-        "description": "Product added to cart success message"
-    },
-    "goToCart": "Go to Cart",
-    "@goToCart": {
-        "description": "Go to cart button text"
-    },
-    "showFirst": "Show first",
-    "@showFirst": {
-        "description": "Sorting modal title"
-    },
-    "sortPopular": "Popular",
-    "@sortPopular": {
-        "description": "Sort by popularity option"
-    },
-    "sortCheap": "Cheapest first",
-    "@sortCheap": {
-        "description": "Sort by price ascending option"
-    },
-    "sortExpensive": "Most expensive first",
-    "@sortExpensive": {
-        "description": "Sort by price descending option"
-    },
-    "myData": "My Data",
-    "@myData": {
-        "description": "My data page title"
-    },
-    "save": "Save",
-    "@save": {
-        "description": "Save button text"
-    },
-    "deleteAccount": "Delete Account",
-    "@deleteAccount": {
-        "description": "Delete account button text"
-    },
-    "fillAllFields": "Please fill in all fields",
-    "@fillAllFields": {
-        "description": "Validation message for empty fields"
-    },
-    "profileUpdateError": "Error updating profile: {message}",
-    "@profileUpdateError": {
-        "description": "Profile update error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "error": "Error: {message}",
-    "@error": {
-        "description": "Generic error message",
-        "placeholders": {
-            "message": {
-                "type": "String"
-            }
-        }
-    },
-    "faqTicketAfterPayment": "How is the ticket issued after payment?",
-    "@faqTicketAfterPayment": {
-        "description": "FAQ question about ticket issuance"
-    },
-    "faqTicketAfterPaymentAnswer": "The ticket is issued automatically after payment. You can see it in the My Profile section.",
-    "@faqTicketAfterPaymentAnswer": {
-        "description": "FAQ answer about ticket issuance"
-    },
-    "faqDeliveryMethod": "How is delivery carried out?",
-    "@faqDeliveryMethod": {
-        "description": "FAQ question about delivery method"
-    },
-    "faqDeliveryMethodAnswer": "Delivery is carried out through KazPost. You will receive a notification when your order is shipped.",
-    "@faqDeliveryMethodAnswer": {
-        "description": "FAQ answer about delivery method"
-    },
-    "faqDeliveryTime": "How long does delivery take?",
-    "@faqDeliveryTime": {
-        "description": "FAQ question about delivery time"
-    },
-    "faqDeliveryTimeAnswer": "Delivery usually takes 3 to 7 business days, depending on your region.",
-    "@faqDeliveryTimeAnswer": {
-        "description": "FAQ answer about delivery time"
-    },
-    "faqCancelOrder": "Can I cancel my order after payment?",
-    "@faqCancelOrder": {
-        "description": "FAQ question about order cancellation"
-    },
-    "faqCancelOrderAnswer": "Yes, you can cancel your order before it is shipped. To do this, contact our support team.",
-    "@faqCancelOrderAnswer": {
-        "description": "FAQ answer about order cancellation"
-    },
-    "faqTrackOrder": "How can I track my order?",
-    "@faqTrackOrder": {
-        "description": "FAQ question about order tracking"
-    },
-    "faqTrackOrderAnswer": "After shipping, you will receive a tracking number. You can track your package on the KazPost website or in the My Orders section.",
-    "@faqTrackOrderAnswer": {
-        "description": "FAQ answer about order tracking"
-    },
-    "errorTitle": "Error",
-    "@errorTitle": {
-        "description": "Error title for snackbar"
-    },
-    "success": "Success!",
-    "@success": {
-        "description": "Success title for snackbar"
-    },
-    "orderDetails": "Order Details",
-    "@orderDetails": {
-        "description": "Order details page title"
-    },
-    "noData": "No data",
-    "@noData": {
-        "description": "No data available message"
-    },
-    "recipient": "Recipient:",
-    "@recipient": {
-        "description": "Recipient label"
-    },
-    "noName": "No name",
-    "@noName": {
-        "description": "No name available message"
-    },
-    "noPhone": "No phone number",
-    "@noPhone": {
-        "description": "No phone number available message"
-    },
-    "deliveryDate": "Delivery Date:",
-    "@deliveryDate": {
-        "description": "Delivery date label"
-    },
-    "orderId": "Order ID: {id}",
-    "@orderId": {
-        "description": "Order ID text with placeholder",
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "orderStatusPaymentPending": "Pending Payment",
-    "@orderStatusPaymentPending": {
-        "description": "Order status: Payment Pending"
-    },
-    "orderStatusProcessing": "Processing",
-    "@orderStatusProcessing": {
-        "description": "Order status: Processing"
-    },
-    "orderStatusWay": "On the Way",
-    "@orderStatusWay": {
-        "description": "Order status: On the Way"
-    },
-    "orderStatusPickup": "Ready for Pickup",
-    "@orderStatusPickup": {
-        "description": "Order status: Ready for Pickup"
-    },
-    "orderStatusDelivered": "Delivered",
-    "@orderStatusDelivered": {
-        "description": "Order status: Delivered"
-    },
-    "orderStatusCanceled": "Canceled",
-    "@orderStatusCanceled": {
-        "description": "Order status: Canceled"
-    },
-    "orderStatusAssembling": "Assembling",
-    "@orderStatusAssembling": {
-        "description": "Order status: Assembling"
-    },
-    "orderStatusAbandoned": "Abandoned",
-    "@orderStatusAbandoned": {
-        "description": "Order status: Abandoned"
-    },
-    "orderStatusPaymentFailed": "Payment Failed",
-    "@orderStatusPaymentFailed": {
-        "description": "Order status: Payment Failed"
-    },
-    "orderProcessingMessage": "Your items are reserved, order is being processed. You will receive a notification when the order is sent for assembly",
-    "@orderProcessingMessage": {
-        "description": "Order processing status message"
-    },
-    "ticketsWillBeAwarded": "Tickets will be awarded",
-    "@ticketsWillBeAwarded": {
-        "description": "Tickets award message"
-    },
-    "totalAmount": "Total Amount",
-    "@totalAmount": {
-        "description": "Total amount label"
-    },
-    "items": "Items",
-    "@items": {
-        "description": "Items label"
-    },
-    "discount": "Discount",
-    "@discount": {
-        "description": "Discount label"
-    },
-    "promotionalNumbers": "Promotional Numbers",
-    "@promotionalNumbers": {
-        "description": "Promotional numbers label"
-    },
-    "delivery": "Delivery",
-    "@delivery": {
-        "description": "Delivery label"
-    },
-    "free": "Free",
-    "@free": {
-        "description": "Free delivery text"
-    },
-    "total": "Total",
-    "@total": {
-        "description": "Total label"
-    },
-    "paid": "Paid",
-    "@paid": {
-        "description": "Paid status"
-    },
-    "unpaid": "Unpaid",
-    "@unpaid": {
-        "description": "Unpaid status"
-    },
-    "enterPhoneNumber": "Enter your\nphone number",
-    "@enterPhoneNumber": {
-        "description": "Phone number input title"
-    },
-    "weWillSendSms": "We will send an SMS with a verification code",
-    "@weWillSendSms": {
-        "description": "SMS verification message"
-    },
-    "getCode": "Get Code",
-    "@getCode": {
-        "description": "Get verification code button"
-    },
-    "termsAndPrivacy": "By clicking the \"Get Code\" button, you accept the terms of use and privacy policy",
-    "@termsAndPrivacy": {
-        "description": "Terms and privacy policy text"
-    },
-    "enterCode": "Enter Code",
-    "@enterCode": {
-        "description": "Enter verification code title"
-    },
-    "sentToNumber": "We sent it to the number\n+7 {phoneNumber}",
-    "@sentToNumber": {
-        "description": "SMS sent confirmation message",
-        "placeholders": {
-            "phoneNumber": {
-                "type": "String"
-            }
-        }
-    },
-    "signIn": "Sign In",
-    "@signIn": {
-        "description": "Sign in button text"
-    },
-    "market": "Market",
-    "streams": "Streams",
-    "orders": "Orders",
-    "searchHomeHint": "What were you looking for?",
-    "all": "All",
-    "plusPrice": "With Plus",
-    "sellerOrders": "{count} orders",
-    "@sellerOrders": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "reviews": "Reviews",
-    "reviewsCount": "{count} reviews",
-    "@reviewsCount": {
-        "placeholders": {
-            "count": {
-                "type": "String"
-            }
-        }
-    },
-    "readAll": "Read all",
-    "relatedProducts": "You might also like",
-    "buy": "Buy",
-    "newTag": "New",
-    "hitTag": "Hit",
-    "myTickets": "My tickets",
-    "specifyDeliveryAddress": "Specify delivery address",
-    "myOrders": "My orders",
-    "orderStatus": "Order status",
-    "myCard": "My card",
-    "contacts": "Contacts",
-    "inviteFriends": "Invite friends",
-    "goToPayment": "Go to payment",
-    "clearCart": "Clear",
-    "youSaved": "You saved",
-    "recommended": "Recommended",
-    "notAvailable": "Not available",
-    "defaultDescription": "A high-quality product that meets your daily care needs. Carefully selected ingredients ensure effective results. Suitable for all skin types. Recommended by professionals.",
-    "liveNow": "Live now",
-    "otpSubtitle": "We sent a 4-digit code\nto your phone",
-    "resendCode": "Resend code",
-    "confirm": "Confirm",
-    "continueAction": "Continue",
-    "notificationCategoryPurchase": "Purchase",
-    "notificationCategoryDelivery": "Delivery",
-    "notificationCategoryStream": "Streams",
-    "notificationCategorySubscription": "Subscription",
-    "noNotifications": "No notifications",
-    "selectAddress": "Select address",
-    "noSavedAddresses": "You don't have any saved addresses yet",
-    "addAddress": "Add address",
-    "raffleTab": "Raffles",
-    "@raffleTab": {
-        "description": "Catalog tab label for raffles"
-    },
-    "allShopsTab": "All shops",
-    "@allShopsTab": {
-        "description": "Catalog top switcher label for shops view"
-    },
-    "wholeCatalogTab": "Whole catalog",
-    "@wholeCatalogTab": {
-        "description": "Catalog top switcher label for catalog view"
-    },
-    "raffleDefaultTitle": "Raffle",
-    "@raffleDefaultTitle": {
-        "description": "Fallback title when a raffle has no seller"
-    },
-    "raffleDateLabel": "Date: {date}",
-    "@raffleDateLabel": {
-        "description": "Raffle draw date label",
-        "placeholders": {
-            "date": {
-                "type": "String"
-            }
-        }
-    },
-    "raffleDateTbd": "Date: TBD",
-    "@raffleDateTbd": {
-        "description": "Raffle date placeholder when unknown"
-    },
-    "raffleGiftsCount": "{count} gifts",
-    "@raffleGiftsCount": {
-        "description": "Number of gifts in a raffle",
-        "placeholders": {
-            "count": {
-                "type": "int"
-            }
-        }
-    },
-    "raffleGiftsAction": "View gifts",
-    "@raffleGiftsAction": {
-        "description": "Header button that opens the gifts sheet"
-    },
-    "raffleGiftsTitle": "Raffle gifts",
-    "@raffleGiftsTitle": {
-        "description": "Title of the gifts bottom sheet"
-    },
-    "raffleGiftsEmpty": "No gifts yet",
-    "@raffleGiftsEmpty": {
-        "description": "Empty state for raffle gifts sheet"
-    },
-    "raffleEmpty": "No active raffles yet",
-    "@raffleEmpty": {
-        "description": "Empty state for raffles list"
-    },
-    "raffleLoadError": "Failed to load raffle",
-    "@raffleLoadError": {
-        "description": "Raffle load error"
-    },
-    "raffleProductsEmpty": "No products in this raffle yet",
-    "@raffleProductsEmpty": {
-        "description": "Empty state for raffle products grid"
-    },
-    "sortDiscount": "Biggest discount",
-    "@sortDiscount": {
-        "description": "Sort by discount option"
-    },
-    "baseAvatar": "Base",
-    "@baseAvatar": {
-        "description": "Label for the base avatar option (initial letter)"
-    },
-    "selectAvatar": "Select",
-    "@selectAvatar": {
-        "description": "Label for the custom photo avatar option"
-    },
-    "dateOfBirth": "Date of birth",
-    "@dateOfBirth": {
-        "description": "Date of birth field label"
-    },
-    "birthDateHint": "dd-mm-yyyy",
-    "@birthDateHint": {
-        "description": "Date of birth placeholder"
-    },
-    "phoneNumberHint": "(000) - 00 - 00",
-    "@phoneNumberHint": {
-        "description": "Phone number field placeholder"
-    },
-    "addPhoto": "Add photo",
-    "@addPhoto": {
-        "description": "Add photo bottom sheet title"
-    },
-    "gallery": "Gallery",
-    "@gallery": {
-        "description": "Gallery option in the photo picker sheet"
-    },
-    "camera": "Camera",
-    "@camera": {
-        "description": "Camera option in the photo picker sheet"
-    },
-    "shareAppMessage": "Hi! I'm using this awesome app. Join me: {link}",
-    "@shareAppMessage": {
-        "description": "Message pre-filled in the system share sheet when inviting friends",
-        "placeholders": {
-            "link": {
-                "type": "String"
-            }
-        }
-    },
-    "shareAppError": "Couldn't open the share sheet",
-    "@shareAppError": {
-        "description": "Error shown when the native share sheet fails to open"
-    },
-    "ordersTabAll": "All",
-    "ordersTabActive": "Active",
-    "ordersTabCompleted": "Completed",
-    "ordersTabReturn": "Returns",
-    "ordersEmptyTitle": "No orders",
-    "ordersEmptyMessage": "Your orders will appear here",
-    "orderTagActive": "Active",
-    "orderTagCompleted": "Completed",
-    "orderTagReturn": "Return",
-    "orderLeaveReview": "Leave a review",
-    "orderInTransitMessage": "Your order has been handed over for shipping. A little patience, your item is on its way.",
-    "orderDeliveredMessage": "Congratulations! The courier delivered your order. We'd appreciate it if you rated our work.",
-    "orderReturnMessage": "The order was returned or canceled.",
-    "priceTenge": "{price}₸",
-    "@priceTenge": {
-        "description": "Price with tenge symbol (no space)",
-        "placeholders": {
-            "price": {
-                "type": "String"
-            }
-        }
-    },
-    "favoritesEmptyTitle": "Nothing here yet",
-    "favoritesEmptySubtitle": "Add items to favorites so you can easily come back to them later!",
-    "goShopping": "Go shopping",
-    "myCards": "My cards",
-    "paymentCard": "Payment card",
-    "addCard": "Add card",
-    "cardsEmptyTitle": "No cards",
-    "cardsEmptySubtitle": "You don't have any saved cards yet",
-    "contactsTitle": "Contacts",
-    "callCenter": "Call center",
-    "callCenterSubtitle": "We'll consult and help\nyou place an order",
-    "acceptCallsHours": "We accept calls from 10:00 to 20:00",
-    "respondHours": "We reply from 10:00 to 20:00",
-    "writeOnWhatsapp": "Message on Whatsapp",
-    "writeOnTelegram": "Message on Telegram",
-    "deliverySectionTitle": "Delivery",
-    "deliverySectionSubtitle": "Updates are posted in our Telegram channel",
-    "selfPickupSectionTitle": "Self-pickup address",
-    "branches": "Branches",
-    "loginRequired": "Sign in",
-    "loginRequiredHint": "Sign in to your account to continue",
-    "addToCartFailed": "Couldn't add to cart",
-    "pullToRefresh": "Pull down to refresh",
-    "refreshing": "Refreshing…",
-    "removeFromCartFailed": "Couldn't remove from cart",
-    "paymentAmountTitle": "Payment amount:",
-    "paymentSumLabel": "Amount:",
-    "paymentCommissionLabel": "Commission:",
-    "paymentTermsPart1": "By proceeding with the payment, you automatically",
-    "paymentTermsLinkText": "agree",
-    "paymentTermsPart2": "to the terms",
-    "payButton": "Pay",
-    "fromTitle": "From",
-    "fromOtherCard": "From another card",
-    "removeCardTitle": "Remove card?",
-    "removeCardSubtitle": "Are you sure you want to remove this card",
-    "removeAction": "Remove",
-    "enterCardDataTitle": "Enter card details",
-    "cardExpiryLabel": "Expiry date",
-    "cardExpiryHint": "MM/YY",
-    "cardCvvLabel": "CVV code",
-    "saveCardData": "Save card details",
-    "cardWarning": "Make sure the card allows online transactions and has sufficient limit",
-    "orderAcceptedTitle": "Your order is accepted!",
-    "orderIdLabel": "Order ID: {id}",
-    "@orderIdLabel": {
-        "placeholders": {
-            "id": {
-                "type": "String"
-            }
-        }
-    },
-    "receiptItemsLabel": "Items:",
-    "receiptSavedLabel": "Saved:",
-    "receiptTicketsLabel": "Tickets:",
-    "receiptPaymentMethodLabel": "Payment method:",
-    "viewOrderStatus": "View status",
-    "viewersLabel": "Viewers",
-    "streamInactiveTitle": "Stream is currently inactive",
-    "streamInactiveSubtitle": "Wait for the broadcast to start",
-    "searchHint": "Search products…",
-    "searchPrompt": "Start typing to find a product",
-    "searchEmpty": "Nothing found",
-    "searchError": "Search failed. Please try again",
-    "onAirNow": "On air now",
-    "giftButton": "Gift",
-    "commentInputHint": "Type a comment...",
-    "inCart": "In Cart",
-    "kaspiPayTitle": "Kaspi payment",
-    "kaspiAmountToPay": "To pay: {amount}",
-    "@kaspiAmountToPay": {
-        "placeholders": {
-            "amount": {
-                "type": "String"
-            }
-        }
-    },
-    "kaspiScanOrPay": "Scan the QR code or tap «Pay» to open Kaspi",
-    "kaspiWaitingPayment": "Waiting for payment…",
-    "kaspiPaymentFailed": "Payment failed",
-    "kaspiLinkExpired": "The payment link has expired",
-    "kaspiPayAgain": "Pay again"
+  "@@locale": "en",
+  "appName": "hibai",
+  "@appName": {
+    "description": "The name of the application"
+  },
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Welcome message"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login button text"
+  },
+  "register": "Register",
+  "@register": {
+    "description": "Register button text"
+  },
+  "email": "Email",
+  "@email": {
+    "description": "Email field label"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password field label"
+  },
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password button text"
+  },
+  "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": {
+    "description": "Don't have an account text"
+  },
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {
+    "description": "Already have an account text"
+  },
+  "phone": "Phone",
+  "@phone": {
+    "description": "Phone field label"
+  },
+  "name": "Name",
+  "@name": {
+    "description": "Name field label"
+  },
+  "surname": "Surname",
+  "@surname": {
+    "description": "Surname field label"
+  },
+  "phoneNumber": "Phone Number",
+  "@phoneNumber": {
+    "description": "Phone number field label"
+  },
+  "enterName": "Enter your name",
+  "@enterName": {
+    "description": "Name field hint"
+  },
+  "enterSurname": "Enter your surname",
+  "@enterSurname": {
+    "description": "Surname field hint"
+  },
+  "enterPhone": "Enter your phone number",
+  "@enterPhone": {
+    "description": "Phone number field hint"
+  },
+  "enterEmail": "Enter your email",
+  "@enterEmail": {
+    "description": "Email field hint"
+  },
+  "enterPassword": "Enter your password",
+  "@enterPassword": {
+    "description": "Password field hint"
+  },
+  "enterConfirmPassword": "Confirm your password",
+  "@enterConfirmPassword": {
+    "description": "Confirm password field hint"
+  },
+  "cart": "Cart",
+  "@cart": {
+    "description": "Cart menu item text"
+  },
+  "favorites": "Favorites",
+  "@favorites": {
+    "description": "Favorites section title"
+  },
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile menu item text"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings section title"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications setting"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+  "catalog": "Catalog",
+  "@catalog": {
+    "description": "Catalog menu item text"
+  },
+  "freeDelivery": "Free delivery",
+  "@freeDelivery": {
+    "description": "Free delivery text"
+  },
+  "deliveryAddress": "Delivery Address:",
+  "@deliveryAddress": {
+    "description": "Delivery address label"
+  },
+  "addressExample": "Example: Auezova 34",
+  "@addressExample": {
+    "description": "Address field hint"
+  },
+  "postalCode": "Postal Code",
+  "@postalCode": {
+    "description": "Postal code field label"
+  },
+  "cardNumber": "Card number",
+  "@cardNumber": {
+    "description": "Card number field label"
+  },
+  "enterCardNumber": "Enter card number",
+  "@enterCardNumber": {
+    "description": "Card number field hint"
+  },
+  "cvv": "CVV",
+  "@cvv": {
+    "description": "CVV field label"
+  },
+  "whoWillMeet": "Who will meet the courier?",
+  "@whoWillMeet": {
+    "description": "Name field label for delivery"
+  },
+  "nameExample": "Example: Abzal",
+  "@nameExample": {
+    "description": "Name field hint for delivery"
+  },
+  "tryAgain": "Try again",
+  "@tryAgain": {
+    "description": "Try again button text"
+  },
+  "emptyCityList": "City list is empty",
+  "@emptyCityList": {
+    "description": "Empty city list message"
+  },
+  "productName": "Product name",
+  "@productName": {
+    "description": "Default product name"
+  },
+  "productDescription": "Product description",
+  "@productDescription": {
+    "description": "Default product description text"
+  },
+  "homeAddress": "Home Address",
+  "@homeAddress": {
+    "description": "Home address label"
+  },
+  "postalIndex": "Postal index: {index}",
+  "@postalIndex": {
+    "description": "Postal index text with placeholder",
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "myAddresses": "My Addresses",
+  "@myAddresses": {
+    "description": "My addresses section title"
+  },
+  "orderHistory": "Order History",
+  "@orderHistory": {
+    "description": "Order history page title"
+  },
+  "support": "Support",
+  "@support": {
+    "description": "Support section title"
+  },
+  "supportTitle": "Support",
+  "@supportTitle": {
+    "description": "Support page title"
+  },
+  "supportWorkingHours": "We are ready to help you\nevery day from 9:00 - 22:00",
+  "@supportWorkingHours": {
+    "description": "Support working hours message"
+  },
+  "whatsapp": "WhatsApp",
+  "@whatsapp": {
+    "description": "WhatsApp button text"
+  },
+  "telegram": "Telegram",
+  "@telegram": {
+    "description": "Telegram button text"
+  },
+  "faq": "Frequently Asked Questions",
+  "@faq": {
+    "description": "FAQ section title"
+  },
+  "failedToOpen": "Failed to open {url}",
+  "@failedToOpen": {
+    "description": "Error message when URL cannot be opened",
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "exitApp": "Exit Application",
+  "@exitApp": {
+    "description": "Exit application button text"
+  },
+  "exitConfirmation": "Are you sure you want to exit the application?",
+  "@exitConfirmation": {
+    "description": "Exit application confirmation message"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "notInStock": "Out of stock",
+  "@notInStock": {
+    "description": "Product out of stock label"
+  },
+  "youWon": "You won!",
+  "@youWon": {
+    "description": "Prize won message"
+  },
+  "weWillContactYou": "We will contact you soon",
+  "@weWillContactYou": {
+    "description": "Contact message after winning"
+  },
+  "index": "Index: {index}",
+  "@index": {
+    "description": "Postal index text with placeholder",
+    "placeholders": {
+      "index": {
+        "type": "String"
+      }
+    }
+  },
+  "price": "{price} ₸",
+  "@price": {
+    "description": "Price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "oldPrice": "{price} ₸",
+  "@oldPrice": {
+    "description": "Old price with currency",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "productDescriptionShort": "Provides ease and comfort in makeup all...",
+  "home": "Home",
+  "@home": {
+    "description": "Home menu item text"
+  },
+  "products": "products",
+  "@products": {
+    "description": "Products count text"
+  },
+  "more": "More",
+  "in_sale": "In Sale",
+  "not_in_sale": "Not in sale",
+  "purchases": "Purchases",
+  "orderAgain": "Order again",
+  "myPrizes": "My prizes",
+  "noPrizes": "No prizes",
+  "cartEmpty": "Cart is empty",
+  "@cartEmpty": {
+    "description": "Empty cart message"
+  },
+  "addedItemsWillAppearHere": "Added items will appear here",
+  "@addedItemsWillAppearHere": {
+    "description": "Empty cart hint message"
+  },
+  "goToShopping": "Go shopping",
+  "@goToShopping": {
+    "description": "Go to shopping button text"
+  },
+  "proceedToCheckout": "Proceed to checkout",
+  "@proceedToCheckout": {
+    "description": "Proceed to checkout button text"
+  },
+  "pricePerItem": "{price} ₸/item",
+  "@pricePerItem": {
+    "description": "Price per item text",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "cannotAddMore": "Cannot add more. This is the maximum.",
+  "@cannotAddMore": {
+    "description": "Maximum items reached message"
+  },
+  "prize_goods": "Prize goods",
+  "number_of_tickets": "Number for participation",
+  "tickets": "tickets",
+  "description": "Description",
+  "@description": {
+    "description": "Product description section title"
+  },
+  "addToCart": "Add to Cart",
+  "@addToCart": {
+    "description": "Add to cart button text"
+  },
+  "productOutOfStock": "Product is out of stock!",
+  "@productOutOfStock": {
+    "description": "Product out of stock message"
+  },
+  "productAddedToCart": "Product successfully added to cart!",
+  "@productAddedToCart": {
+    "description": "Product added to cart success message"
+  },
+  "goToCart": "Go to Cart",
+  "@goToCart": {
+    "description": "Go to cart button text"
+  },
+  "showFirst": "Show first",
+  "@showFirst": {
+    "description": "Sorting modal title"
+  },
+  "sortPopular": "Popular",
+  "@sortPopular": {
+    "description": "Sort by popularity option"
+  },
+  "sortCheap": "Cheap",
+  "@sortCheap": {
+    "description": "Sort by price ascending option"
+  },
+  "sortExpensive": "Expensive",
+  "@sortExpensive": {
+    "description": "Sort by price descending option"
+  },
+  "myData": "My Data",
+  "@myData": {
+    "description": "My data page title"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {
+    "description": "Delete account button text"
+  },
+  "fillAllFields": "Please fill in all fields",
+  "@fillAllFields": {
+    "description": "Validation message for empty fields"
+  },
+  "profileUpdateError": "Error updating profile: {message}",
+  "@profileUpdateError": {
+    "description": "Profile update error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "error": "Error: {message}",
+  "@error": {
+    "description": "Generic error message",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "faqTicketAfterPayment": "How is the ticket issued after payment?",
+  "@faqTicketAfterPayment": {
+    "description": "FAQ question about ticket issuance"
+  },
+  "faqTicketAfterPaymentAnswer": "The ticket is issued automatically after payment. You can see it in the My Profile section.",
+  "@faqTicketAfterPaymentAnswer": {
+    "description": "FAQ answer about ticket issuance"
+  },
+  "faqDeliveryMethod": "How is delivery carried out?",
+  "@faqDeliveryMethod": {
+    "description": "FAQ question about delivery method"
+  },
+  "faqDeliveryMethodAnswer": "Delivery is carried out through KazPost. You will receive a notification when your order is shipped.",
+  "@faqDeliveryMethodAnswer": {
+    "description": "FAQ answer about delivery method"
+  },
+  "faqDeliveryTime": "How long does delivery take?",
+  "@faqDeliveryTime": {
+    "description": "FAQ question about delivery time"
+  },
+  "faqDeliveryTimeAnswer": "Delivery usually takes 3 to 7 business days, depending on your region.",
+  "@faqDeliveryTimeAnswer": {
+    "description": "FAQ answer about delivery time"
+  },
+  "faqCancelOrder": "Can I cancel my order after payment?",
+  "@faqCancelOrder": {
+    "description": "FAQ question about order cancellation"
+  },
+  "faqCancelOrderAnswer": "Yes, you can cancel your order before it is shipped. To do this, contact our support team.",
+  "@faqCancelOrderAnswer": {
+    "description": "FAQ answer about order cancellation"
+  },
+  "faqTrackOrder": "How can I track my order?",
+  "@faqTrackOrder": {
+    "description": "FAQ question about order tracking"
+  },
+  "faqTrackOrderAnswer": "After shipping, you will receive a tracking number. You can track your package on the KazPost website or in the My Orders section.",
+  "@faqTrackOrderAnswer": {
+    "description": "FAQ answer about order tracking"
+  },
+  "errorTitle": "Error",
+  "@errorTitle": {
+    "description": "Error title for snackbar"
+  },
+  "success": "Success!",
+  "@success": {
+    "description": "Success title for snackbar"
+  },
+  "orderDetails": "Order Details",
+  "@orderDetails": {
+    "description": "Order details page title"
+  },
+  "noData": "No data",
+  "@noData": {
+    "description": "No data available message"
+  },
+  "recipient": "Recipient:",
+  "@recipient": {
+    "description": "Recipient label"
+  },
+  "noName": "No name",
+  "@noName": {
+    "description": "No name available message"
+  },
+  "noPhone": "No phone number",
+  "@noPhone": {
+    "description": "No phone number available message"
+  },
+  "deliveryDate": "Delivery Date:",
+  "@deliveryDate": {
+    "description": "Delivery date label"
+  },
+  "orderId": "Order ID: {id}",
+  "@orderId": {
+    "description": "Order ID text with placeholder",
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "orderStatusPaymentPending": "Pending Payment",
+  "@orderStatusPaymentPending": {
+    "description": "Order status: Payment Pending"
+  },
+  "orderStatusProcessing": "Processing",
+  "@orderStatusProcessing": {
+    "description": "Order status: Processing"
+  },
+  "orderStatusWay": "On the Way",
+  "@orderStatusWay": {
+    "description": "Order status: On the Way"
+  },
+  "orderStatusPickup": "Waiting at branch",
+  "@orderStatusPickup": {
+    "description": "Order status: the parcel is waiting at the Kazpost branch"
+  },
+  "orderStatusDelivered": "Delivered",
+  "@orderStatusDelivered": {
+    "description": "Order status: Delivered"
+  },
+  "orderStatusCanceled": "Canceled",
+  "@orderStatusCanceled": {
+    "description": "Order status: Canceled"
+  },
+  "orderStatusAssembling": "Assembling",
+  "@orderStatusAssembling": {
+    "description": "Order status: Assembling"
+  },
+  "orderStatusAbandoned": "Abandoned",
+  "@orderStatusAbandoned": {
+    "description": "Order status: Abandoned"
+  },
+  "orderStatusPaymentFailed": "Payment Failed",
+  "@orderStatusPaymentFailed": {
+    "description": "Order status: Payment Failed"
+  },
+  "orderProcessingMessage": "Your items are reserved, order is being processed. You will receive a notification when the order is sent for assembly",
+  "@orderProcessingMessage": {
+    "description": "Order processing status message"
+  },
+  "ticketsWillBeAwarded": "Tickets will be awarded",
+  "@ticketsWillBeAwarded": {
+    "description": "Tickets award message"
+  },
+  "totalAmount": "Total Amount",
+  "@totalAmount": {
+    "description": "Total amount label"
+  },
+  "items": "Items",
+  "@items": {
+    "description": "Items label"
+  },
+  "discount": "Discount",
+  "@discount": {
+    "description": "Discount label"
+  },
+  "promotionalNumbers": "Promotional Numbers",
+  "@promotionalNumbers": {
+    "description": "Promotional numbers label"
+  },
+  "delivery": "Delivery",
+  "@delivery": {
+    "description": "Delivery label"
+  },
+  "free": "Free",
+  "@free": {
+    "description": "Free delivery text"
+  },
+  "total": "Total",
+  "@total": {
+    "description": "Total label"
+  },
+  "paid": "Paid",
+  "@paid": {
+    "description": "Paid status"
+  },
+  "unpaid": "Unpaid",
+  "@unpaid": {
+    "description": "Unpaid status"
+  },
+  "enterPhoneNumber": "Enter your\nphone number",
+  "@enterPhoneNumber": {
+    "description": "Phone number input title"
+  },
+  "weWillSendSms": "We will send an SMS with a verification code",
+  "@weWillSendSms": {
+    "description": "SMS verification message"
+  },
+  "getCode": "Get Code",
+  "@getCode": {
+    "description": "Get verification code button"
+  },
+  "orderConsentText": "By tapping the button, you agree to the Offer terms and the Privacy policy",
+  "@orderConsentText": {
+    "description": "Consent notice under the checkout button. Must contain orderConsentOffer and orderConsentPrivacy verbatim — they are turned into tappable links"
+  },
+  "orderConsentOffer": "Offer terms",
+  "@orderConsentOffer": {
+    "description": "Public offer link label inside orderConsentText"
+  },
+  "orderConsentPrivacy": "Privacy policy",
+  "@orderConsentPrivacy": {
+    "description": "Privacy policy link label inside orderConsentText"
+  },
+  "termsAndPrivacy": "By clicking the \"Get Code\" button, you accept the terms of use and privacy policy",
+  "@termsAndPrivacy": {
+    "description": "Terms and privacy policy text"
+  },
+  "userAgreement": "terms of use",
+  "@userAgreement": {
+    "description": "User agreement link label inside termsAndPrivacy"
+  },
+  "privacyPolicy": "privacy policy",
+  "@privacyPolicy": {
+    "description": "Privacy policy link label inside termsAndPrivacy"
+  },
+  "greeting": "Hello!",
+  "@greeting": {
+    "description": "PIN lock screen greeting"
+  },
+  "cannotLogin": "Can't log in?",
+  "@cannotLogin": {
+    "description": "Can't log in link on the PIN lock screen"
+  },
+  "createPinTitle": "Create a PIN",
+  "@createPinTitle": {
+    "description": "Create PIN screen title"
+  },
+  "confirmPinTitle": "Repeat the PIN",
+  "@confirmPinTitle": {
+    "description": "Confirm PIN screen title"
+  },
+  "pinMismatch": "PINs don't match",
+  "@pinMismatch": {
+    "description": "Error when the two entered PINs differ"
+  },
+  "wrongPin": "Wrong PIN code",
+  "@wrongPin": {
+    "description": "Toast shown when the entered PIN is incorrect"
+  },
+  "fillInData": "Fill in your details",
+  "@fillInData": {
+    "description": "Registration / fill-in-details screen title"
+  },
+  "selectCity": "Select city",
+  "@selectCity": {
+    "description": "City picker placeholder"
+  },
+  "enterCode": "Enter Code",
+  "@enterCode": {
+    "description": "Enter verification code title"
+  },
+  "sentToNumber": "We sent it to the number\n+7 {phoneNumber}",
+  "@sentToNumber": {
+    "description": "SMS sent confirmation message",
+    "placeholders": {
+      "phoneNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "signIn": "Sign In",
+  "@signIn": {
+    "description": "Sign in button text"
+  },
+  "market": "Market",
+  "streams": "Streams",
+  "orders": "Orders",
+  "searchHomeHint": "What were you looking for?",
+  "all": "All",
+  "plusPrice": "With Plus",
+  "sellerOrders": "{count} orders",
+  "@sellerOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reviews": "Reviews",
+  "reviewsCount": "{count} reviews",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "readAll": "Read all",
+  "relatedProducts": "You might also like",
+  "buy": "Buy",
+  "newTag": "New",
+  "hitTag": "Hit",
+  "myTickets": "My tickets",
+  "specifyDeliveryAddress": "Specify delivery address",
+  "myOrders": "My orders",
+  "orderStatus": "Order status",
+  "myCard": "My card",
+  "contacts": "Contacts",
+  "sattyJuldyz": "Satty juldyz",
+  "techSupport": "Tech support",
+  "inviteFriends": "Invite friends",
+  "goToPayment": "Go to payment",
+  "clearCart": "Clear",
+  "youSaved": "You saved",
+  "recommended": "Recommended",
+  "notAvailable": "Not available",
+  "defaultDescription": "A high-quality product that meets your daily care needs. Carefully selected ingredients ensure effective results. Suitable for all skin types. Recommended by professionals.",
+  "liveNow": "Live now",
+  "otpSubtitle": "We sent a 4-digit code\nto your phone",
+  "resendCode": "Resend code",
+  "confirm": "Confirm",
+  "continueAction": "Continue",
+  "notificationCategoryPurchase": "Purchase",
+  "notificationCategoryDelivery": "Delivery",
+  "notificationCategoryStream": "Streams",
+  "notificationCategorySubscription": "Subscription",
+  "noNotifications": "No notifications",
+  "selectAddress": "Select address",
+  "noSavedAddresses": "You don't have any saved addresses yet",
+  "deliveryAddressesTitle": "Delivery addresses",
+  "deliveryAddressTitle": "Delivery address",
+  "addMoreAddress": "Add another address",
+  "saveAddress": "Save address",
+  "newAddress": "New address",
+  "addressLabeled": "“{label}” address",
+  "@addressLabeled": {
+    "description": "Saved address card title",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "addressAdded": "Address added",
+  "addressDeleted": "Address deleted",
+  "deleteAddressTitle": "Delete address?",
+  "deleteAddressMessage": "Are you sure you want to delete this address?",
+  "deleteAction": "Delete",
+  "addAction": "Add",
+  "savingInProgress": "Saving...",
+  "addressNameLabel": "Address name",
+  "addressNameHint": "For example: Home or work",
+  "enterAddressName": "Enter a name",
+  "streetAndHouseHint": "Street and house number",
+  "enterAddressLine": "Enter the address",
+  "apartmentLabel": "Apartment",
+  "entranceLabel": "Entrance",
+  "floorLabel": "Floor",
+  "postalIndexHint": "Index",
+  "enterPostalIndex": "Enter the index",
+  "selectCityFirst": "Select a city",
+  "selectRegion": "Select a region",
+  "addressesLoadError": "Failed to load addresses",
+  "addressAddError": "Failed to add the address",
+  "addressSaveError": "Failed to save the address",
+  "addressDeleteError": "Failed to delete the address",
+  "addAddress": "Add address",
+  "raffleTab": "Raffles",
+  "@raffleTab": {
+    "description": "Catalog tab label for raffles"
+  },
+  "allShopsTab": "All shops",
+  "@allShopsTab": {
+    "description": "Catalog top switcher label for shops view"
+  },
+  "wholeCatalogTab": "Whole catalog",
+  "@wholeCatalogTab": {
+    "description": "Catalog top switcher label for catalog view"
+  },
+  "catalogTileLottery": "Raffle\nproducts",
+  "@catalogTileLottery": {
+    "description": "Catalog grid tile label. \\n is a hard line break tuned to the 110pt tile"
+  },
+  "catalogTileDiscount": "Discounted\nproducts",
+  "@catalogTileDiscount": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileMakeup": "Makeup",
+  "@catalogTileMakeup": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTilePerfume": "Perfumery",
+  "@catalogTilePerfume": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileBodyCare": "Body\ncare",
+  "@catalogTileBodyCare": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileHairCare": "Hair\ncare",
+  "@catalogTileHairCare": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileCosmeticSets": "Cosmetic\nsets",
+  "@catalogTileCosmeticSets": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileFaceCare": "Face\ncare",
+  "@catalogTileFaceCare": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileSunCare": "Sun\ncare",
+  "@catalogTileSunCare": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileHygiene": "Personal\nhygiene",
+  "@catalogTileHygiene": {
+    "description": "Catalog grid tile label"
+  },
+  "catalogTileOralCare": "Oral\ncare",
+  "@catalogTileOralCare": {
+    "description": "Catalog grid tile label"
+  },
+  "raffleDefaultTitle": "Raffle",
+  "@raffleDefaultTitle": {
+    "description": "Fallback title when a raffle has no seller"
+  },
+  "raffleDateLabel": "Date: {date}",
+  "@raffleDateLabel": {
+    "description": "Raffle draw date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "raffleDateTbd": "Date: TBD",
+  "@raffleDateTbd": {
+    "description": "Raffle date placeholder when unknown"
+  },
+  "raffleGiftsCount": "{count} gifts",
+  "@raffleGiftsCount": {
+    "description": "Number of gifts in a raffle",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "raffleGiftsAction": "View gifts",
+  "@raffleGiftsAction": {
+    "description": "Header button that opens the gifts sheet"
+  },
+  "raffleGiftsTitle": "Raffle gifts",
+  "@raffleGiftsTitle": {
+    "description": "Title of the gifts bottom sheet"
+  },
+  "raffleGiftsEmpty": "No gifts yet",
+  "@raffleGiftsEmpty": {
+    "description": "Empty state for raffle gifts sheet"
+  },
+  "raffleEmpty": "No active raffles yet",
+  "@raffleEmpty": {
+    "description": "Empty state for raffles list"
+  },
+  "raffleLoadError": "Failed to load raffle",
+  "@raffleLoadError": {
+    "description": "Raffle load error"
+  },
+  "raffleProductsEmpty": "No products in this raffle yet",
+  "@raffleProductsEmpty": {
+    "description": "Empty state for raffle products grid"
+  },
+  "sortDiscount": "Biggest discount",
+  "@sortDiscount": {
+    "description": "Sort by discount option"
+  },
+  "baseAvatar": "Base",
+  "@baseAvatar": {
+    "description": "Label for the base avatar option (initial letter)"
+  },
+  "selectAvatar": "Select",
+  "@selectAvatar": {
+    "description": "Label for the custom photo avatar option"
+  },
+  "dateOfBirth": "Date of birth",
+  "@dateOfBirth": {
+    "description": "Date of birth field label"
+  },
+  "birthDateHint": "dd-mm-yyyy",
+  "@birthDateHint": {
+    "description": "Date of birth placeholder"
+  },
+  "phoneNumberHint": "(000) - 00 - 00",
+  "@phoneNumberHint": {
+    "description": "Phone number field placeholder"
+  },
+  "addPhoto": "Add photo",
+  "@addPhoto": {
+    "description": "Add photo bottom sheet title"
+  },
+  "gallery": "Gallery",
+  "@gallery": {
+    "description": "Gallery option in the photo picker sheet"
+  },
+  "camera": "Camera",
+  "@camera": {
+    "description": "Camera option in the photo picker sheet"
+  },
+  "shareAppMessage": "Hi! I'm using this awesome app. Join me: {link}",
+  "@shareAppMessage": {
+    "description": "Message pre-filled in the system share sheet when inviting friends",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAppError": "Couldn't open the share sheet",
+  "@shareAppError": {
+    "description": "Error shown when the native share sheet fails to open"
+  },
+  "ordersTabAll": "All",
+  "ordersTabActive": "Active",
+  "ordersTabCompleted": "Completed",
+  "ordersTabReturn": "Returns",
+  "ordersEmptyTitle": "No orders",
+  "ordersEmptyMessage": "Your orders will appear here",
+  "orderTagActive": "Active",
+  "orderTagCompleted": "Completed",
+  "orderTagReturn": "Return",
+  "orderLeaveReview": "Leave a review",
+  "orderInTransitMessage": "Your order has been handed over for shipping. A little patience, your item is on its way.",
+  "orderDeliveredMessage": "Congratulations! The courier delivered your order. We'd appreciate it if you rated our work.",
+  "orderReturnMessage": "The order was returned or canceled.",
+  "priceTenge": "{price}₸",
+  "@priceTenge": {
+    "description": "Price with tenge symbol (no space)",
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "favoritesEmptyTitle": "Nothing here yet",
+  "favoritesEmptySubtitle": "Add items to favorites so you can easily come back to them later!",
+  "goShopping": "Go shopping",
+  "myCards": "My cards",
+  "paymentCard": "Payment card",
+  "addCard": "Add card",
+  "cardsEmptyTitle": "No cards",
+  "cardsEmptySubtitle": "You don't have any saved cards yet",
+  "contactsTitle": "Contacts",
+  "callCenter": "Call center",
+  "callCenterSubtitle": "We'll consult and help\nyou place an order",
+  "acceptCallsHours": "We accept calls from 10:00 to 20:00",
+  "respondHours": "We reply from 10:00 to 20:00",
+  "writeOnWhatsapp": "Message on Whatsapp",
+  "writeOnTelegram": "Message on Telegram",
+  "deliverySectionTitle": "Delivery",
+  "deliverySectionSubtitle": "Updates are posted in our Telegram channel",
+  "selfPickupSectionTitle": "Self-pickup address",
+  "branches": "Branches",
+  "loginRequired": "Sign in",
+  "loginRequiredHint": "Sign in to your account to continue",
+  "addToCartFailed": "Couldn't add to cart",
+  "pullToRefresh": "Pull down to refresh",
+  "refreshing": "Refreshing…",
+  "removeFromCartFailed": "Couldn't remove from cart",
+  "paymentAmountTitle": "Payment amount:",
+  "paymentSumLabel": "Amount:",
+  "paymentCommissionLabel": "Commission:",
+  "paymentTermsPart1": "By proceeding with the payment, you automatically",
+  "paymentTermsLinkText": "agree",
+  "paymentTermsPart2": "to the terms",
+  "payButton": "Pay",
+  "fromTitle": "From",
+  "fromOtherCard": "From another card",
+  "removeCardTitle": "Remove card?",
+  "removeCardSubtitle": "Are you sure you want to remove this card",
+  "removeAction": "Remove",
+  "enterCardDataTitle": "Enter card details",
+  "cardExpiryLabel": "Expiry date",
+  "cardExpiryHint": "MM/YY",
+  "cardCvvLabel": "CVV code",
+  "saveCardData": "Save card details",
+  "cardWarning": "Make sure the card allows online transactions and has sufficient limit",
+  "orderAcceptedTitle": "Your order is accepted!",
+  "orderIdLabel": "Order ID: {id}",
+  "@orderIdLabel": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "receiptItemsLabel": "Items:",
+  "receiptSavedLabel": "Saved:",
+  "receiptTicketsLabel": "Tickets:",
+  "receiptPaymentMethodLabel": "Payment method:",
+  "viewOrderStatus": "View status",
+  "viewersLabel": "Viewers",
+  "streamInactiveTitle": "Stream is currently inactive",
+  "streamInactiveSubtitle": "Wait for the broadcast to start",
+  "searchHint": "Search products…",
+  "searchPrompt": "Start typing to find a product",
+  "searchEmpty": "Nothing found",
+  "searchError": "Search failed. Please try again",
+  "onAirNow": "On air now",
+  "giftButton": "Gift",
+  "commentInputHint": "Type a comment...",
+  "inCart": "In Cart",
+  "kaspiPayTitle": "Kaspi payment",
+  "kaspiAmountToPay": "To pay: {amount}",
+  "@kaspiAmountToPay": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "kaspiScanOrPay": "Scan the QR code or tap «Pay» to open Kaspi",
+  "kaspiWaitingPayment": "Waiting for payment…",
+  "kaspiPaymentFailed": "Payment failed",
+  "kaspiLinkExpired": "The payment link has expired",
+  "kaspiPayAgain": "Pay again",
+  "sellerRaffleDate": "Raffle: {date}",
+  "@sellerRaffleDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "sellersEmpty": "No shops yet",
+  "sellersLoadError": "Failed to load shops",
+  "sellerProductsEmpty": "This shop has no products yet",
+  "sellerNotFound": "This shop is no longer available",
+  "sellerStoreTitleFallback": "Shop",
+  "ticketsBadge": "+{count}",
+  "@ticketsBadge": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "productUnavailable": "This product is no longer available",
+  "plusPriceActive": "Your Plus price",
+  "reviewsEmpty": "No reviews yet",
+  "reviewAnonymous": "Buyer",
+  "reviewComposerHint": "Share your impressions of the product",
+  "reviewSend": "Send",
+  "reviewSubmitted": "Thanks for your review!",
+  "reviewAlreadyLeft": "You have already reviewed this product",
+  "reviewTooManyRequests": "Too many attempts. Try again in a minute",
+  "reviewSubmitError": "Couldn't send the review",
+  "reviewsLoadError": "Failed to load reviews",
+  "shareProductMessage": "{name} — {price}. Found it in Bai Market.",
+  "@shareProductMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "shareProductMessageNoPrice": "{name}. Found it in Bai Market.",
+  "@shareProductMessageNoPrice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartItemsCount": "{count, plural, =1{{count} item} other{{count} items}}",
+  "@cartItemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "checkoutShort": "Checkout",
+  "cartClearFailed": "Couldn't clear the cart",
+  "cartNotEnoughStock": "Not enough items in stock",
+  "cartQuantityChangeFailed": "Couldn't change the quantity — the item was removed, please add it again",
+  "cartItemRemovedByStock": "«{name}» is out of stock and was removed",
+  "@cartItemRemovedByStock": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartItemPriceChanged": "«{name}» price has changed",
+  "@cartItemPriceChanged": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "cartItemQuantityReduced": "«{name}» quantity reduced to {quantity}",
+  "@cartItemQuantityReduced": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "quantity": {
+        "type": "String"
+      }
+    }
+  },
+  "cartRefreshFailed": "Couldn't refresh the cart",
+  "pushPermissionTitle": "Turn on notifications",
+  "pushPermissionBody": "We'll let you know about order status, raffle results and new arrivals",
+  "pushPermissionAllow": "Turn on",
+  "pushPermissionLater": "Later",
+  "pushDisabledBanner": "Notifications are turned off",
+  "pushEnableAction": "Turn on",
+  "notificationsSettingsTitle": "Notifications",
+  "notificationsOn": "On",
+  "notificationsOff": "Off",
+  "notificationsLoadError": "Failed to load notifications",
+  "commonCancel": "Cancel",
+  "addedToCart": "Added to cart",
+  "outOfStock": "Out of stock",
+  "pullToRefreshHint": "Pull down to refresh",
+  "streamsLoadError": "Couldn't load streams",
+  "streamsEmptyTitle": "No streams right now",
+  "streamsEmptySubtitle": "Come back a bit later",
+  "streamErrorGeneric": "Something went wrong",
+  "streamEndedTitle": "The stream has ended",
+  "streamEndedSubtitle": "Pick another broadcast",
+  "streamReconnecting": "Reconnecting…",
+  "streamConnectionLost": "Connection lost",
+  "streamRetry": "Try again",
+  "streamChatTooLong": "The message is too long",
+  "streamChatRateLimited": "Too many messages, slow down",
+  "streamProductsTitle": "Products in the stream",
+  "streamGiftsTitle": "Gifts",
+  "pinnedProductBadge": "On air",
+  "streamHostCameraPaused": "The host paused the camera",
+  "streamStartCta": "Go live",
+  "streamResumeCta": "Back to your stream",
+  "startStreamSheetTitle": "New stream",
+  "startStreamTitleLabel": "Stream title",
+  "startStreamTitleHint": "For example: Sneaker sale",
+  "startStreamTitleTooShort": "Add a longer title",
+  "startStreamSubmit": "Start",
+  "startStreamFailed": "Couldn't start the stream",
+  "streamAccessDenied": "Streams are unavailable, please contact support",
+  "streamAlreadyLiveTitle": "You already have a live stream",
+  "streamAlreadyLiveMessage": "You can only run one stream at a time. End the current one or open it as a viewer.",
+  "streamEndAndRestart": "End and restart",
+  "streamOpenAsViewer": "Open as viewer",
+  "streamStopConfirmTitle": "End the stream?",
+  "streamStopConfirmAction": "End",
+  "hostCameraPaused": "Camera is off",
+  "hostPickProductTitle": "Show a product",
+  "hostPinProduct": "Show",
+  "hostUnpinProduct": "Hide the product",
+  "hostNoProducts": "No products yet",
+  "hostPermissionDeniedTitle": "Camera and microphone are required",
+  "hostPermissionDeniedMessage": "Allow access in settings to go live.",
+  "hostOpenSettings": "Settings",
+  "storyOpenProduct": "View product",
+  "stockLeft": "{count} left!",
+  "@stockLeft": {
+    "description": "Remaining stock badge on a product card",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "updateForcedTitle": "Update required",
+  "@updateForcedTitle": {
+    "description": "Title of the blocking force-update dialog"
+  },
+  "updateForcedMessage": "This version of Bai Market is no longer supported. Install the latest one to keep shopping — it only takes a moment.",
+  "@updateForcedMessage": {
+    "description": "Body of the blocking force-update dialog"
+  },
+  "updateRecommendedTitle": "A new version is out",
+  "@updateRecommendedTitle": {
+    "description": "Title of the dismissible recommended-update dialog"
+  },
+  "updateRecommendedMessage": "We have added new features and ironed out a few things. Updating takes less than a minute.",
+  "@updateRecommendedMessage": {
+    "description": "Body of the dismissible recommended-update dialog"
+  },
+  "updateNow": "Update",
+  "@updateNow": {
+    "description": "Primary button of the update dialog — opens the store"
+  },
+  "updateLater": "Later",
+  "@updateLater": {
+    "description": "Secondary button of the recommended-update dialog"
+  },
+  "updateWhatsNew": "What's new",
+  "@updateWhatsNew": {
+    "description": "Heading above the release notes in the update dialog"
+  },
+  "profileVersion": "Version: {version}",
+  "@profileVersion": {
+    "description": "App version line at the bottom of the profile screen",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateVersionBadge": "Version {version}",
+  "@updateVersionBadge": {
+    "description": "Badge showing the version available in the store",
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "updateStoreOpenFailed": "Couldn't open the app store. Please try again.",
+  "@updateStoreOpenFailed": {
+    "description": "Shown when neither the native store scheme nor the web link opens"
+  },
+  "checkoutTitle": "Checkout",
+  "savedAddressTitle": "Saved address",
+  "selectSavedAddressFirst": "Choose a saved address",
+  "@selectSavedAddressFirst": {
+    "description": "Checkout: the city comes only from the address book, so a saved address must be picked before the order can be created"
+  },
+  "chooseAction": "choose",
+  "changeAction": "Change",
+  "addressFallbackTitle": "Address",
+  "branchWithAddress": "Branch: {address}",
+  "@branchWithAddress": {
+    "description": "Pickup branch line with its address",
+    "placeholders": {
+      "address": {
+        "type": "String"
+      }
+    }
+  },
+  "cityFallbackName": "City",
+  "recipientNameCourierLabel": "Who will meet the courier (full name)",
+  "recipientNamePickupLabel": "Who will pick up the order (full name)",
+  "recipientNameHint": "For example: Asylbek Daniyal",
+  "processingAction": "Processing\u2026",
+  "kaspiPaymentStartFailed": "Could not start the Kaspi payment",
+  "paymentMethodsTitle": "Payment methods",
+  "deliveryByCourier": "By courier",
+  "deliverySelfPickup": "Self-pickup",
+  "filialDistrict": "Bostandyk district",
+  "filialAddressLine": "112 Abdully Rozybakieva street",
+  "deliveryMethodBranch": "To a Kazpost branch",
+  "@deliveryMethodBranch": {
+    "description": "Delivery method: to the Kazpost branch"
+  },
+  "deliveryMethodBranchHint": "You will pick it up at the post office with the tracking number",
+  "@deliveryMethodBranchHint": {
+    "description": "Hint under the branch delivery method"
+  },
+  "deliveryMethodDoor": "To the door",
+  "@deliveryMethodDoor": {
+    "description": "Delivery method: courier to the door"
+  },
+  "deliveryMethodDoorHint": "A Go Post courier will bring it home",
+  "@deliveryMethodDoorHint": {
+    "description": "Hint under the door delivery method"
+  },
+  "houseNumberLabel": "House and apartment",
+  "@houseNumberLabel": {
+    "description": "Label of the house and apartment field on checkout"
+  },
+  "houseNumberHint": "150, apt. 25",
+  "@houseNumberHint": {
+    "description": "Hint of the house and apartment field on checkout"
+  },
+  "enterHouseNumber": "Enter the house and apartment",
+  "@enterHouseNumber": {
+    "description": "Validation message for the empty house and apartment field"
+  },
+  "postalCodeInvalidLength": "The postal code must be 6 digits",
+  "@postalCodeInvalidLength": {
+    "description": "Validation message for a postal code that is not 6 digits long"
+  },
+  "enterPostalForDelivery": "Enter the postal code to see the delivery price",
+  "@enterPostalForDelivery": {
+    "description": "Placeholder shown instead of the delivery price until the postal code is filled in"
+  },
+  "selectAddressForDelivery": "Choose an address to see the delivery price",
+  "@selectAddressForDelivery": {
+    "description": "Placeholder shown instead of the delivery price when the postal code is ready but no saved address is picked yet — the quote needs the city too"
+  },
+  "deliveryPriceCalculating": "Calculating\u2026",
+  "@deliveryPriceCalculating": {
+    "description": "Shown while the delivery price is being requested"
+  },
+  "amountToPay": "To pay",
+  "@amountToPay": {
+    "description": "Label of the total amount: items plus delivery"
+  },
+  "trackingNumberLabel": "Tracking number",
+  "@trackingNumberLabel": {
+    "description": "Label of the Kazpost tracking number"
+  },
+  "trackOnKazpost": "Track on post.kz",
+  "@trackOnKazpost": {
+    "description": "Action that opens the parcel tracking page on post.kz"
+  },
+  "trackingNumberCopied": "Tracking number copied",
+  "@trackingNumberCopied": {
+    "description": "Snackbar shown after the tracking number is copied"
+  },
+  "orderStatusPickupKazpostMessage": "The parcel is waiting at the Kazpost branch. Pick it up with the tracking number",
+  "@orderStatusPickupKazpostMessage": {
+    "description": "Explanation of the PICKUP order status"
+  },
+  "deliveryQuoteFailed": "Could not calculate the delivery. Please try again",
+  "@deliveryQuoteFailed": {
+    "description": "Shown when the delivery price request failed"
+  }
 }

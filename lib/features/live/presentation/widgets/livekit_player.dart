@@ -5,21 +5,34 @@ import '../../../../core/services/live_logger.dart';
 
 /// Подключается к комнате LiveKit Cloud и рендерит видеотрек хоста.
 ///
-/// Строго subscribe-only: камеру/микрофон не публикуем. Виджет сам управляет
-/// жизненным циклом `Room` (connect в initState, disconnect/dispose в dispose).
-/// При смене `token`/`url` пересоздаёт соединение.
+/// Строго subscribe-only: камеру/микрофон не публикуем — ими занимается экран
+/// ведущего. Виджет сам управляет жизненным циклом `Room` (connect в initState,
+/// disconnect/dispose в dispose). При смене `token`/`url` пересоздаёт
+/// соединение — на этом и построено обновление протухшего токена.
+///
+/// Про обрывы сообщает наверх через [onDisconnected]: решение, когда и с каким
+/// backoff переподключаться, принимает кубит, а не виджет.
 class LiveKitPlayer extends StatefulWidget {
   const LiveKitPlayer({
     super.key,
     required this.url,
     required this.token,
     this.roomName,
+    this.onConnected,
+    this.onDisconnected,
     this.logger = const LiveLogger(),
   });
 
   final String url;
   final String token;
   final String? roomName;
+
+  /// Появилась дорожка ведущего — можно сбрасывать счётчик попыток.
+  final VoidCallback? onConnected;
+
+  /// Соединение с комнатой оборвалось.
+  final VoidCallback? onDisconnected;
+
   final LiveLogger logger;
 
   @override
@@ -73,9 +86,16 @@ class _LiveKitPlayerState extends State<LiveKitPlayer> {
       ..on<ParticipantDisconnectedEvent>((_) => _pickVideoTrack())
       ..on<RoomDisconnectedEvent>((e) {
         _log.warn('LiveKit room disconnected', e.reason);
-        if (mounted && _videoTrack == null) {
-          setState(() => _status = _PlayerStatus.error);
+        // Раньше здесь стояло `if (_videoTrack == null)`, и обрыв ПОСЛЕ того,
+        // как дорожка уже пришла, не менял ничего: виджет продолжал рисовать
+        // мёртвый трек, без ошибки и без переподключения. Сообщаем всегда.
+        if (mounted) {
+          setState(() {
+            _videoTrack = null;
+            _status = _PlayerStatus.error;
+          });
         }
+        widget.onDisconnected?.call();
       });
 
     try {
@@ -110,6 +130,7 @@ class _LiveKitPlayerState extends State<LiveKitPlayer> {
       _videoTrack = found;
       _status = found != null ? _PlayerStatus.playing : _PlayerStatus.noVideo;
     });
+    if (found != null) widget.onConnected?.call();
   }
 
   void _teardown() {

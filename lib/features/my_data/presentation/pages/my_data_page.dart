@@ -39,9 +39,7 @@ class _MyDataPageState extends State<MyDataPage> {
     _firstName = TextEditingController(text: widget.profileModel.firstName);
     _lastName = TextEditingController(text: widget.profileModel.lastName);
     _birthDate = TextEditingController();
-    _phone = TextEditingController(
-      text: _stripLeadingCountry(widget.profileModel.phoneNumber),
-    );
+    _phone = TextEditingController(text: _stripLeadingCountry(widget.profileModel.phoneNumber));
   }
 
   @override
@@ -72,10 +70,7 @@ class _MyDataPageState extends State<MyDataPage> {
     try {
       final response = await _dio.patch(
         '${mainUrl}profile',
-        data: {
-          'firstName': _firstName.text.trim(),
-          'lastName': _lastName.text.trim(),
-        },
+        data: {'firstName': _firstName.text.trim(), 'lastName': _lastName.text.trim()},
         options: Options(headers: {'Content-Type': 'application/json'}),
       );
       if (!mounted) return;
@@ -84,9 +79,7 @@ class _MyDataPageState extends State<MyDataPage> {
         Navigator.pop(context);
         return;
       }
-      final msg = response.data is Map && response.data['message'] != null
-          ? response.data['message'].toString()
-          : 'Unknown error';
+      final msg = response.data is Map && response.data['message'] != null ? response.data['message'].toString() : 'Unknown error';
       _showError(l10n.profileUpdateError(msg));
     } catch (e) {
       if (!mounted) return;
@@ -97,23 +90,15 @@ class _MyDataPageState extends State<MyDataPage> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.all(16),
-        duration: const Duration(seconds: 3),
-      ),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message), backgroundColor: Colors.red, behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16), duration: const Duration(seconds: 3)));
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final initial = (widget.profileModel.firstName?.trim().isNotEmpty ?? false)
-        ? widget.profileModel.firstName!.trim()
-        : (widget.profileModel.lastName?.trim() ?? '');
+    final initial = (widget.profileModel.firstName?.trim().isNotEmpty ?? false) ? widget.profileModel.firstName!.trim() : (widget.profileModel.lastName?.trim() ?? '');
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -134,12 +119,7 @@ class _MyDataPageState extends State<MyDataPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AvatarUploader(
-                          initial: initial,
-                          imageUrl: widget.profileModel.avatarUrl ?? '',
-                          baseLabel: l10n.baseAvatar,
-                          selectLabel: l10n.selectAvatar,
-                        ),
+                        AvatarUploader(initial: initial, imageUrl: widget.profileModel.avatarUrl ?? '', baseLabel: l10n.baseAvatar, selectLabel: l10n.selectAvatar),
                         const SizedBox(height: 24),
                         SurnameField(controller: _lastName),
                         const SizedBox(height: 16),
@@ -153,16 +133,10 @@ class _MyDataPageState extends State<MyDataPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                MainButton(
-                  onPressed: _saving ? null : _save,
-                  text: l10n.save,
-                ),
-                const SizedBox(height: 4),
+                MainButton(onPressed: _saving ? null : _save, text: l10n.save),
+                const SizedBox(height: 10),
                 Center(
-                  child: DeleteAccountTextButton(
-                    text: l10n.deleteAccount,
-                    onPressed: () {},
-                  ),
+                  child: DeleteAccountTextButton(text: l10n.deleteAccount, onPressed: () {}),
                 ),
               ],
             ),

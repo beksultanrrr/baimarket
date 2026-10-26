@@ -15,11 +15,14 @@ class ProductCubit extends Cubit<ProductState> {
   Future<void> getProductDetail({required int id}) async {
     emit(ProductGetting());
     try {
-      ProductModel? product = await _productRepository.getProductDetail(id: id);
-      if (product != null) {
-        emit(ProductGot(productModel: product));
-      } else {
-        emit(ProductGetError());
+      final result = await _productRepository.getProductDetail(id: id);
+      switch (result) {
+        case ProductDetailLoaded(:final product):
+          emit(ProductGot(productModel: product));
+        case ProductDetailNotFound():
+          emit(ProductNotFound());
+        case ProductDetailFailed():
+          emit(ProductGetError());
       }
     } catch (e) {
       emit(ProductGetError());

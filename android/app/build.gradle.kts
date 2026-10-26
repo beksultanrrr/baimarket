@@ -34,8 +34,11 @@ android {
 
     defaultConfig {
         applicationId = "com.bmarket.baimarket"
-        // flutter_webrtc (livekit_client) требует minSdk >= 21.
-        minSdk = maxOf(flutter.minSdkVersion, 21)
+        // Реальный пол — 24: столько объявляет FlutterExtension.minSdkVersion
+        // текущего Flutter, и ровно столько требует video_player_android.
+        // flutter_webrtc (livekit_client) довольствуется 21, поэтому клэмп
+        // ниже 24 опускать нельзя — сборка отвалится на video_player.
+        minSdk = maxOf(flutter.minSdkVersion, 24)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -74,10 +77,9 @@ flutter {
     source = "../.."
 }
 
-// ✅ Добавить зависимости для Firebase Messaging
-dependencies {
-    implementation("com.google.firebase:firebase-messaging:23.4.1")
-}
-
-// ✅ Эта строка обязательно должна идти в конце!
-apply(plugin = "com.google.gms.google-services")
+// Версия firebase-messaging здесь не пиннится: её задаёт BoM, который
+// подтягивает сам плагин firebase_messaging. Ручной пин 23.4.1 конфликтовал
+// с ним и мог разъехаться при обновлении плагина.
+//
+// Плагин google-services применяется один раз в блоке plugins {} выше;
+// повторный apply(plugin = ...) отсюда убран как дубль.

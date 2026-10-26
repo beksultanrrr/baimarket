@@ -1,8 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../../core/models/collection_badge_model.dart';
+import '../../../seller/data/models/seller_model.dart';
+
 part 'product_model.g.dart';
 
-@JsonSerializable()
+/// Ответ `GET /model/:id`.
+///
+/// Новые поля пакета 2 добавлены опциональными: `plusPrice`, `hasActivePlus`,
+/// `ticketsCount`, `reviewsCount`, `seller`. Ключ `seller` до этого молча
+/// выбрасывался при парсинге.
+///
+/// `cartQuantity` здесь **нет** — состояние нижней кнопки «Купить» / «В корзине»
+/// берётся из `GET /cart` через `CartCubit`.
+@JsonSerializable(explicitToJson: true)
 class ProductModel {
   final int id;
   final String? name;
@@ -18,9 +29,26 @@ class ProductModel {
   final String? detailedDescriptionEn;
   final int? inStockCount;
   final double? weightInKg;
-  final List<Map<String, dynamic>>? collections;
+  final List<CollectionBadgeModel>? collections;
   final Map<String, dynamic>? product;
   final bool? isInFavorite;
+
+  /// Цена по Plus-подписке. `null` — строку Plus не показывать.
+  final int? plusPrice;
+
+  /// Действует ли [plusPrice] для текущего пользователя уже сейчас.
+  /// Без токена всегда `false`.
+  final bool? hasActivePlus;
+
+  /// Билеты за покупку одной единицы товара.
+  final int? ticketsCount;
+
+  /// Количество **видимых** отзывов — для заголовка «28 отзывы». Админ может
+  /// скрыть отзыв, не удаляя, и тогда он выпадает и из списка, и из счётчика.
+  final int? reviewsCount;
+
+  /// Продавец. Может быть `null`.
+  final SellerModel? seller;
 
   ProductModel({
     required this.id,
@@ -40,6 +68,11 @@ class ProductModel {
     required this.price,
     required this.product,
     required this.weightInKg,
+    this.plusPrice,
+    this.hasActivePlus,
+    this.ticketsCount,
+    this.reviewsCount,
+    this.seller,
   });
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);

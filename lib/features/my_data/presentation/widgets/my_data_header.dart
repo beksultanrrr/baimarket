@@ -26,23 +26,14 @@ class MyDataHeader extends StatelessWidget {
                   context.go('/profile');
                 }
               },
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-                size: 26,
-              ),
+              child: const Icon(Icons.arrow_back, color: Colors.black, size: 26),
             ),
           ),
         ),
         const SizedBox(height: 8),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-            height: 1.1,
-          ),
+          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w600, color: Colors.black, height: 1.1),
         ),
       ],
     );

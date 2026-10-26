@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/push/push_token_sync.dart';
 import '../../../../core/secure_token_storage.dart';
 import '../../../../core/services/app_logger.dart';
 import '../../data/datasources/auth_services.dart';
@@ -46,6 +49,11 @@ class AuthCubit extends Cubit<AuthState> {
       );
       if (otp) {
         authLog.state('emit CodeVerified');
+        // Единственное место, которое достоверно знает «логин удался».
+        // force: true обязателен — токен устройства при смене пользователя не
+        // меняется, и кэш «уже отправляли» подавил бы перепривязку к новому
+        // userId. Без await: переход на /main ждать этого не должен.
+        unawaited(PushTokenSync.onLogin());
         emit(CodeVerified());
       } else {
         authLog.warn('emit AuthError — verifyOtp returned false');
@@ -68,8 +76,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logOut() async {
-    authLog.step('logOut() — clearing token');
-    await removeAuthToken();
+    authLog.step('logOut() — revoking refresh token');
+    // Сначала отзыв на сервере, потом стирание: после очистки хранилища
+    // отзывать будет нечем, и refresh-токен прожил бы на бэкенде все 90 дней.
+    // Ошибки глушатся внутри — выход не должен зависеть от сети.
+    await revokeRefreshToken();
+    // Именно clearTokens: одного access-токена мало, оставленный refresh
+    // позволил бы восстановить сессию.
+    await clearTokens();
     emit(AuthInitial());
   }
 }

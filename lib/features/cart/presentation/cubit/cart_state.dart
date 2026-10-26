@@ -1,6 +1,6 @@
 part of 'cart_cubit.dart';
 
-abstract class CartState extends Equatable {
+sealed class CartState extends Equatable {
   const CartState();
 
   @override
@@ -9,38 +9,72 @@ abstract class CartState extends Equatable {
 
 class CartInitial extends CartState {}
 
-class CartGetting extends CartState {}
+class CartLoading extends CartState {}
+
+/// Корзины нет.
+///
+/// Отдельного состояния «пустая корзина» в контракте не существует: позиция
+/// корзины и позиция заказа — одна строка, при оформлении она уезжает в заказ,
+/// а корзина удаляется целиком. `GET /cart` в этом случае отдаёт 404, и это
+/// нормальное состояние, а не ошибка.
+class CartEmpty extends CartState {
+  const CartEmpty();
+}
 
 class CartGot extends CartState {
+  CartGot({
+    required this.cart,
+    this.changes = const [],
+    this.busy = false,
+    this.busyLines = const {},
+  })  : _signature = _snapshot(cart, busy, busyLines, changes.length),
+        itemsCount = _countItems(cart),
+        linesCount = cart.cartItems?.length ?? 0;
+
   final CartModel cart;
-  final List<Object?> _signature;
 
-  CartGot({required this.cart}) : _signature = _snapshot(cart);
+  /// Что изменил сервер при синхронизации с каталогом.
+  final List<CartChangeModel> changes;
 
-  static List<Object?> _snapshot(CartModel cart) {
+  /// Летит запрос, меняющий корзину целиком (очистка, добавление).
+  final bool busy;
+
+  /// id позиций (`cartItems[].id`) с летящим запросом.
+  final Set<int> busyLines;
+
+  final int itemsCount;
+  final int linesCount;
+
+  final String _signature;
+
+  /// Подпись обязана включать **id позиции**: оптимистично добавленный товар
+  /// имеет `id: 0`, а после ответа сервера тот же товар в том же количестве
+  /// приходит с настоящим id. Без него подписи совпадают, Cubit схлопывает
+  /// эмиты, и в UI остаётся `id: 0` — а именно он идёт в `DELETE /cartitem/:id`.
+  static String _snapshot(
+    CartModel cart,
+    bool busy,
+    Set<int> busyLines,
+    int changesCount,
+  ) {
     final items = cart.cartItems ?? const <CartItemModel>[];
-    final entries = <Object?>[
-      cart.id,
-      cart.totalPrice,
-      items.length,
-    ];
-    for (final item in items) {
-      entries.add('${item.model?.id ?? 0}:${item.quantity}');
+    final parts = items
+        .map((i) => '${i.id}:${i.model?.id}:${i.quantity}:${i.unitPrice}')
+        .join(',');
+    return '${cart.id}|${cart.totalPrice}|${cart.oldTotalPrice}|'
+        '${items.length}|$parts|$busy|${busyLines.length}|$changesCount';
+  }
+
+  static int _countItems(CartModel cart) {
+    var total = 0;
+    for (final i in cart.cartItems ?? const <CartItemModel>[]) {
+      total += i.quantity;
     }
-    return entries;
+    return total;
   }
 
   @override
-  List<Object?> get props => _signature;
+  List<Object?> get props => [_signature];
 }
 
 class CartGetError extends CartState {}
-
-class CartGotAgain extends CartState {
-  final CartModel cart;
-
-  const CartGotAgain({required this.cart});
-
-  @override
-  List<Object?> get props => [identityHashCode(cart)];
-}

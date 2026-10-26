@@ -183,7 +183,7 @@ class _EmptyView extends StatelessWidget {
                 if (products.isEmpty) return const SizedBox.shrink();
                 final count = products.length > 10 ? 10 : products.length;
                 return SizedBox(
-                  height: 339,
+                  height: 342,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 16),

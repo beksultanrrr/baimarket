@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/app_pallete.dart';
@@ -86,12 +85,7 @@ class _PaymentWebViewPageState extends State<PaymentWebViewPage> {
       cardBrand: a.cardBrand,
     );
     paymentLog.nav('push /order_success', 'orderId=${successArgs.orderId}');
-    final scope = LiveShoppingScope.maybeOf(context);
-    if (scope != null) {
-      scope.openOrderSuccess(context, successArgs);
-    } else {
-      context.push('/order_success', extra: successArgs);
-    }
+    liveAwarePush(context, '/order_success', extra: successArgs);
   }
 
   @override

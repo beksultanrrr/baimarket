@@ -29,7 +29,7 @@ List<_CategoryItem> _buildCategories(AppLocalizations l10n) => [
     title: l10n.notificationCategoryPurchase,
     iconPath: 'assets/icons/notification/notification_shop.svg',
     bgColor: const Color(0xFFDFF6F2),
-    iconColor: const Color(0xFF3DBFAD),
+    iconColor: const Color(0xFF71CD32),
   ),
   _CategoryItem(
     slug: 'delivery',

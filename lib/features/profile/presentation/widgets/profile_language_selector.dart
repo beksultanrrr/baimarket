@@ -19,7 +19,7 @@ class ProfileLanguageSelector extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            'assets/icons/profile_page/profile_page_language.svg',
+            'assets/icons/profile_page/language-circle.svg',
             width: 26,
             height: 26,
           ),

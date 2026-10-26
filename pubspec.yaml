@@ -1,10 +1,12 @@
 name: bai_market
 description: "Cosmetics App"
 publish_to: "none"
-version: 1.0.5+21
+version: 1.0.14+30
 
 environment:
-  sdk: ^3.7.0
+  # pubspec.lock уже зафиксирован на dart >=3.12.0 / flutter >=3.44.0 (этого
+  # требует video_player_android), так что ^3.7.0 было неправдой.
+  sdk: ^3.12.0
 
 dependencies:
   flutter:
@@ -36,12 +38,20 @@ dependencies:
   google_fonts: ^6.2.1
   share_plus: ^10.1.4
   provider: ^6.1.2
-  youtube_player_flutter: ^9.1.1
   socket_io_client: ^3.1.2
   # Пин на проверенную версию: livekit 2.6.4 → flutter_webrtc 1.3.0 →
   # WebRTC-SDK 137 (совпадает с Podfile.lock; 2.8.x тянет WebRTC-SDK 144).
   livekit_client: 2.6.4
   crypto: ^3.0.6
+  # Версия приложения в рантайме читается из бандла (Info.plist /
+  # versionName), а не из константы — иначе проверка обновления сравнивала бы
+  # манифест с числом, которое забыли поднять вместе с pubspec.
+  # ^9 — не ^8: wakelock_plus 1.5.2 уже тянет package_info_plus ^9.0.0,
+  # на восьмёрке резолвер падает.
+  package_info_plus: ^9.0.1
+  video_player: ^2.13.0
+  wakelock_plus: ^1.5.2
+  permission_handler: ^12.0.3
 
 # path_provider_foundation 2.6.0 pulls the objective_c FFI package, whose
 # dylib fails to load on the iOS simulator (runtime dlopen error). 2.5.1 is
@@ -55,6 +65,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   json_serializable: ^6.8.0
   build_runner: ^2.4.15
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   generate: true
@@ -96,8 +107,30 @@ flutter:
         - asset: fonts/Gilroy-Light.ttf
           weight: 300
 
+# Иконка приложения (Android + iOS) собирается из логотипа HiBai
+# (assets/images/logo_hibai.png). Исходники лежат в assets/launcher_icon/ —
+# эта папка намеренно НЕ объявлена в flutter.assets, чтобы 1024×1024 PNG'и
+# не попадали в бандл приложения.
+# Перегенерация: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  # Лого на сплошном фирменном фоне — для iOS и для legacy-иконки Android (<26).
+  image_path: "assets/launcher_icon/app_icon.png"
+  # App Store отклоняет иконки с альфа-каналом.
+  remove_alpha_ios: true
+  # Adaptive icon (Android 8+): фон — фирменный салатовый, лого вписано
+  # в safe zone 66%, чтобы круглая маска лаунчера не срезала края надписи.
+  adaptive_icon_background: "#AEFE15"
+  adaptive_icon_foreground: "assets/launcher_icon/app_icon_foreground.png"
+  # Лого уже отмасштабировано под safe zone в самом PNG, поэтому отключаем
+  # добавочный inset пакета (по умолчанию 16%) — иначе надпись мельчает вдвое.
+  adaptive_icon_foreground_inset: 0
+  # Themed icon (Android 13+): монохромный силуэт лого.
+  adaptive_icon_monochrome: "assets/launcher_icon/app_icon_monochrome.png"
+
 flutter_native_splash:
-  color: "#3DBFAD"
+  color: "#aefa14"
   image: assets/images/bai_splash.png
   # PNG горизонтальный (1024×456), Android 12+ требует квадратную icon-zone
   # внутри круглой маски — без `fullscreen: true` система обрезала бы лого
@@ -106,8 +139,8 @@ flutter_native_splash:
   android_gravity: center
   ios_content_mode: center
   android_12:
-    color: "#3DBFAD"
-    icon_background_color: "#3DBFAD"
+    color: "#aefa14"
+    icon_background_color: "#aefa14"
     image: assets/images/bai_splash.png
 
   android: true

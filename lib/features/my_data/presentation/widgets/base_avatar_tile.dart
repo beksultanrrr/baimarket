@@ -20,23 +20,22 @@ class BaseAvatarTile extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: 72,
-        width: 72,
+        // Макет: 80×80, скругление 15, заливка #DCF3CC, буква #00520B.
+        // Обводки у выбранной плитки в макете нет — убрана намеренно.
+        height: 80,
+        width: 80,
         decoration: BoxDecoration(
-          color: const Color(0xFFDDF2EF),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(
-            color: selected ? mainColorLight : Colors.transparent,
-            width: 1.5,
-          ),
+          color: accentSoftGreen,
+          borderRadius: BorderRadius.circular(15),
         ),
         alignment: Alignment.center,
         child: Text(
           initial.isEmpty ? '?' : initial.characters.first.toUpperCase(),
           style: const TextStyle(
+            fontFamily: 'Gilroy',
             fontSize: 32,
             fontWeight: FontWeight.w700,
-            color: mainColorDark,
+            color: Color(0xFF00520B),
           ),
         ),
       ),

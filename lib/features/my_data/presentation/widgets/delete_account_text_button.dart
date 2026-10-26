@@ -1,5 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
+import '../../../../core/app_pallete.dart';
+
+/// «Удалить аккаунт» — по макету полноширинная кнопка с тонкой рамкой и без
+/// заливки (раньше была просто серая надпись).
 class DeleteAccountTextButton extends StatelessWidget {
   const DeleteAccountTextButton({
     super.key,
@@ -13,14 +18,24 @@ class DeleteAccountTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: EdgeInsets.zero,
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF8A8A8A),
+      child: Container(
+        height: 60,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: hairlineBorder, width: kHairlineWidth),
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontFamily: 'Gilroy',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.black,
+          ),
         ),
       ),
     );

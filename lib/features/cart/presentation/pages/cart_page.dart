@@ -2,7 +2,6 @@ import 'package:bai_market/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/widgets/app_refresh_indicator.dart';
 import '../../../collection/presentation/cubit/collection_cubit.dart';
 import '../../../live/presentation/widgets/live_shopping_scope.dart';
@@ -10,6 +9,7 @@ import '../../data/models/cart_item_model.dart';
 import '../../data/models/cart_model.dart';
 import '../widgets/cart_app_bar.dart';
 import '../widgets/cart_bottom_bar.dart';
+import '../widgets/cart_changes_banner.dart';
 import '../widgets/cart_empty_state.dart';
 import '../widgets/cart_item_card.dart';
 import '../widgets/cart_recommended.dart';
@@ -48,7 +48,13 @@ class _CartPageState extends State<CartPage> {
     ]);
   }
 
+  /// Итог берём с сервера: `GET /cart` переписывает цены позиций на актуальные,
+  /// и локальная сумма по `model.price` может разойтись с тем, что спишут при
+  /// оплате. Локальный расчёт остаётся только фолбэком для оптимистично
+  /// добавленной позиции, которую сервер ещё не подтвердил.
   int _calculateTotal(CartModel? cart) {
+    final serverTotal = cart?.totalPrice;
+    if (serverTotal != null && serverTotal > 0) return serverTotal;
     final items = cart?.cartItems ?? const <CartItemModel>[];
     return items.fold(
       0,
@@ -57,12 +63,32 @@ class _CartPageState extends State<CartPage> {
   }
 
   int _calculateSaved(CartModel? cart) {
+    final total = cart?.totalPrice;
+    final oldTotal = cart?.oldTotalPrice;
+    if (total != null && oldTotal != null && oldTotal > total) {
+      return oldTotal - total;
+    }
     final items = cart?.cartItems ?? const <CartItemModel>[];
     return items.fold(0, (sum, item) {
       final old = item.model?.oldPrice ?? item.model?.price ?? 0;
       final current = item.model?.price ?? 0;
       return sum + ((old - current) * item.quantity);
     });
+  }
+
+  /// Очистка ждёт ответа сервера и держит кнопку заблокированной.
+  Future<void> _onClear() async {
+    await context.read<CartCubit>().clearCart();
+  }
+
+  /// Перед оформлением перечитываем корзину. Навигация — по возвращённому
+  /// значению, а не по состоянию: `CartPage` смонтирована сразу в двух местах
+  /// (таб и шит поверх эфира), и раньше приходилось гадать, кто из них должен
+  /// уводить на оформление.
+  Future<void> _onCheckout() async {
+    final cart = await context.read<CartCubit>().prepareCheckout();
+    if (cart == null || !mounted) return;
+    liveAwarePush(context, '/make_order', extra: cart);
   }
 
   @override
@@ -72,44 +98,36 @@ class _CartPageState extends State<CartPage> {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: BlocConsumer<CartCubit, CartState>(
-          listener: (context, state) {
-            if (state is CartGotAgain) {
-              // CartPage живёт сразу в двух местах: в IndexedStack /main и
-              // в боттом-шите поверх /live. Оба инстанса слушают глобальный
-              // CartCubit, поэтому без isCurrent-гарда мы пушили /make_order
-              // и из шита, и из спрятанной за стримом MenuPage.
-              final isCurrent = ModalRoute.of(context)?.isCurrent ?? true;
-              if (!isCurrent) return;
-              final scope = LiveShoppingScope.maybeOf(context);
-              if (scope != null) {
-                scope.openCreateOrder(context, state.cart);
-              } else {
-                context.push('/make_order', extra: state.cart);
-              }
-            }
-          },
+        body: BlocBuilder<CartCubit, CartState>(
           builder: (context, state) {
-            final cart = state is CartGot ? state.cart : null;
+            final got = state is CartGot ? state : null;
+            final cart = got?.cart;
             final items = cart?.cartItems ?? const <CartItemModel>[];
             final hasItems = items.isNotEmpty;
+            final busy = got?.busy ?? false;
+            final busyLines = got?.busyLines ?? const <int>{};
 
             return Column(
               children: [
                 CartAppBar(
                   showClear: hasItems,
-                  onClear: () => cartCubit.clearCart(),
+                  // Пока летит DELETE /cart — кнопка выключена, чтобы повторный
+                  // тап не отправил второй запрос.
+                  onClear: busy ? null : _onClear,
+                  isBusy: busy,
                 ),
+                if (got != null && got.changes.isNotEmpty)
+                  CartChangesBanner(changes: got.changes),
                 Expanded(
                   child: hasItems
-                      ? _buildCartContent(cartCubit, items)
+                      ? _buildCartContent(cartCubit, items, busyLines)
                       : _buildEmptyContent(),
                 ),
                 if (hasItems)
                   CartBottomBar(
                     totalPrice: _calculateTotal(cart),
                     savedAmount: _calculateSaved(cart),
-                    onCheckout: () => cartCubit.getCartAgain(),
+                    onCheckout: busy ? null : _onCheckout,
                   ),
               ],
             );
@@ -119,7 +137,11 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget _buildCartContent(CartCubit cartCubit, List<CartItemModel> items) {
+  Widget _buildCartContent(
+    CartCubit cartCubit,
+    List<CartItemModel> items,
+    Set<int> busyLines,
+  ) {
     return AppRefreshIndicator(
       onRefresh: _onRefresh,
       child: SingleChildScrollView(
@@ -137,11 +159,16 @@ class _CartPageState extends State<CartPage> {
                     CartItemCard(
                       key: ValueKey(item.model?.id ?? item.id),
                       item: item,
+                      isBusy: busyLines.contains(item.id),
                       onAdd: () => cartCubit.addCart(
                         id: item.model!.id,
                         product: item.model,
                       ),
-                      onRemove: () => cartCubit.removeCart(id: item.model!.id),
+                      // Последняя единица — удаляем позицию целиком одним
+                      // запросом, без пары delete + повторное добавление.
+                      onRemove: () => item.quantity <= 1
+                          ? cartCubit.removeLine(id: item.model!.id)
+                          : cartCubit.removeCart(id: item.model!.id),
                     ),
                 ],
               ),

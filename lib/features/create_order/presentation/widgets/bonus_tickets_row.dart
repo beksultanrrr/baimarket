@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../l10n/app_localizations.dart';
 import 'section_card.dart';
 
 class BonusTicketsRow extends StatelessWidget {
@@ -20,10 +21,10 @@ class BonusTicketsRow extends StatelessWidget {
             width: 28,
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Text(
-              'Будет начислено билетов',
-              style: TextStyle(
+              AppLocalizations.of(context)!.ticketsWillBeAwarded,
+              style: const TextStyle(
                 fontFamily: 'Gilroy',
                 fontSize: 15,
                 fontWeight: FontWeight.w600,

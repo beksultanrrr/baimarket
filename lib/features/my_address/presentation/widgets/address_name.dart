@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../l10n/app_localizations.dart';
+
 import '../../../../core/app_pallete.dart';
 
 class AddressName extends StatelessWidget {
@@ -7,6 +9,7 @@ class AddressName extends StatelessWidget {
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Column(
@@ -14,9 +17,9 @@ class AddressName extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 4),
-            child: const Text(
-              'Название адреса',
-              style: TextStyle(
+            child: Text(
+              l10n.addressNameLabel,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -33,7 +36,7 @@ class AddressName extends StatelessWidget {
                 horizontal: 16,
                 vertical: 16,
               ),
-              hintText: 'Например: Дом или работа',
+              hintText: l10n.addressNameHint,
               hintStyle: const TextStyle(
                 fontSize: 15,
                 color: Colors.black38,

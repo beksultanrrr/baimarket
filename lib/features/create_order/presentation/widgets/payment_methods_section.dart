@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/app_pallete.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'section_card.dart';
 
+// `card`/`halyk`/`cash` пока не показываем — на экране остался только Kaspi.
+// Значения оставлены в enum, чтобы не переписывать обработку слагов и
+// ветку наличного расчёта в create_order_page, если способ вернут.
 enum PaymentMethod { card, kaspi, halyk, cash }
 
 class PaymentMethodsSection extends StatelessWidget {
@@ -22,9 +26,9 @@ class PaymentMethodsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Способы оплаты',
-            style: TextStyle(
+          Text(
+            AppLocalizations.of(context)!.paymentMethodsTitle,
+            style: const TextStyle(
               fontFamily: 'Gilroy',
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -47,17 +51,6 @@ class PaymentMethodsSection extends StatelessWidget {
                     Icons.qr_code_2_rounded,
                     size: 28,
                     color: Color(0xFFE4002B),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                _MethodCard(
-                  isSelected: selected == PaymentMethod.cash,
-                  onTap: () => onChanged(PaymentMethod.cash),
-                  label: 'Наличными',
-                  icon: const Icon(
-                    Icons.payments_outlined,
-                    size: 28,
-                    color: Colors.black,
                   ),
                 ),
               ],

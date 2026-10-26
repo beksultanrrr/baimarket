@@ -30,12 +30,8 @@ class _MyDataPageState extends State<MyDataPage> {
 
   @override
   void initState() {
-    firstNameController = TextEditingController(
-      text: widget.profileModel.firstName,
-    );
-    lastNameController = TextEditingController(
-      text: widget.profileModel.lastName,
-    );
+    firstNameController = TextEditingController(text: widget.profileModel.firstName);
+    lastNameController = TextEditingController(text: widget.profileModel.lastName);
     super.initState();
   }
 
@@ -58,13 +54,7 @@ class _MyDataPageState extends State<MyDataPage> {
     // Валидация полей
     if (firstNameController.text.isEmpty || lastNameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.fillAllFields),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-        ),
+        SnackBar(content: Text(l10n.fillAllFields), backgroundColor: Colors.red, duration: const Duration(seconds: 3), behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16)),
       );
       return;
     }
@@ -80,10 +70,7 @@ class _MyDataPageState extends State<MyDataPage> {
             // 'Authorization': 'Bearer your_token_here',
           },
         ),
-        data: {
-          'firstName': firstNameController.text,
-          'lastName': lastNameController.text,
-        },
+        data: {'firstName': firstNameController.text, 'lastName': lastNameController.text},
       );
 
       if (response.statusCode == 200) {
@@ -106,13 +93,7 @@ class _MyDataPageState extends State<MyDataPage> {
     } catch (e) {
       // Обработка исключений (например, нет интернета)
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.error(e.toString())),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-        ),
+        SnackBar(content: Text(l10n.error(e.toString())), backgroundColor: Colors.red, duration: const Duration(seconds: 3), behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16)),
       );
     }
   }
@@ -130,23 +111,14 @@ class _MyDataPageState extends State<MyDataPage> {
 
     try {
       dio.options.headers["authorization"] = "Bearer $token";
-      final response = await dio.delete(
-        url.toString(),
-        options: Options(headers: {'Content-Type': 'application/json'}),
-      );
-      if (response.statusCode == 200 ||
-          response.statusCode == 204 ||
-          response.statusCode == 201) {
+      final response = await dio.delete(url.toString(), options: Options(headers: {'Content-Type': 'application/json'}));
+      if (response.statusCode == 200 || response.statusCode == 204 || response.statusCode == 201) {
         await storage.remove('auth_token');
         authCubit.logOut();
         if (mounted) {
           context.go('/auth');
           await Future.delayed(const Duration(milliseconds: 300));
-          await showPlatformSuccessDialog(
-            context,
-            l10n.success,
-            'Аккаунт успешно удалён',
-          );
+          await showPlatformSuccessDialog(context, l10n.success, 'Аккаунт успешно удалён');
         }
       } else {
         final errorMessage = response.data['message'] ?? 'Unknown error';
@@ -162,13 +134,7 @@ class _MyDataPageState extends State<MyDataPage> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l10n.error(e.toString())),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-        ),
+        SnackBar(content: Text(l10n.error(e.toString())), backgroundColor: Colors.red, duration: const Duration(seconds: 3), behavior: SnackBarBehavior.floating, margin: const EdgeInsets.all(16)),
       );
     }
   }
@@ -187,11 +153,7 @@ class _MyDataPageState extends State<MyDataPage> {
         centerTitle: true,
         title: Text(
           l10n.myData,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black),
         ),
       ),
       body: SafeArea(
@@ -208,10 +170,7 @@ class _MyDataPageState extends State<MyDataPage> {
               const SizedBox(height: 4),
               MainButton(onPressed: _updateProfile, text: l10n.save),
               const Spacer(),
-              DeleteAccountButton(
-                text: l10n.deleteAccount,
-                onPressed: _deleteAccount,
-              ),
+              DeleteAccountButton(text: l10n.deleteAccount, onPressed: _deleteAccount),
             ],
           ),
         ),
@@ -220,93 +179,55 @@ class _MyDataPageState extends State<MyDataPage> {
   }
 }
 
-Future<bool?> showPlatformDeleteDialog(
-  BuildContext context,
-  AppLocalizations l10n,
-) {
+Future<bool?> showPlatformDeleteDialog(BuildContext context, AppLocalizations l10n) {
   if (Platform.isIOS) {
     return showCupertinoDialog<bool>(
       context: context,
-      builder:
-          (context) => CupertinoAlertDialog(
-            title: Text(l10n.deleteAccount),
-            content: Text(
-              'Вы уверены, что хотите удалить аккаунт? Это действие необратимо.',
-            ),
-            actions: [
-              CupertinoDialogAction(
-                child: Text('Отмена'),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-              CupertinoDialogAction(
-                isDestructiveAction: true,
-                child: Text(l10n.deleteAccount),
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-            ],
-          ),
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(l10n.deleteAccount),
+        content: Text('Вы уверены, что хотите удалить аккаунт? Это действие необратимо.'),
+        actions: [
+          CupertinoDialogAction(child: Text('Отмена'), onPressed: () => Navigator.of(context).pop(false)),
+          CupertinoDialogAction(isDestructiveAction: true, child: Text(l10n.deleteAccount), onPressed: () => Navigator.of(context).pop(true)),
+        ],
+      ),
     );
   } else {
     return showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(l10n.deleteAccount),
-            content: Text(
-              'Вы уверены, что хотите удалить аккаунт? Это действие необратимо.',
-            ),
-            actions: [
-              TextButton(
-                child: Text('Отмена'),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-              TextButton(
-                child: Text(
-                  l10n.deleteAccount,
-                  style: TextStyle(color: Colors.red),
-                ),
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(l10n.deleteAccount),
+        content: Text('Вы уверены, что хотите удалить аккаунт? Это действие необратимо.'),
+        actions: [
+          TextButton(child: Text('Отмена'), onPressed: () => Navigator.of(context).pop(false)),
+          TextButton(
+            child: Text(l10n.deleteAccount, style: TextStyle(color: Colors.red)),
+            onPressed: () => Navigator.of(context).pop(true),
           ),
+        ],
+      ),
     );
   }
 }
 
-Future<void> showPlatformSuccessDialog(
-  BuildContext context,
-  String title,
-  String content,
-) {
+Future<void> showPlatformSuccessDialog(BuildContext context, String title, String content) {
   if (Platform.isIOS) {
     return showCupertinoDialog<void>(
       context: context,
-      builder:
-          (context) => CupertinoAlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              CupertinoDialogAction(
-                child: Text('OK'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
+      builder: (context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [CupertinoDialogAction(child: Text('OK'), onPressed: () => Navigator.of(context).pop())],
+      ),
     );
   } else {
     return showDialog<void>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          ),
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [TextButton(child: Text('OK'), onPressed: () => Navigator.of(context).pop())],
+      ),
     );
   }
 }

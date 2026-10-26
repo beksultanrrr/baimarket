@@ -9,7 +9,7 @@ class AppLocalizationsKk extends AppLocalizations {
   AppLocalizationsKk([String locale = 'kk']) : super(locale);
 
   @override
-  String get appName => 'Bai Market';
+  String get appName => 'hibai';
 
   @override
   String get welcome => 'Қош келдіңіз';
@@ -282,10 +282,10 @@ class AppLocalizationsKk extends AppLocalizations {
   String get sortPopular => 'Танымал';
 
   @override
-  String get sortCheap => 'Алдымен арзан';
+  String get sortCheap => 'Арзан';
 
   @override
-  String get sortExpensive => 'Алдымен қымбат';
+  String get sortExpensive => 'Қымбат';
 
   @override
   String get myData => 'Менің деректерім';
@@ -378,7 +378,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get orderStatusWay => 'Жолда';
 
   @override
-  String get orderStatusPickup => 'Алу пунктісінде күтілуде';
+  String get orderStatusPickup => 'Бөлімшеде күтуде';
 
   @override
   String get orderStatusDelivered => 'Алынды';
@@ -438,7 +438,46 @@ class AppLocalizationsKk extends AppLocalizations {
   String get getCode => 'Код алу';
 
   @override
+  String get orderConsentText => 'Түймені басу арқылы сіз Оферта шарттарымен және Құпиялылық саясатымен келісесіз';
+
+  @override
+  String get orderConsentOffer => 'Оферта шарттарымен';
+
+  @override
+  String get orderConsentPrivacy => 'Құпиялылық саясатымен';
+
+  @override
   String get termsAndPrivacy => '\"Код алу\" түймесін басу арқылы сіз пайдалану шарттарын және құпиялылық саясатын қабылдайсыз';
+
+  @override
+  String get userAgreement => 'пайдалану шарттарын';
+
+  @override
+  String get privacyPolicy => 'құпиялылық саясатын';
+
+  @override
+  String get greeting => 'Сәлеметсіз бе!';
+
+  @override
+  String get cannotLogin => 'Кіре алмайсыз ба?';
+
+  @override
+  String get createPinTitle => 'PIN-код ойлап табыңыз';
+
+  @override
+  String get confirmPinTitle => 'PIN-кодты қайталаңыз';
+
+  @override
+  String get pinMismatch => 'PIN-кодтар сәйкес келмейді';
+
+  @override
+  String get wrongPin => 'PIN-код қате';
+
+  @override
+  String get fillInData => 'Толтырыңыз';
+
+  @override
+  String get selectCity => 'Қаланы таңдаңыз';
 
   @override
   String get enterCode => 'Кодты енгізіңіз';
@@ -516,6 +555,12 @@ class AppLocalizationsKk extends AppLocalizations {
   String get contacts => 'Байланыстар';
 
   @override
+  String get sattyJuldyz => 'Satty juldyz';
+
+  @override
+  String get techSupport => 'Тех көмек';
+
+  @override
   String get inviteFriends => 'Достарыңызды шақырыңыз';
 
   @override
@@ -573,6 +618,95 @@ class AppLocalizationsKk extends AppLocalizations {
   String get noSavedAddresses => 'Сізде сақталған мекенжайлар жоқ';
 
   @override
+  String get deliveryAddressesTitle => 'Жеткізу мекенжайлары';
+
+  @override
+  String get deliveryAddressTitle => 'Жеткізу мекенжайы';
+
+  @override
+  String get addMoreAddress => 'Тағы мекенжай қосу';
+
+  @override
+  String get saveAddress => 'Мекенжайды сақтау';
+
+  @override
+  String get newAddress => 'Жаңа мекенжай';
+
+  @override
+  String addressLabeled(String label) {
+    return '«$label» мекенжайы';
+  }
+
+  @override
+  String get addressAdded => 'Мекенжай сәтті қосылды';
+
+  @override
+  String get addressDeleted => 'Мекенжай жойылды';
+
+  @override
+  String get deleteAddressTitle => 'Мекенжайды жою керек пе?';
+
+  @override
+  String get deleteAddressMessage => 'Осы мекенжайды жойғыңыз келетініне сенімдісіз бе?';
+
+  @override
+  String get deleteAction => 'Жою';
+
+  @override
+  String get addAction => 'Қосу';
+
+  @override
+  String get savingInProgress => 'Сақталуда...';
+
+  @override
+  String get addressNameLabel => 'Мекенжай атауы';
+
+  @override
+  String get addressNameHint => 'Мысалы: Үй немесе жұмыс';
+
+  @override
+  String get enterAddressName => 'Атауын енгізіңіз';
+
+  @override
+  String get streetAndHouseHint => 'Көше және үй нөмірі';
+
+  @override
+  String get enterAddressLine => 'Мекенжайды енгізіңіз';
+
+  @override
+  String get apartmentLabel => 'Пәтер';
+
+  @override
+  String get entranceLabel => 'Кіреберіс';
+
+  @override
+  String get floorLabel => 'Қабат';
+
+  @override
+  String get postalIndexHint => 'Индекс';
+
+  @override
+  String get enterPostalIndex => 'Индексті енгізіңіз';
+
+  @override
+  String get selectCityFirst => 'Қаланы таңдаңыз';
+
+  @override
+  String get selectRegion => 'Аймақты таңдаңыз';
+
+  @override
+  String get addressesLoadError => 'Мекенжайларды жүктеу қатесі';
+
+  @override
+  String get addressAddError => 'Мекенжай қосу қатесі';
+
+  @override
+  String get addressSaveError => 'Мекенжайды сақтау мүмкін болмады';
+
+  @override
+  String get addressDeleteError => 'Мекенжайды жою қатесі';
+
+  @override
   String get addAddress => 'Мекенжай қосу';
 
   @override
@@ -583,6 +717,39 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get wholeCatalogTab => 'Барлық каталог';
+
+  @override
+  String get catalogTileLottery => 'Ұтыс\nтауарлары';
+
+  @override
+  String get catalogTileDiscount => 'Жеңілдікті\nтауарлар';
+
+  @override
+  String get catalogTileMakeup => 'Макияжға';
+
+  @override
+  String get catalogTilePerfume => 'Парфюмерия';
+
+  @override
+  String get catalogTileBodyCare => 'Денеге\nкүтім';
+
+  @override
+  String get catalogTileHairCare => 'Шашқа\nкүтім';
+
+  @override
+  String get catalogTileCosmeticSets => 'Косметика\nжинақтары';
+
+  @override
+  String get catalogTileFaceCare => 'Бетке\nкүтім';
+
+  @override
+  String get catalogTileSunCare => 'Күннен\nқорғау';
+
+  @override
+  String get catalogTileHygiene => 'Жеке\nгигиена';
+
+  @override
+  String get catalogTileOralCare => 'Ауыз қуысын\nкүту';
 
   @override
   String get raffleDefaultTitle => 'Ұтыс';
@@ -904,4 +1071,417 @@ class AppLocalizationsKk extends AppLocalizations {
 
   @override
   String get kaspiPayAgain => 'Қайта төлеу';
+
+  @override
+  String sellerRaffleDate(String date) {
+    return 'Ұтыс: $date';
+  }
+
+  @override
+  String get sellersEmpty => 'Әзірге дүкендер жоқ';
+
+  @override
+  String get sellersLoadError => 'Дүкендерді жүктеу мүмкін болмады';
+
+  @override
+  String get sellerProductsEmpty => 'Бұл дүкенде әзірге тауар жоқ';
+
+  @override
+  String get sellerNotFound => 'Дүкен қолжетімсіз';
+
+  @override
+  String get sellerStoreTitleFallback => 'Дүкен';
+
+  @override
+  String ticketsBadge(String count) {
+    return '+$count';
+  }
+
+  @override
+  String get productUnavailable => 'Тауар қолжетімсіз';
+
+  @override
+  String get plusPriceActive => 'Plus бағаңыз';
+
+  @override
+  String get reviewsEmpty => 'Әзірге пікірлер жоқ';
+
+  @override
+  String get reviewAnonymous => 'Сатып алушы';
+
+  @override
+  String get reviewComposerHint => 'Тауар туралы әсеріңізбен бөлісіңіз';
+
+  @override
+  String get reviewSend => 'Жіберу';
+
+  @override
+  String get reviewSubmitted => 'Пікіріңізге рахмет!';
+
+  @override
+  String get reviewAlreadyLeft => 'Сіз бұл тауарға пікір қалдырғансыз';
+
+  @override
+  String get reviewTooManyRequests => 'Тым көп әрекет. Бір минуттан кейін қайталаңыз';
+
+  @override
+  String get reviewSubmitError => 'Пікірді жіберу мүмкін болмады';
+
+  @override
+  String get reviewsLoadError => 'Пікірлерді жүктеу мүмкін болмады';
+
+  @override
+  String shareProductMessage(String name, String price) {
+    return '$name — $price. Bai Market-тен таптым.';
+  }
+
+  @override
+  String shareProductMessageNoPrice(String name) {
+    return '$name. Bai Market-тен таптым.';
+  }
+
+  @override
+  String cartItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count тауар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkoutShort => 'Рәсімдеу';
+
+  @override
+  String get cartClearFailed => 'Себетті тазалау мүмкін болмады';
+
+  @override
+  String get cartNotEnoughStock => 'Қорда тауар жеткіліксіз';
+
+  @override
+  String get cartQuantityChangeFailed => 'Санын өзгерту мүмкін болмады — тауар себеттен жойылды, қайта қосыңыз';
+
+  @override
+  String cartItemRemovedByStock(String name) {
+    return '«$name» бітті және себеттен жойылды';
+  }
+
+  @override
+  String cartItemPriceChanged(String name) {
+    return '«$name» бағасы өзгерді';
+  }
+
+  @override
+  String cartItemQuantityReduced(String name, String quantity) {
+    return '«$name» саны $quantity дейін азайтылды';
+  }
+
+  @override
+  String get cartRefreshFailed => 'Себетті жаңарту мүмкін болмады';
+
+  @override
+  String get pushPermissionTitle => 'Хабарламаларды қосыңыз';
+
+  @override
+  String get pushPermissionBody => 'Тапсырыс күйі, ұтыс нәтижелері және жаңалықтар туралы хабарлаймыз';
+
+  @override
+  String get pushPermissionAllow => 'Қосу';
+
+  @override
+  String get pushPermissionLater => 'Кейінірек';
+
+  @override
+  String get pushDisabledBanner => 'Хабарламалар өшірілген';
+
+  @override
+  String get pushEnableAction => 'Қосу';
+
+  @override
+  String get notificationsSettingsTitle => 'Хабарламалар';
+
+  @override
+  String get notificationsOn => 'Қосылған';
+
+  @override
+  String get notificationsOff => 'Өшірілген';
+
+  @override
+  String get notificationsLoadError => 'Хабарламаларды жүктеу мүмкін болмады';
+
+  @override
+  String get commonCancel => 'Бас тарту';
+
+  @override
+  String get addedToCart => 'Себетке қосылды';
+
+  @override
+  String get outOfStock => 'Қоймада жоқ';
+
+  @override
+  String get pullToRefreshHint => 'Жаңарту үшін төмен тартыңыз';
+
+  @override
+  String get streamsLoadError => 'Эфирлерді жүктеу мүмкін болмады';
+
+  @override
+  String get streamsEmptyTitle => 'Қазір эфир жоқ';
+
+  @override
+  String get streamsEmptySubtitle => 'Сәлден кейін қараңыз';
+
+  @override
+  String get streamErrorGeneric => 'Бірдеңе дұрыс болмады';
+
+  @override
+  String get streamEndedTitle => 'Эфир аяқталды';
+
+  @override
+  String get streamEndedSubtitle => 'Басқа эфирді таңдаңыз';
+
+  @override
+  String get streamReconnecting => 'Қайта қосылудамыз…';
+
+  @override
+  String get streamConnectionLost => 'Байланыс үзілді';
+
+  @override
+  String get streamRetry => 'Қайталау';
+
+  @override
+  String get streamChatTooLong => 'Хабарлама тым ұзын';
+
+  @override
+  String get streamChatRateLimited => 'Хабарлама тым көп, сәл күте тұрыңыз';
+
+  @override
+  String get streamProductsTitle => 'Эфирдегі тауарлар';
+
+  @override
+  String get streamGiftsTitle => 'Сыйлықтар';
+
+  @override
+  String get pinnedProductBadge => 'Эфирде';
+
+  @override
+  String get streamHostCameraPaused => 'Сатушы камераны өшірді';
+
+  @override
+  String get streamStartCta => 'Эфир бастау';
+
+  @override
+  String get streamResumeCta => 'Эфиріңізге оралу';
+
+  @override
+  String get startStreamSheetTitle => 'Жаңа эфир';
+
+  @override
+  String get startStreamTitleLabel => 'Эфир атауы';
+
+  @override
+  String get startStreamTitleHint => 'Мысалы: Кроссовкалар жеңілдігі';
+
+  @override
+  String get startStreamTitleTooShort => 'Ұзынырақ атау енгізіңіз';
+
+  @override
+  String get startStreamSubmit => 'Бастау';
+
+  @override
+  String get startStreamFailed => 'Эфирді бастау мүмкін болмады';
+
+  @override
+  String get streamAccessDenied => 'Эфирлер қолжетімсіз, қолдау қызметіне хабарласыңыз';
+
+  @override
+  String get streamAlreadyLiveTitle => 'Сізде эфир жүріп жатыр';
+
+  @override
+  String get streamAlreadyLiveMessage => 'Бір мезгілде бір ғана эфир жүргізуге болады. Ағымдағысын аяқтаңыз немесе көрермен ретінде ашыңыз.';
+
+  @override
+  String get streamEndAndRestart => 'Аяқтап, қайта бастау';
+
+  @override
+  String get streamOpenAsViewer => 'Көрермен ретінде ашу';
+
+  @override
+  String get streamStopConfirmTitle => 'Эфирді аяқтайсыз ба?';
+
+  @override
+  String get streamStopConfirmAction => 'Аяқтау';
+
+  @override
+  String get hostCameraPaused => 'Камера өшірулі';
+
+  @override
+  String get hostPickProductTitle => 'Тауарды көрсету';
+
+  @override
+  String get hostPinProduct => 'Көрсету';
+
+  @override
+  String get hostUnpinProduct => 'Тауарды экраннан алу';
+
+  @override
+  String get hostNoProducts => 'Әзірге тауар жоқ';
+
+  @override
+  String get hostPermissionDeniedTitle => 'Камера мен микрофонға рұқсат керек';
+
+  @override
+  String get hostPermissionDeniedMessage => 'Эфирге шығу үшін параметрлерде рұқсат беріңіз.';
+
+  @override
+  String get hostOpenSettings => 'Параметрлер';
+
+  @override
+  String get storyOpenProduct => 'Тауарға өту';
+
+  @override
+  String stockLeft(int count) {
+    return '$count дана қалды!';
+  }
+
+  @override
+  String get updateForcedTitle => 'Жаңарту қажет';
+
+  @override
+  String get updateForcedMessage => 'Bai Market қолданбасының бұл нұсқасына қолдау көрсетілмейді. Соңғы нұсқаны орнатыңыз — бұл бір минуттан аз уақыт алады.';
+
+  @override
+  String get updateRecommendedTitle => 'Жаңа нұсқа шықты';
+
+  @override
+  String get updateRecommendedMessage => 'Біз жаңа мүмкіндіктер қостық және бірнеше ақауды түзеттік. Жаңарту бір минуттан аз уақыт алады.';
+
+  @override
+  String get updateNow => 'Жаңарту';
+
+  @override
+  String get updateLater => 'Кейінірек';
+
+  @override
+  String get updateWhatsNew => 'Не жаңалық';
+
+  @override
+  String profileVersion(String version) {
+    return 'Нұсқа: $version';
+  }
+
+  @override
+  String updateVersionBadge(String version) {
+    return '$version нұсқасы';
+  }
+
+  @override
+  String get updateStoreOpenFailed => 'Қолданбалар дүкенін ашу мүмкін болмады. Қайталап көріңіз.';
+
+  @override
+  String get checkoutTitle => 'Тапсырысты рәсімдеу';
+
+  @override
+  String get savedAddressTitle => 'Сақталған мекенжай';
+
+  @override
+  String get selectSavedAddressFirst => 'Сақталған мекенжайды таңдаңыз';
+
+  @override
+  String get chooseAction => 'таңдау';
+
+  @override
+  String get changeAction => 'Өзгерту';
+
+  @override
+  String get addressFallbackTitle => 'Мекенжай';
+
+  @override
+  String branchWithAddress(String address) {
+    return 'Филиал: $address';
+  }
+
+  @override
+  String get cityFallbackName => 'Қала';
+
+  @override
+  String get recipientNameCourierLabel => 'Кім қарсы алады (Аты-жөні)';
+
+  @override
+  String get recipientNamePickupLabel => 'Кім алып кетеді (Аты-жөні)';
+
+  @override
+  String get recipientNameHint => 'Мысалы: Асылбек Даниял';
+
+  @override
+  String get processingAction => 'Өңделуде…';
+
+  @override
+  String get kaspiPaymentStartFailed => 'Kaspi төлемін бастау мүмкін болмады';
+
+  @override
+  String get paymentMethodsTitle => 'Төлем әдістері';
+
+  @override
+  String get deliveryByCourier => 'Курьермен';
+
+  @override
+  String get deliverySelfPickup => 'Өзі алып кету';
+
+  @override
+  String get filialDistrict => 'Бостандық ауданы';
+
+  @override
+  String get filialAddressLine => 'Абдулла Розыбакиев көшесі, 112';
+
+  @override
+  String get deliveryMethodBranch => 'Қазпошта бөлімшесіне дейін';
+
+  @override
+  String get deliveryMethodBranchHint => 'Трек-нөмір бойынша поштадан аласыз';
+
+  @override
+  String get deliveryMethodDoor => 'Есікке дейін';
+
+  @override
+  String get deliveryMethodDoorHint => 'Go Post курьері үйге жеткізеді';
+
+  @override
+  String get houseNumberLabel => 'Үй және пәтер';
+
+  @override
+  String get houseNumberHint => '150, пәтер 25';
+
+  @override
+  String get enterHouseNumber => 'Үй мен пәтерді көрсетіңіз';
+
+  @override
+  String get postalCodeInvalidLength => 'Индекс 6 саннан тұруы керек';
+
+  @override
+  String get enterPostalForDelivery => 'Жеткізу құнын білу үшін индексті енгізіңіз';
+
+  @override
+  String get selectAddressForDelivery => 'Жеткізу құнын білу үшін мекенжайды таңдаңыз';
+
+  @override
+  String get deliveryPriceCalculating => 'Есептеп жатырмыз…';
+
+  @override
+  String get amountToPay => 'Төлеуге';
+
+  @override
+  String get trackingNumberLabel => 'Трек-нөмір';
+
+  @override
+  String get trackOnKazpost => 'post.kz сайтында бақылау';
+
+  @override
+  String get trackingNumberCopied => 'Трек-нөмір көшірілді';
+
+  @override
+  String get orderStatusPickupKazpostMessage => 'Сәлемдеме Қазпошта бөлімшесінде күтіп тұр. Оны трек-нөмір бойынша алыңыз';
+
+  @override
+  String get deliveryQuoteFailed => 'Жеткізуді есептеу мүмкін болмады. Қайталап көріңіз';
 }

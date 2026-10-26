@@ -13,7 +13,9 @@ class CartBottomBar extends StatelessWidget {
 
   final int totalPrice;
   final int savedAmount;
-  final VoidCallback onCheckout;
+
+  /// `null` — пока летит мутация корзины, оформление заблокировано.
+  final VoidCallback? onCheckout;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class CartBottomBar extends StatelessWidget {
                     const SizedBox(width: 8),
                     ShaderMask(
                       shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Color(0xFF117DAA), Color(0xFF1EA396)],
+                        colors: [Color(0xFF71CD32), Color(0xFF71CD32)],
                       ).createShader(bounds),
                       blendMode: BlendMode.srcIn,
                       child: Text(
@@ -69,7 +71,7 @@ class CartBottomBar extends StatelessWidget {
                     const Spacer(),
                     ShaderMask(
                       shaderCallback: (bounds) => const LinearGradient(
-                        colors: [Color(0xFF117DAA), Color(0xFF1EA396)],
+                        colors: [Color(0xFF71CD32), Color(0xFF71CD32)],
                       ).createShader(bounds),
                       blendMode: BlendMode.srcIn,
                       child: Text(

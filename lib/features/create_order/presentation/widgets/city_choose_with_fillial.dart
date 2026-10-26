@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/app_pallete.dart';
 import '../../../../core/urls.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 class CityChooseWithFillial extends StatefulWidget {
   const CityChooseWithFillial({
@@ -80,6 +81,7 @@ class _CityChooseWithFillialState extends State<CityChooseWithFillial> {
   void _showCitySelectionModal() {
     showModalBottomSheet(
       context: context,
+      routeSettings: const RouteSettings(name: kLiveSheetRouteName),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
       ),

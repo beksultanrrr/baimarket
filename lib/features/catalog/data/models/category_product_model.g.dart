@@ -13,17 +13,20 @@ CategoryProductModel _$CategoryProductModelFromJson(
   name: json['name'] as String?,
   price: (json['price'] as num?)?.toInt(),
   oldPrice: (json['oldPrice'] as num?)?.toInt(),
-  photoUrls:
-      (json['photoUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  photoUrls: (json['photoUrls'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
   inStockCount: (json['inStockCount'] as num?)?.toInt(),
   descriptionKz: json['descriptionKz'] as String?,
   descriptionRu: json['descriptionRu'] as String?,
   descriptionEn: json['descriptionEn'] as String?,
-  collections:
-      (json['collections'] as List<dynamic>?)
-          ?.map((e) => e as Map<String, dynamic>)
-          .toList(),
-  isInFavorite: json['isInFavorite'] as bool,
+  collections: (json['collections'] as List<dynamic>?)
+      ?.map((e) => CollectionBadgeModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  isInFavorite: json['isInFavorite'] as bool? ?? false,
+  plusPrice: (json['plusPrice'] as num?)?.toInt(),
+  ticketsCount: (json['ticketsCount'] as num?)?.toInt(),
+  cartQuantity: (json['cartQuantity'] as num?)?.toInt(),
 );
 
 Map<String, dynamic> _$CategoryProductModelToJson(
@@ -38,6 +41,9 @@ Map<String, dynamic> _$CategoryProductModelToJson(
   'descriptionKz': instance.descriptionKz,
   'descriptionRu': instance.descriptionRu,
   'descriptionEn': instance.descriptionEn,
-  'collections': instance.collections,
+  'collections': instance.collections?.map((e) => e.toJson()).toList(),
   'isInFavorite': instance.isInFavorite,
+  'plusPrice': instance.plusPrice,
+  'ticketsCount': instance.ticketsCount,
+  'cartQuantity': instance.cartQuantity,
 };

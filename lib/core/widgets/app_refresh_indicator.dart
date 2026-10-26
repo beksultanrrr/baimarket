@@ -31,7 +31,11 @@ class AppRefreshIndicator extends StatelessWidget {
       edgeOffset: edgeOffset,
       elevation: 0,
       semanticsLabel: l10n.pullToRefresh,
-      semanticsValue: l10n.refreshing,
+      // semanticsValue намеренно не задаём: это значение прогресса для
+      // semantics-узла прогресс-бара (диапазон 0…100), и любая нетекстовая
+      // строка там валит accessibility-мост Android:
+      // «Progress bar value, minValue, and maxValue must be valid numbers».
+      // Описание для скринридера несёт semanticsLabel выше.
       triggerMode: RefreshIndicatorTriggerMode.onEdge,
       child: child,
     );

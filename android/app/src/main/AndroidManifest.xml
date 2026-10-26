@@ -3,10 +3,19 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Ведущий эфира публикует камеру и микрофон через flutter_webrtc, а его
+         манифест не объявляет ни одного разрешения — без этих трёх
+         setMicrophoneEnabled(true) падает на любом устройстве. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <!-- Приезжает и мержем из манифеста firebase_messaging, объявляем явно
+         для наглядности: без него на Android 13+ уведомлений не будет. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
-        android:label="bai_market"
+        android:label="hibai"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -26,9 +35,46 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <!-- Отдаёт входящую ссылку встроенному роутеру Flutter, а тот —
+                 GoRouter'у. Без флага Android откроет приложение на initial
+                 route и путь из ссылки просто потеряется. -->
+            <meta-data
+              android:name="flutter_deeplinking_enabled"
+              android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <!-- App Links: https-ссылки с Firebase Hosting открываются прямо в
+                 приложении, без выбора браузера. autoVerify требует, чтобы
+                 КАЖДЫЙ host отдавал /.well-known/assetlinks.json с отпечатком
+                 подписи — иначе Android 12+ заваливает верификацию целиком, а
+                 не только для проблемного домена. Оба домена обслуживает один
+                 и тот же сайт Hosting, поэтому файл у них общий.
+
+                 Пути ограничены явно: без pathPrefix приложение перехватывало
+                 бы вообще все ссылки на домен, включая служебные. -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="https" android:host="hibai-8a160.web.app"/>
+                <data android:scheme="https" android:host="hibai-8a160.firebaseapp.com"/>
+                <data android:pathPrefix="/product/"/>
+                <data android:pathPrefix="/seller/"/>
+                <data android:pathPrefix="/collection/"/>
+                <data android:pathPrefix="/raffle/"/>
+                <data android:pathPrefix="/live/"/>
+            </intent-filter>
+            <!-- Запасная кастомная схема baimarket://product/42. Нужна там, где
+                 App Links не срабатывают: WebView внутри мессенджеров и кнопка
+                 «Открыть в приложении» на странице-заглушке. Верификации не
+                 требует, поэтому работает всегда. -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="baimarket"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
@@ -36,12 +82,25 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Было false: SDK не обновлял токен самостоятельно, и onTokenRefresh
+             фактически не мог сработать. -->
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"
-            android:value="false" />
+            android:value="true" />
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
+        <!-- Без этого фоновые уведомления уходят в автоканал SDK
+             "fcm_fallback_notification_channel" ("Разное"), который на части
+             прошивок замьючен. Значение обязано совпадать с kDefaultChannelId
+             в lib/core/push/push_channels.dart и с каналом, который создаёт
+             MainActivity.onCreate. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="default_channel" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/notification_color" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
@@ -52,6 +111,19 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <!-- Диалог обновления открывает карточку приложения через url_launcher.
+             На Android 11+ без этих записей система прячет от нас обработчики
+             схем, launchUrl не находит активити и кнопка «Обновить» молча
+             ничего не делает. `market` — приложение Google Play, `https` —
+             браузер как запасной путь. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="market"/>
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW"/>
+            <data android:scheme="https"/>
         </intent>
     </queries>
 </manifest>

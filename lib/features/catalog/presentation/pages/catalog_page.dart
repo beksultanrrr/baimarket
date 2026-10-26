@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/widgets/app_refresh_indicator.dart';
-import '../../../../core/widgets/shop_banners.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../raffle/presentation/cubit/raffle_list_cubit.dart';
+import '../../../seller/presentation/cubit/seller_list_cubit.dart';
+import '../../../seller/presentation/widgets/seller_banners.dart';
 import '../widgets/catalog_app_bar.dart';
 import '../widgets/catalog_tiles_grid.dart';
 import '../widgets/catalog_top_switcher.dart';
@@ -19,22 +19,22 @@ class CatalogPage extends ConsumerStatefulWidget {
 }
 
 class _CatalogPageState extends ConsumerState<CatalogPage> {
-  final RaffleListCubit _raffleListCubit = RaffleListCubit();
+  final SellerListCubit _sellerListCubit = SellerListCubit();
 
   @override
   void initState() {
     super.initState();
-    _raffleListCubit.load();
+    _sellerListCubit.load();
   }
 
   @override
   void dispose() {
-    _raffleListCubit.close();
+    _sellerListCubit.close();
     super.dispose();
   }
 
   Future<void> _onRefresh() async {
-    await _raffleListCubit.load();
+    await _sellerListCubit.load();
   }
 
   @override
@@ -46,7 +46,7 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
       child: Scaffold(
         backgroundColor: const Color(0xFFF5F5F5),
         body: BlocProvider.value(
-          value: _raffleListCubit,
+          value: _sellerListCubit,
           child: AppRefreshIndicator(
             onRefresh: _onRefresh,
             child: CustomScrollView(
@@ -78,13 +78,13 @@ class _CatalogPageState extends ConsumerState<CatalogPage> {
   }
 
   Widget _body(CatalogTopTab topTab) {
-    // «Все магазины» — баннеры с лицами стримеров.
+    // «Все магазины» — карточки продавцов из GET /seller.
     // «Весь каталог» — сетка категорий-плиток (новый дизайн); тап
     // ведёт на /collection/{slug} (с фолбэком на `all`).
     final Widget child = topTab == CatalogTopTab.allShops
         ? const KeyedSubtree(
             key: ValueKey('allShops'),
-            child: ShopBanners(
+            child: SellerBanners(
               padding: EdgeInsets.symmetric(horizontal: 16),
             ),
           )

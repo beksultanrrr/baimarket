@@ -137,7 +137,7 @@ class _LoadingView extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  mainAxisExtent: 339,
+                  mainAxisExtent: 342,
                 ),
                 itemBuilder: (_, __) =>
                     const SimpleShimmer(borderRadius: 16),

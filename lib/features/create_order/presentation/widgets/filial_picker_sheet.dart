@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../core/app_pallete.dart';
 import '../../../../core/urls.dart';
 import '../../data/models/city_model.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 class FilialPickerResult {
   const FilialPickerResult({required this.city, required this.filialIndex});
@@ -20,6 +21,7 @@ Future<FilialPickerResult?> showFilialPickerSheet({
 }) {
   return showModalBottomSheet<FilialPickerResult>(
     context: context,
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (_) => _FilialPickerSheet(
@@ -95,6 +97,7 @@ class _FilialPickerSheetState extends State<_FilialPickerSheet> {
     if (_cities.isEmpty) return;
     final picked = await showModalBottomSheet<CityModel>(
       context: context,
+      routeSettings: const RouteSettings(name: kLiveSheetRouteName),
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),

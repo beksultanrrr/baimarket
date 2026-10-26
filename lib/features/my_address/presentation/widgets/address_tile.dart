@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../../l10n/app_localizations.dart';
 import '../../../../core/app_pallete.dart';
 import '../../data/models/user_address_model.dart';
 
@@ -18,6 +20,7 @@ class AddressTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -39,7 +42,7 @@ class AddressTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Адрес: ${address.label}',
+                    l10n.addressLabeled(address.label),
                     style: TextStyle(
                       color: mainColorLight,
                       fontWeight: FontWeight.w500,
@@ -52,7 +55,7 @@ class AddressTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'индекс: ${address.postalCode}',
+                    l10n.postalIndex(address.postalCode),
                     style: TextStyle(color: Colors.black, fontSize: 12),
                   ),
                 ],

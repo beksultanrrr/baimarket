@@ -13,11 +13,21 @@ class NetworkImageWidget extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.dark = false,
     this.solidFallback = false,
+    this.fallbackColor,
+    this.fallbackScale = 0.55,
   });
 
   final String url;
   final BoxFit fit;
   final bool dark;
+
+  /// Фон заглушки. По умолчанию — нейтральный серый; экраны, где картинка
+  /// лежит прямо на белом (hero товара), передают [Colors.white].
+  final Color? fallbackColor;
+
+  /// Размер mock-картинки внутри заглушки (доля от меньшей стороны).
+  /// По умолчанию 0.55 — мок заметно меньше блока, видно что это заглушка.
+  final double fallbackScale;
 
   /// Если `true` — на пустом URL и при ошибке вместо mock-картинки
   /// рисуется чисто нейтральный цвет (без иконок/изображений).
@@ -36,13 +46,14 @@ class NetworkImageWidget extends StatelessWidget {
   /// - solidFallback: только ровный нейтральный цвет, без mock-картинки
   ///   (для крупных фонов, где мок выглядит как чужое фото).
   Widget _fallback() {
-    if (solidFallback) return const ColoredBox(color: _kFallbackBg);
+    final bg = fallbackColor ?? _kFallbackBg;
+    if (solidFallback) return ColoredBox(color: bg);
     return LayoutBuilder(
       builder: (context, constraints) {
         final maxSide = constraints.biggest.shortestSide;
-        final imgSide = maxSide * 0.55;
+        final imgSide = maxSide * fallbackScale;
         return Container(
-          color: _kFallbackBg,
+          color: bg,
           alignment: Alignment.center,
           child: Image.asset(
             _kFallbackAsset,

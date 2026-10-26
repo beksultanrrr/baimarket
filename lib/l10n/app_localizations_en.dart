@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Bai Market';
+  String get appName => 'hibai';
 
   @override
   String get welcome => 'Welcome';
@@ -282,10 +282,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sortPopular => 'Popular';
 
   @override
-  String get sortCheap => 'Cheapest first';
+  String get sortCheap => 'Cheap';
 
   @override
-  String get sortExpensive => 'Most expensive first';
+  String get sortExpensive => 'Expensive';
 
   @override
   String get myData => 'My Data';
@@ -378,7 +378,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get orderStatusWay => 'On the Way';
 
   @override
-  String get orderStatusPickup => 'Ready for Pickup';
+  String get orderStatusPickup => 'Waiting at branch';
 
   @override
   String get orderStatusDelivered => 'Delivered';
@@ -438,7 +438,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get getCode => 'Get Code';
 
   @override
+  String get orderConsentText => 'By tapping the button, you agree to the Offer terms and the Privacy policy';
+
+  @override
+  String get orderConsentOffer => 'Offer terms';
+
+  @override
+  String get orderConsentPrivacy => 'Privacy policy';
+
+  @override
   String get termsAndPrivacy => 'By clicking the \"Get Code\" button, you accept the terms of use and privacy policy';
+
+  @override
+  String get userAgreement => 'terms of use';
+
+  @override
+  String get privacyPolicy => 'privacy policy';
+
+  @override
+  String get greeting => 'Hello!';
+
+  @override
+  String get cannotLogin => 'Can\'t log in?';
+
+  @override
+  String get createPinTitle => 'Create a PIN';
+
+  @override
+  String get confirmPinTitle => 'Repeat the PIN';
+
+  @override
+  String get pinMismatch => 'PINs don\'t match';
+
+  @override
+  String get wrongPin => 'Wrong PIN code';
+
+  @override
+  String get fillInData => 'Fill in your details';
+
+  @override
+  String get selectCity => 'Select city';
 
   @override
   String get enterCode => 'Enter Code';
@@ -516,6 +555,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get contacts => 'Contacts';
 
   @override
+  String get sattyJuldyz => 'Satty juldyz';
+
+  @override
+  String get techSupport => 'Tech support';
+
+  @override
   String get inviteFriends => 'Invite friends';
 
   @override
@@ -573,6 +618,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSavedAddresses => 'You don\'t have any saved addresses yet';
 
   @override
+  String get deliveryAddressesTitle => 'Delivery addresses';
+
+  @override
+  String get deliveryAddressTitle => 'Delivery address';
+
+  @override
+  String get addMoreAddress => 'Add another address';
+
+  @override
+  String get saveAddress => 'Save address';
+
+  @override
+  String get newAddress => 'New address';
+
+  @override
+  String addressLabeled(String label) {
+    return '“$label” address';
+  }
+
+  @override
+  String get addressAdded => 'Address added';
+
+  @override
+  String get addressDeleted => 'Address deleted';
+
+  @override
+  String get deleteAddressTitle => 'Delete address?';
+
+  @override
+  String get deleteAddressMessage => 'Are you sure you want to delete this address?';
+
+  @override
+  String get deleteAction => 'Delete';
+
+  @override
+  String get addAction => 'Add';
+
+  @override
+  String get savingInProgress => 'Saving...';
+
+  @override
+  String get addressNameLabel => 'Address name';
+
+  @override
+  String get addressNameHint => 'For example: Home or work';
+
+  @override
+  String get enterAddressName => 'Enter a name';
+
+  @override
+  String get streetAndHouseHint => 'Street and house number';
+
+  @override
+  String get enterAddressLine => 'Enter the address';
+
+  @override
+  String get apartmentLabel => 'Apartment';
+
+  @override
+  String get entranceLabel => 'Entrance';
+
+  @override
+  String get floorLabel => 'Floor';
+
+  @override
+  String get postalIndexHint => 'Index';
+
+  @override
+  String get enterPostalIndex => 'Enter the index';
+
+  @override
+  String get selectCityFirst => 'Select a city';
+
+  @override
+  String get selectRegion => 'Select a region';
+
+  @override
+  String get addressesLoadError => 'Failed to load addresses';
+
+  @override
+  String get addressAddError => 'Failed to add the address';
+
+  @override
+  String get addressSaveError => 'Failed to save the address';
+
+  @override
+  String get addressDeleteError => 'Failed to delete the address';
+
+  @override
   String get addAddress => 'Add address';
 
   @override
@@ -583,6 +717,39 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wholeCatalogTab => 'Whole catalog';
+
+  @override
+  String get catalogTileLottery => 'Raffle\nproducts';
+
+  @override
+  String get catalogTileDiscount => 'Discounted\nproducts';
+
+  @override
+  String get catalogTileMakeup => 'Makeup';
+
+  @override
+  String get catalogTilePerfume => 'Perfumery';
+
+  @override
+  String get catalogTileBodyCare => 'Body\ncare';
+
+  @override
+  String get catalogTileHairCare => 'Hair\ncare';
+
+  @override
+  String get catalogTileCosmeticSets => 'Cosmetic\nsets';
+
+  @override
+  String get catalogTileFaceCare => 'Face\ncare';
+
+  @override
+  String get catalogTileSunCare => 'Sun\ncare';
+
+  @override
+  String get catalogTileHygiene => 'Personal\nhygiene';
+
+  @override
+  String get catalogTileOralCare => 'Oral\ncare';
 
   @override
   String get raffleDefaultTitle => 'Raffle';
@@ -904,4 +1071,418 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get kaspiPayAgain => 'Pay again';
+
+  @override
+  String sellerRaffleDate(String date) {
+    return 'Raffle: $date';
+  }
+
+  @override
+  String get sellersEmpty => 'No shops yet';
+
+  @override
+  String get sellersLoadError => 'Failed to load shops';
+
+  @override
+  String get sellerProductsEmpty => 'This shop has no products yet';
+
+  @override
+  String get sellerNotFound => 'This shop is no longer available';
+
+  @override
+  String get sellerStoreTitleFallback => 'Shop';
+
+  @override
+  String ticketsBadge(String count) {
+    return '+$count';
+  }
+
+  @override
+  String get productUnavailable => 'This product is no longer available';
+
+  @override
+  String get plusPriceActive => 'Your Plus price';
+
+  @override
+  String get reviewsEmpty => 'No reviews yet';
+
+  @override
+  String get reviewAnonymous => 'Buyer';
+
+  @override
+  String get reviewComposerHint => 'Share your impressions of the product';
+
+  @override
+  String get reviewSend => 'Send';
+
+  @override
+  String get reviewSubmitted => 'Thanks for your review!';
+
+  @override
+  String get reviewAlreadyLeft => 'You have already reviewed this product';
+
+  @override
+  String get reviewTooManyRequests => 'Too many attempts. Try again in a minute';
+
+  @override
+  String get reviewSubmitError => 'Couldn\'t send the review';
+
+  @override
+  String get reviewsLoadError => 'Failed to load reviews';
+
+  @override
+  String shareProductMessage(String name, String price) {
+    return '$name — $price. Found it in Bai Market.';
+  }
+
+  @override
+  String shareProductMessageNoPrice(String name) {
+    return '$name. Found it in Bai Market.';
+  }
+
+  @override
+  String cartItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items',
+      one: '$count item',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkoutShort => 'Checkout';
+
+  @override
+  String get cartClearFailed => 'Couldn\'t clear the cart';
+
+  @override
+  String get cartNotEnoughStock => 'Not enough items in stock';
+
+  @override
+  String get cartQuantityChangeFailed => 'Couldn\'t change the quantity — the item was removed, please add it again';
+
+  @override
+  String cartItemRemovedByStock(String name) {
+    return '«$name» is out of stock and was removed';
+  }
+
+  @override
+  String cartItemPriceChanged(String name) {
+    return '«$name» price has changed';
+  }
+
+  @override
+  String cartItemQuantityReduced(String name, String quantity) {
+    return '«$name» quantity reduced to $quantity';
+  }
+
+  @override
+  String get cartRefreshFailed => 'Couldn\'t refresh the cart';
+
+  @override
+  String get pushPermissionTitle => 'Turn on notifications';
+
+  @override
+  String get pushPermissionBody => 'We\'ll let you know about order status, raffle results and new arrivals';
+
+  @override
+  String get pushPermissionAllow => 'Turn on';
+
+  @override
+  String get pushPermissionLater => 'Later';
+
+  @override
+  String get pushDisabledBanner => 'Notifications are turned off';
+
+  @override
+  String get pushEnableAction => 'Turn on';
+
+  @override
+  String get notificationsSettingsTitle => 'Notifications';
+
+  @override
+  String get notificationsOn => 'On';
+
+  @override
+  String get notificationsOff => 'Off';
+
+  @override
+  String get notificationsLoadError => 'Failed to load notifications';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get addedToCart => 'Added to cart';
+
+  @override
+  String get outOfStock => 'Out of stock';
+
+  @override
+  String get pullToRefreshHint => 'Pull down to refresh';
+
+  @override
+  String get streamsLoadError => 'Couldn\'t load streams';
+
+  @override
+  String get streamsEmptyTitle => 'No streams right now';
+
+  @override
+  String get streamsEmptySubtitle => 'Come back a bit later';
+
+  @override
+  String get streamErrorGeneric => 'Something went wrong';
+
+  @override
+  String get streamEndedTitle => 'The stream has ended';
+
+  @override
+  String get streamEndedSubtitle => 'Pick another broadcast';
+
+  @override
+  String get streamReconnecting => 'Reconnecting…';
+
+  @override
+  String get streamConnectionLost => 'Connection lost';
+
+  @override
+  String get streamRetry => 'Try again';
+
+  @override
+  String get streamChatTooLong => 'The message is too long';
+
+  @override
+  String get streamChatRateLimited => 'Too many messages, slow down';
+
+  @override
+  String get streamProductsTitle => 'Products in the stream';
+
+  @override
+  String get streamGiftsTitle => 'Gifts';
+
+  @override
+  String get pinnedProductBadge => 'On air';
+
+  @override
+  String get streamHostCameraPaused => 'The host paused the camera';
+
+  @override
+  String get streamStartCta => 'Go live';
+
+  @override
+  String get streamResumeCta => 'Back to your stream';
+
+  @override
+  String get startStreamSheetTitle => 'New stream';
+
+  @override
+  String get startStreamTitleLabel => 'Stream title';
+
+  @override
+  String get startStreamTitleHint => 'For example: Sneaker sale';
+
+  @override
+  String get startStreamTitleTooShort => 'Add a longer title';
+
+  @override
+  String get startStreamSubmit => 'Start';
+
+  @override
+  String get startStreamFailed => 'Couldn\'t start the stream';
+
+  @override
+  String get streamAccessDenied => 'Streams are unavailable, please contact support';
+
+  @override
+  String get streamAlreadyLiveTitle => 'You already have a live stream';
+
+  @override
+  String get streamAlreadyLiveMessage => 'You can only run one stream at a time. End the current one or open it as a viewer.';
+
+  @override
+  String get streamEndAndRestart => 'End and restart';
+
+  @override
+  String get streamOpenAsViewer => 'Open as viewer';
+
+  @override
+  String get streamStopConfirmTitle => 'End the stream?';
+
+  @override
+  String get streamStopConfirmAction => 'End';
+
+  @override
+  String get hostCameraPaused => 'Camera is off';
+
+  @override
+  String get hostPickProductTitle => 'Show a product';
+
+  @override
+  String get hostPinProduct => 'Show';
+
+  @override
+  String get hostUnpinProduct => 'Hide the product';
+
+  @override
+  String get hostNoProducts => 'No products yet';
+
+  @override
+  String get hostPermissionDeniedTitle => 'Camera and microphone are required';
+
+  @override
+  String get hostPermissionDeniedMessage => 'Allow access in settings to go live.';
+
+  @override
+  String get hostOpenSettings => 'Settings';
+
+  @override
+  String get storyOpenProduct => 'View product';
+
+  @override
+  String stockLeft(int count) {
+    return '$count left!';
+  }
+
+  @override
+  String get updateForcedTitle => 'Update required';
+
+  @override
+  String get updateForcedMessage => 'This version of Bai Market is no longer supported. Install the latest one to keep shopping — it only takes a moment.';
+
+  @override
+  String get updateRecommendedTitle => 'A new version is out';
+
+  @override
+  String get updateRecommendedMessage => 'We have added new features and ironed out a few things. Updating takes less than a minute.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateWhatsNew => 'What\'s new';
+
+  @override
+  String profileVersion(String version) {
+    return 'Version: $version';
+  }
+
+  @override
+  String updateVersionBadge(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get updateStoreOpenFailed => 'Couldn\'t open the app store. Please try again.';
+
+  @override
+  String get checkoutTitle => 'Checkout';
+
+  @override
+  String get savedAddressTitle => 'Saved address';
+
+  @override
+  String get selectSavedAddressFirst => 'Choose a saved address';
+
+  @override
+  String get chooseAction => 'choose';
+
+  @override
+  String get changeAction => 'Change';
+
+  @override
+  String get addressFallbackTitle => 'Address';
+
+  @override
+  String branchWithAddress(String address) {
+    return 'Branch: $address';
+  }
+
+  @override
+  String get cityFallbackName => 'City';
+
+  @override
+  String get recipientNameCourierLabel => 'Who will meet the courier (full name)';
+
+  @override
+  String get recipientNamePickupLabel => 'Who will pick up the order (full name)';
+
+  @override
+  String get recipientNameHint => 'For example: Asylbek Daniyal';
+
+  @override
+  String get processingAction => 'Processing…';
+
+  @override
+  String get kaspiPaymentStartFailed => 'Could not start the Kaspi payment';
+
+  @override
+  String get paymentMethodsTitle => 'Payment methods';
+
+  @override
+  String get deliveryByCourier => 'By courier';
+
+  @override
+  String get deliverySelfPickup => 'Self-pickup';
+
+  @override
+  String get filialDistrict => 'Bostandyk district';
+
+  @override
+  String get filialAddressLine => '112 Abdully Rozybakieva street';
+
+  @override
+  String get deliveryMethodBranch => 'To a Kazpost branch';
+
+  @override
+  String get deliveryMethodBranchHint => 'You will pick it up at the post office with the tracking number';
+
+  @override
+  String get deliveryMethodDoor => 'To the door';
+
+  @override
+  String get deliveryMethodDoorHint => 'A Go Post courier will bring it home';
+
+  @override
+  String get houseNumberLabel => 'House and apartment';
+
+  @override
+  String get houseNumberHint => '150, apt. 25';
+
+  @override
+  String get enterHouseNumber => 'Enter the house and apartment';
+
+  @override
+  String get postalCodeInvalidLength => 'The postal code must be 6 digits';
+
+  @override
+  String get enterPostalForDelivery => 'Enter the postal code to see the delivery price';
+
+  @override
+  String get selectAddressForDelivery => 'Choose an address to see the delivery price';
+
+  @override
+  String get deliveryPriceCalculating => 'Calculating…';
+
+  @override
+  String get amountToPay => 'To pay';
+
+  @override
+  String get trackingNumberLabel => 'Tracking number';
+
+  @override
+  String get trackOnKazpost => 'Track on post.kz';
+
+  @override
+  String get trackingNumberCopied => 'Tracking number copied';
+
+  @override
+  String get orderStatusPickupKazpostMessage => 'The parcel is waiting at the Kazpost branch. Pick it up with the tracking number';
+
+  @override
+  String get deliveryQuoteFailed => 'Could not calculate the delivery. Please try again';
 }

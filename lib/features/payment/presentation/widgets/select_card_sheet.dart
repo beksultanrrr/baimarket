@@ -8,6 +8,7 @@ import 'delete_card_dialog.dart';
 import 'other_card_tile.dart';
 import 'select_card_tile.dart';
 import 'sheet_close_button.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 /// Возвращаемые из шита намерения родительскому экрану.
 enum SelectCardResult { picked, addNewCard }
@@ -20,6 +21,7 @@ Future<SelectCardResult?> showSelectCardSheet({
 }) {
   return showModalBottomSheet<SelectCardResult>(
     context: context,
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (_) {

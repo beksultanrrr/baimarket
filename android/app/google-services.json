@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "508941561573",
-    "project_id": "baimarket-a123a",
-    "storage_bucket": "baimarket-a123a.firebasestorage.app"
+    "project_number": "746121233690",
+    "project_id": "hibai-8a160",
+    "storage_bucket": "hibai-8a160.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:508941561573:android:68e0c7a72953d9db5cee0c",
+        "mobilesdk_app_id": "1:746121233690:android:d091604b2d70237cab58a3",
         "android_client_info": {
           "package_name": "com.bmarket.baimarket"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCmoDxwg-aTaN6Oz0epo0JvAt5o2QNLxz4"
+          "current_key": "AIzaSyBXsd1A7buJFEALG4ijsbyMROrdpi_L8GA"
         }
       ],
       "services": {

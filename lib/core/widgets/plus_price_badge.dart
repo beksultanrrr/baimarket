@@ -1,3 +1,4 @@
+import 'package:bai_market/core/app_pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,20 +8,6 @@ class PlusPriceBadge extends StatelessWidget {
   const PlusPriceBadge({super.key, required this.plusPrice});
   final int plusPrice;
 
-  static const _gradient = LinearGradient(
-    colors: [Color(0xFF117DAA), Color(0xFF1EA396)],
-    begin: Alignment.centerLeft,
-    end: Alignment.centerRight,
-  );
-
-  Widget _gradientText(String text, TextStyle style) {
-    return ShaderMask(
-      shaderCallback: (bounds) => _gradient.createShader(bounds),
-      blendMode: BlendMode.srcIn,
-      child: Text(text, style: style.copyWith(color: Colors.white)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -28,8 +15,8 @@ class PlusPriceBadge extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8FEFE),
-        borderRadius: BorderRadius.circular(6),
+        color: accentSoftGreen,
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,31 +25,36 @@ class PlusPriceBadge extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SvgPicture.asset(
-                'assets/icons/main_plus.svg',
+                'assets/icons/main_plus_2.svg',
                 height: 22,
                 width: 22,
               ),
               const SizedBox(width: 4),
+              // Ширина подобрана так, чтобы подпись всегда ложилась в две
+              // строки («Plus пен» / «алсаңыз») — во всех трёх локалях.
               SizedBox(
                 width: 52,
-                child: _gradientText(
+                child: Text(
                   l10n.plusPrice,
-                  const TextStyle(
-                    fontSize: 9,
+                  maxLines: 2,
+                  style: const TextStyle(
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'Gilroy',
                     height: 1.1,
+                    color: Color(0xFF39951F),
                   ),
                 ),
               ),
             ],
           ),
-          _gradientText(
+          Text(
             l10n.price(plusPrice.toString()),
-            TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               fontFamily: GoogleFonts.inter().fontFamily,
+              color:  Color(0xFF39951F),
             ),
           ),
         ],

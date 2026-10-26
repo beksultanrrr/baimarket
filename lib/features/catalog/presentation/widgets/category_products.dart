@@ -209,7 +209,7 @@ class _CategoryProductsState extends State<CategoryProducts> {
                                 width: 24,
                                 child: NetworkImageWidget(
                                   url:
-                                      '$imgUrl${product.collections![index]['labelUrl']}',
+                                      '$imgUrl${product.collections![index].labelUrl ?? ''}',
                                 ),
                               ),
                         ),

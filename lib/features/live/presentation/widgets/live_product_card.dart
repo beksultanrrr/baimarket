@@ -6,6 +6,7 @@ import '../../../../core/urls.dart';
 import '../../../../core/widgets/plus_price_badge.dart';
 import '../../../../core/widgets/show_image.dart';
 import '../../../catalog/data/models/category_product_model.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// Карточка товара для frame 37 «Товары в стриме».
 /// Включает: фаворит-сердце, картинку, цены (актуальная red + старая
@@ -25,7 +26,11 @@ class LiveProductCard extends StatelessWidget {
   final VoidCallback onFavoriteTap;
   final VoidCallback onBuyTap;
 
-  bool get _outOfStock => (product.inStockCount ?? 0) <= 0;
+  // `null` — остаток неизвестен (например, товар приехал из эфира, а не
+  // из каталога). Раньше здесь стоял `?? 0`, и такие товары показывались
+  // как «нет в наличии», хотя они есть.
+  bool get _outOfStock =>
+      product.inStockCount != null && product.inStockCount! <= 0;
 
   String _formatPrice(int v) {
     final s = v.toString();
@@ -44,6 +49,7 @@ class LiveProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final price = product.price ?? 0;
     final oldPrice = product.oldPrice;
     final stock = product.inStockCount ?? 0;
@@ -135,8 +141,10 @@ class LiveProductCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 6),
-          PlusPriceBadge(plusPrice: (price * 0.7).round()),
+          if (product.plusPrice != null) ...[
+            const SizedBox(height: 6),
+            PlusPriceBadge(plusPrice: product.plusPrice!),
+          ],
           const SizedBox(height: 6),
           _StockBadge(count: stock),
           const SizedBox(height: 6),
@@ -168,7 +176,7 @@ class LiveProductCard extends StatelessWidget {
                 ),
                 alignment: Alignment.center,
                 child: Text(
-                  _outOfStock ? 'Нет в наличии' : 'Купить',
+                  _outOfStock ? l10n.outOfStock : l10n.buy,
                   style: TextStyle(
                     fontFamily: 'Gilroy',
                     fontSize: 13,
@@ -219,7 +227,7 @@ class _StockBadge extends StatelessWidget {
           const SizedBox(width: 5),
           Flexible(
             child: Text(
-              _empty ? 'Осталось 0 штук!' : 'Осталось $count штук!',
+              AppLocalizations.of(context)!.stockLeft(count),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

@@ -11,7 +11,16 @@ class MyAddressLoaded extends MyAddressState {
   MyAddressLoaded(this.addresses);
 }
 
+/// Что именно не удалось. Готовый текст собирает UI — у кубита нет
+/// `BuildContext`, а значит и доступа к локализациям.
+enum MyAddressErrorKind { load, add, delete }
+
 class MyAddressError extends MyAddressState {
-  final String message;
-  MyAddressError(this.message);
+  final MyAddressErrorKind kind;
+
+  /// Текст от сервера, если он был (например 400 по индексу). UI может
+  /// показать его вместо общей фразы по [kind] — там подробностей нет.
+  final String? message;
+
+  MyAddressError(this.kind, {this.message});
 }

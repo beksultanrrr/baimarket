@@ -266,7 +266,7 @@ class _CollectionPageState extends State<CollectionPage> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10,
-                                mainAxisExtent: 339,
+                                mainAxisExtent: 342,
                               ),
                               itemBuilder: (context, index) => ProductCard(
                                 product: state.collection.products[index],

@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,88 +6,63 @@ import 'package:google_fonts/google_fonts.dart';
 
 class _Tile {
   final String slug;
+
+  /// Целиковая плитка из Figma: градиентный фон + арт, БЕЗ подписи.
+  /// Текст в макете запечён в пути, поэтому из ассетов он вырезан и
+  /// рисуется поверх Flutter-виджетом — иначе плитка не локализуется.
+  final String tileAsset;
+
+  /// Заглушка на первый кадр, пока flutter_svg парсит ассет.
+  /// Примерно средний тон градиента из [tileAsset].
   final Color background;
-  final String iconAsset;
-  final Color textColor;
-  final double iconSize;
-  final Offset iconOffset;
-  final double iconRotation; // degrees
   final Map<String, String> labels;
 
-  const _Tile({
-    required this.slug,
-    required this.background,
-    required this.iconAsset,
-    required this.labels,
-    this.textColor = Colors.white,
-    this.iconSize = 86,
-    this.iconOffset = const Offset(-6, -6),
-    this.iconRotation = 0,
-  });
+  const _Tile({required this.slug, required this.tileAsset, required this.background, required this.labels});
 
   String labelFor(String locale) {
     return labels[locale] ?? labels['ru'] ?? labels.values.first;
   }
 }
 
-// Призы — на бэке коллекция `lottery` (аукционные призы).
+// Призы — на бэке коллекция `lottery` (аукционные призы). Frame 18610.
 const _prizeTile = _Tile(
   slug: 'lottery',
-  background: Color(0xFF3FE0DE),
-  iconAsset: 'assets/icons/main/prize.svg',
-  iconSize: 50,
-  iconOffset: Offset(-3, 0),
-  iconRotation: 0,
+  tileAsset: 'assets/icons/main/tile_prize.svg',
+  background: Color(0xFFF9AE62),
   labels: {'ru': 'Призы', 'kk': 'Сыйлықтар', 'en': 'Prizes'},
 );
 
-// Новинки — на бэке коллекция `new`.
+// Новинки — на бэке коллекция `new`. Frame 18609.
 const _newTile = _Tile(
   slug: 'new',
-  background: Color(0xFF22923C),
-  iconAsset: 'assets/icons/main/new.svg',
-  iconSize: 42,
-  iconOffset: Offset(0, 0),
-  iconRotation: 0,
+  tileAsset: 'assets/icons/main/tile_new.svg',
+  background: Color(0xFFFF6E8C),
   labels: {'ru': 'Новинки', 'kk': 'Жаңалықтар', 'en': 'New'},
 );
 
 // Хиты — отдельной коллекции `hit` на бэке нет, кидаем во весь каталог `all`.
+// Frame 18611.
 const _hitTile = _Tile(
   slug: 'all',
-  background: Color(0xFFB6B4F0),
-  iconAsset: 'assets/icons/main/hit.svg',
-  iconSize: 61,
-  iconOffset: Offset(1, 1),
-  iconRotation: 0,
+  tileAsset: 'assets/icons/main/tile_hit.svg',
+  background: Color(0xFF9B7FDA),
   labels: {'ru': 'Хиты', 'kk': 'Хиттер', 'en': 'Hits'},
 );
 
-// Скидки — на бэке коллекция `discount`.
+// Скидки — на бэке коллекция `discount`. Frame 18614.
 const _salesTile = _Tile(
   slug: 'discount',
-  background: Color(0xFFEF5746),
-  iconAsset: 'assets/icons/main/sales.svg',
-  iconSize: 78,
-  iconOffset: Offset(0, 5),
-  iconRotation: 0,
+  tileAsset: 'assets/icons/main/tile_sales.svg',
+  background: Color(0xFF6BB44F),
   labels: {'ru': 'Скидки', 'kk': 'Жеңіл-\nдіктер', 'en': 'Discounts'},
 );
 
-// Весь каталог — 4 квадрата без поворота, справа в горизонтальном лейауте
+// Весь каталог — 4 квадрата справа. Frame 18613.
 const _allTile = _Tile(
   slug: 'all',
-  background: Color(0xFFEDEDED),
-  iconAsset: 'assets/icons/main/all.svg',
-  textColor: Color(0xFF8C8C8C),
-  iconSize: 56,
-  iconOffset: Offset(11, 8),
-  iconRotation: 0,
-  labels: {
-    'ru': 'Весь\nКаталог',
-    'kk': 'Барлық\nкаталог',
-    'en': 'Whole\nCatalog',
-  },
+  tileAsset: 'assets/icons/main/tile_all.svg',
+  background: Color(0xFF333333),
+  labels: {'ru': 'Весь\nКаталог', 'kk': 'Барлық\nкаталог', 'en': 'Whole\nCatalog'},
 );
 
 class HomeCategoryGrid extends StatelessWidget {
@@ -112,58 +86,18 @@ class HomeCategoryGrid extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: _CategoryCard(
-                    tile: _prizeTile,
-                    height: 80,
-                    locale: locale,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: _CategoryCard(
-                    tile: _newTile,
-                    height: 80,
-                    locale: locale,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: _CategoryCard(
-                  tile: _hitTile,
-                  height: 80,
-                  locale: locale,
-                ),
-              ),
+              Expanded(child: Padding(padding: const EdgeInsets.only(right: 8), child: _CategoryCard(tile: _prizeTile, height: 80, locale: locale))),
+              Expanded(child: Padding(padding: const EdgeInsets.only(right: 8), child: _CategoryCard(tile: _newTile, height: 80, locale: locale))),
+              Expanded(child: _CategoryCard(tile: _hitTile, height: 80, locale: locale)),
             ],
           ),
           const SizedBox(height: 8),
           Row(
             children: [
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: _CategoryCard(
-                    tile: _salesTile,
-                    height: 80,
-                    locale: locale,
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 6,
-                child: _CategoryCard(
-                  tile: _allTile,
-                  height: 80,
-                  locale: locale,
-                  onTapOverride: onAllCatalog,
-                ),
-              ),
+              // 150 : 192 — ровно как в макете (150 + 8 + 192 = 350 = 390pt
+              // экран минус горизонтальные отступы по 20).
+              Expanded(flex: 150, child: Padding(padding: const EdgeInsets.only(right: 8), child: _CategoryCard(tile: _salesTile, height: 80, locale: locale))),
+              Expanded(flex: 192, child: _CategoryCard(tile: _allTile, height: 80, locale: locale, onTapOverride: onAllCatalog)),
             ],
           ),
         ],
@@ -173,12 +107,7 @@ class HomeCategoryGrid extends StatelessWidget {
 }
 
 class _CategoryCard extends StatelessWidget {
-  const _CategoryCard({
-    required this.tile,
-    required this.locale,
-    this.height = 80,
-    this.onTapOverride,
-  });
+  const _CategoryCard({required this.tile, required this.locale, this.height = 80, this.onTapOverride});
 
   final _Tile tile;
   final String locale;
@@ -199,22 +128,21 @@ class _CategoryCard extends StatelessWidget {
           onTapOverride!();
           return;
         }
-        context.push(
-          '/collection/${tile.slug}',
-          extra: {'title': tile.labelFor(locale)},
-        );
+        context.push('/collection/${tile.slug}', extra: {'title': tile.labelFor(locale)});
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Container(
           height: height,
-          decoration: BoxDecoration(
-            color: tile.background,
-            borderRadius: BorderRadius.circular(12),
-          ),
+          decoration: BoxDecoration(color: tile.background, borderRadius: BorderRadius.circular(12)),
           child: Stack(
             clipBehavior: Clip.hardEdge,
             children: [
+              // Градиент + арт целиком приезжают из Figma-ассета. BoxFit.fill,
+              // а не cover: ширина плитки резиновая (Expanded), и cover обрезал
+              // бы арт по высоте на широких экранах, а fill лишь чуть тянет
+              // градиент по горизонтали — визуально незаметно.
+              Positioned.fill(child: SvgPicture.asset(tile.tileAsset, fit: BoxFit.fill)),
               Positioned(
                 top: 9,
                 left: 9,
@@ -223,29 +151,12 @@ class _CategoryCard extends StatelessWidget {
                   label,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontFamily: GoogleFonts.unbounded().fontFamily,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w900,
-                    color: tile.textColor,
-                  ),
+                  style: TextStyle(fontFamily: GoogleFonts.unbounded().fontFamily, fontSize: 15, fontWeight: FontWeight.w900, color: Colors.white),
                 ),
-              ),
-              Positioned(
-                right: tile.iconOffset.dx,
-                bottom: tile.iconOffset.dy,
-                child: _buildIcon(),
               ),
               Positioned.fill(
                 child: IgnorePointer(
-                  child: CustomPaint(
-                    painter: _InnerShadowPainter(
-                      borderRadius: BorderRadius.circular(12),
-                      offset: const Offset(4, 4),
-                      blur: 8,
-                      color: Colors.white.withValues(alpha: 0.25),
-                    ),
-                  ),
+                  child: CustomPaint(painter: _InnerShadowPainter(borderRadius: BorderRadius.circular(12), offset: const Offset(4, 4), blur: 8, color: Colors.white.withValues(alpha: 0.25))),
                 ),
               ),
             ],
@@ -254,29 +165,10 @@ class _CategoryCard extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildIcon() {
-    final icon = SvgPicture.asset(
-      tile.iconAsset,
-      height: tile.iconSize,
-      width: tile.iconSize,
-      fit: BoxFit.contain,
-    );
-    if (tile.iconRotation == 0) return icon;
-    return Transform.rotate(
-      angle: tile.iconRotation * math.pi / 180,
-      child: icon,
-    );
-  }
 }
 
 class _InnerShadowPainter extends CustomPainter {
-  _InnerShadowPainter({
-    required this.borderRadius,
-    required this.offset,
-    required this.color,
-    this.blur = 0,
-  });
+  _InnerShadowPainter({required this.borderRadius, required this.offset, required this.color, this.blur = 0});
 
   final BorderRadius borderRadius;
   final Offset offset;
@@ -305,6 +197,5 @@ class _InnerShadowPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _InnerShadowPainter old) =>
-      old.offset != offset || old.color != color || old.blur != blur;
+  bool shouldRepaint(covariant _InnerShadowPainter old) => old.offset != offset || old.color != color || old.blur != blur;
 }

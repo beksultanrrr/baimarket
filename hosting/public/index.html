@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bai Market</title>
+
+  <!-- Общие OG-теги. Превью конкретного товара тут не собрать: Hosting отдаёт
+       статику, а краулеры Telegram/WhatsApp не выполняют JS. Апгрейд — rewrite
+       на Cloud Function, см. hosting/README.md. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Bai Market" />
+  <meta property="og:title" content="Bai Market" />
+  <meta property="og:description" content="Откройте товар в приложении Bai Market" />
+  <meta property="og:image" content="https://hibai-8a160.web.app/og-cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style>
+    :root {
+      --green: #71CD32;
+      --green-dark: #5FB02A;
+      --ink: #17181C;
+      --muted: #6B7280;
+      --surface: #FFFFFF;
+      --bg: #F7F7F7;
+      --border: #E6E8EB;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #F5F6F7;
+        --muted: #9CA3AF;
+        --surface: #1C1D22;
+        --bg: #111216;
+        --border: #2C2E35;
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .06);
+    }
+
+    /* Логотип — тёмный на прозрачном фоне, поэтому ему нужна фирменная
+       зелёная подложка: на тёмной теме он иначе сливается с карточкой. */
+    .logo-plate {
+      display: block;
+      max-width: 240px;
+      margin: 0 auto 24px;
+      padding: 18px 22px;
+      background: var(--green);
+      border-radius: 18px;
+    }
+
+    .logo {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.3px;
+    }
+
+    p.sub {
+      margin: 0 0 24px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px 20px;
+      border: 0;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: opacity .15s ease;
+    }
+
+    .btn:active { opacity: .75; }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+    }
+
+    .stores {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    [hidden] { display: none !important; }
+
+    .btn-store {
+      flex: 1;
+      padding: 13px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hint {
+      margin: 20px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .hint a { color: var(--green-dark); }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo-plate">
+      <img class="logo" src="/logo.png" alt="Bai Market" width="780" height="244" />
+    </div>
+    <h1 id="title">Открыть в приложении</h1>
+    <p class="sub" id="subtitle">Ссылка ведёт в приложение Bai Market.</p>
+
+    <!-- Главное действие — установка. Оно не может закончиться ошибкой, в
+         отличие от запуска по кастомной схеме, и у того, у кого приложение уже
+         стоит, магазин покажет кнопку «Открыть». -->
+    <a class="btn btn-primary" id="primary" href="#" hidden>Установить приложение</a>
+
+    <!-- Для тех, у кого приложение есть, но система не отдала ему ссылку:
+         WebView внутри соцсетей, ссылка вставлена в адресную строку вручную. -->
+    <a class="btn btn-ghost" id="open" href="#" hidden>Приложение уже установлено — открыть</a>
+
+    <div class="stores" id="stores">
+      <a class="btn-store" id="ios-store" href="#">App Store</a>
+      <a class="btn-store" id="android-store" href="#">Google Play</a>
+    </div>
+
+    <p class="hint" id="hint"></p>
+  </main>
+
+  <script>
+    (function () {
+      // Единственное место, где живут идентификаторы магазинов и схема.
+      var CONFIG = {
+        scheme: 'baimarket',
+
+        // Пакет самой сборки: им адресуется intent:// и он же объявлен в
+        // assetlinks.json. Совпадает с регистрацией в Firebase.
+        androidPackage: 'com.bmarket.baimarket',
+
+        // Пакет листинга в Google Play — намеренно другой.
+        //
+        // На Play опубликован com.baimarket.baimarket (с «ai»), а сборка идёт
+        // под com.bmarket.baimarket. Ссылка на пакет сборки отдаёт 404, то
+        // есть кнопка «установить» вела бы в никуда.
+        //
+        // Когда com.bmarket.baimarket появится в Play, приравняйте это
+        // значение к androidPackage — тогда установленное из маркета
+        // приложение начнёт принимать ссылки, чего сейчас не происходит.
+        playListingId: 'com.baimarket.baimarket',
+        // Числовой id из App Store (apps.apple.com/app/id<ЭТОТ_ID>). Сверен
+        // с bundleId com.baimarket.baimarket через itunes.apple.com/lookup.
+        // Если оставить пустым, ссылка уводит на страницу поиска, а не на
+        // карточку приложения, и автопереход отключается.
+        appStoreId: '6744940738'
+      };
+
+      var TITLES = {
+        product: ['Товар в Bai Market', 'Откройте карточку товара в приложении Bai Market.'],
+        seller: ['Магазин в Bai Market', 'Откройте витрину магазина в приложении Bai Market.'],
+        collection: ['Подборка в Bai Market', 'Откройте подборку в приложении Bai Market.'],
+        raffle: ['Розыгрыш в Bai Market', 'Откройте розыгрыш в приложении Bai Market.'],
+        live: ['Эфир в Bai Market', 'Смотрите прямой эфир в приложении Bai Market.']
+      };
+
+      var path = window.location.pathname + window.location.search;
+      if (path === '/' || path === '') path = '/main';
+
+      var segment = path.split('/')[1] || '';
+      var copy = TITLES[segment];
+      if (copy) {
+        document.getElementById('title').textContent = copy[0];
+        document.getElementById('subtitle').textContent = copy[1];
+        document.title = copy[0];
+      }
+
+      // Кастомная схема как запасной путь. Основной — сам https-адрес: при
+      // установленном приложении App Links / Universal Links открывают его
+      // напрямую, и эта страница даже не грузится.
+      //
+      // Три слэша обязательны: в baimarket://product/42 разбор URI считает
+      // `product` хостом, и до пути приложения доезжает только `/42`.
+      var deepLink = CONFIG.scheme + '://' + path;
+
+      var ua = navigator.userAgent || '';
+      var isAndroid = /android/i.test(ua);
+      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+      var playUrl = 'https://play.google.com/store/apps/details?id=' + CONFIG.playListingId;
+      var appStoreUrl = CONFIG.appStoreId
+        ? 'https://apps.apple.com/kz/app/id' + CONFIG.appStoreId
+        : 'https://apps.apple.com/kz/search?term=Bai%20Market';
+
+      document.getElementById('android-store').href = playUrl;
+      document.getElementById('ios-store').href = appStoreUrl;
+
+      // Android: intent:// сам решает, куда идти — открывает приложение, если
+      // оно установлено, и уходит на browser_fallback_url, если нет. Ошибка
+      // невозможна в принципе, поэтому вызываем сразу и без вопросов.
+      //
+      // Приложению при этом не нужна пройденная верификация App Links: адрес
+      // жёстко адресован по `package=`. Ровно поэтому здесь установленное
+      // приложение открывается даже там, где https-ссылка ушла бы в браузер.
+      //
+      // Первый сегмент намеренно остаётся хостом (intent://product/42): это
+      // канонический вид, который Chrome разбирает предсказуемо. Приложение
+      // такую ссылку понимает — normalizeDeepLink возвращает host в путь.
+      function androidIntentUrl() {
+        return 'intent://' + path.replace(/^\//, '') +
+          '#Intent;scheme=' + CONFIG.scheme +
+          ';package=' + CONFIG.androidPackage +
+          ';S.browser_fallback_url=' + encodeURIComponent(playUrl) +
+          ';end';
+      }
+
+      var primary = document.getElementById('primary');
+      var openLink = document.getElementById('open');
+      var stores = document.getElementById('stores');
+      var hint = document.getElementById('hint');
+
+      if (isAndroid) {
+        primary.href = androidIntentUrl();
+        primary.textContent = 'Открыть';
+        primary.hidden = false;
+        // Запасной выход, если intent:// не поддержан (встречается во
+        // встроенных браузерах, которые не Chrome): тогда автопереход ниже
+        // ничего не сделает, и человек останется на этой карточке.
+        openLink.href = playUrl;
+        openLink.textContent = 'Установить из Google Play';
+        openLink.hidden = false;
+        stores.hidden = true;
+        hint.textContent = 'Если приложение не установлено, откроется Google Play.';
+        // Сразу, не дожидаясь нажатия: у пользователя либо откроется
+        // приложение, либо страница магазина — обе развязки корректны.
+        // replace, а не href: иначе «назад» из Play вернул бы на эту страницу,
+        // та снова бы сработала, и получилась бы петля.
+        window.location.replace(androidIntentUrl());
+        return;
+      }
+
+      if (isIOS) {
+        primary.href = appStoreUrl;
+        primary.textContent = 'Установить из App Store';
+        primary.hidden = false;
+        openLink.href = deepLink;
+        openLink.hidden = false;
+        stores.hidden = true;
+
+        // На iOS нельзя проверить, установлено ли приложение: попытка открыть
+        // baimarket:// без установленного приложения даёт системный алерт
+        // «Safari не может открыть страницу». Поэтому по умолчанию отправляем
+        // в App Store — там у установленного приложения кнопка называется
+        // «Открыть», так что промаха не будет ни в одном из двух случаев.
+        //
+        // Запуск по схеме остаётся отдельной ссылкой: её жмут осознанно те,
+        // у кого приложение точно есть (WebView внутри соцсетей).
+        if (CONFIG.appStoreId) {
+          hint.textContent = 'Открываем App Store…';
+          window.location.replace(appStoreUrl);
+        } else {
+          // Пока нет числового id, автопереход вёл бы на страницу поиска —
+          // это хуже, чем оставить человека на карточке с кнопками.
+          hint.textContent = 'Если приложение уже установлено, нажмите «Открыть».';
+        }
+        return;
+      }
+
+      hint.textContent = 'Откройте эту ссылку на телефоне, чтобы перейти в приложение.';
+    })();
+  </script>
+</body>
+</html>

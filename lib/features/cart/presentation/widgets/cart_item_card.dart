@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/app_pallete.dart';
 import '../../../../core/urls.dart';
 import '../../../../core/utils/translation_utils.dart';
@@ -16,11 +15,20 @@ class CartItemCard extends StatelessWidget {
     required this.item,
     required this.onAdd,
     required this.onRemove,
+    this.isBusy = false,
   });
 
   final CartItemModel item;
   final VoidCallback onAdd;
   final VoidCallback onRemove;
+
+  /// По этой позиции летит запрос.
+  ///
+  /// Уменьшение на единицу неатомарно — отдельной ручки нет, поэтому оно
+  /// делается как `DELETE /cartitem/:id` + повторное добавление с нужным
+  /// количеством. Пока запросы идут, показываем прежнее число и индикатор:
+  /// оптимистичное «на единицу меньше» может оказаться просто неверным.
+  final bool isBusy;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +61,7 @@ class CartItemCard extends StatelessWidget {
             onPressed: () {
               final id = product?.id;
               if (id == null) return;
-              final scope = LiveShoppingScope.maybeOf(context);
-              if (scope != null) {
-                scope.openProduct(context, id);
-              } else {
-                context.push('/product/$id');
-              }
+              liveAwarePush(context, '/product/$id');
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -156,7 +159,7 @@ class CartItemCard extends StatelessWidget {
                     children: [
                       CupertinoButton(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
-                        onPressed: onRemove,
+                        onPressed: isBusy ? null : onRemove,
                         child: SvgPicture.asset(
                           item.quantity <= 1
                               ? 'assets/icons/cart_page/cart_page_trash.svg'
@@ -165,18 +168,25 @@ class CartItemCard extends StatelessWidget {
                           height: 18,
                         ),
                       ),
-                      Text(
-                        '${item.quantity}',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black87,
-                          fontFamily: 'Gilroy',
+                      SizedBox(
+                        width: 24,
+                        child: Center(
+                          child: isBusy
+                              ? const CupertinoActivityIndicator(radius: 8)
+                              : Text(
+                                  '${item.quantity}',
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                    fontFamily: 'Gilroy',
+                                  ),
+                                ),
                         ),
                       ),
                       CupertinoButton(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
-                        onPressed: onAdd,
+                        onPressed: isBusy ? null : onAdd,
                         child: SvgPicture.asset(
                           'assets/icons/cart_page/cart_page_add.svg',
                           width: 18,

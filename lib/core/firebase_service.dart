@@ -1,332 +1,204 @@
 import 'dart:io';
-import 'package:bai_market/core/urls.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'secure_token_storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
+import 'push/push_background_handler.dart';
+import 'push/push_channels.dart';
+import 'push/push_events.dart';
+import 'push/push_message_router.dart';
+import 'push/push_token_sync.dart';
+import 'services/app_logger.dart';
+
+/// Пуш-уведомления: инициализация Firebase Messaging и Awesome Notifications.
+///
+/// Класс стал тонким фасадом — вся содержательная логика вынесена в
+/// `core/push/*`. Инициализация разделена на два этапа: [initEarly] выполняется
+/// в `main()` и не ходит в сеть, [initAfterUi] — после первого кадра, чтобы не
+/// держать сплэш.
 class FirebaseMessagingService {
-  static final FirebaseMessagingService _instance =
-      FirebaseMessagingService._internal();
-  factory FirebaseMessagingService() => _instance;
-  FirebaseMessagingService._internal();
+  FirebaseMessagingService._();
 
-  static final _firebaseMessaging = FirebaseMessaging.instance;
-  static final _dio = Dio();
+  static final _messaging = FirebaseMessaging.instance;
 
-  // Константы для каналов уведомлений
-  static const String _defaultChannelId = 'default_channel';
-  static const String _defaultChannelName = 'Основные уведомления';
-  static const String _defaultChannelDescription =
-      'Канал для основных уведомлений приложения';
-
-  // Инициализация сервиса
-  static Future<void> init() async {
+  /// Быстрая часть: каналы, слушатели, фоновый обработчик. Не бросает наружу —
+  /// иначе `catch` в `main()` подменит всё приложение экраном ошибки.
+  static Future<void> initEarly() async {
     try {
-      await _configureFirebaseMessaging();
-      await _configureAwesomeNotifications();
-      await _setupNotificationHandlers();
-      await _handleInitialMessage();
-    } catch (e) {
-      print('Ошибка инициализации Firebase Messaging: $e');
-    }
-  }
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  // Настройка Firebase Messaging
-  static Future<void> _configureFirebaseMessaging() async {
-    try {
-      // Настройка разрешений для iOS
-      if (Platform.isIOS) {
-        // Request permission first
-        final settings = await _firebaseMessaging.requestPermission(
-          alert: true,
-          badge: true,
-          sound: true,
-          provisional: false,
-          criticalAlert: true,
-        );
+      // Автоинициализация была выключена и в манифесте, и в Info.plist —
+      // из-за этого SDK не обновлял токен самостоятельно. Флаг сохраняется в
+      // нативных prefs, поэтому покрывает и уже установленные устройства.
+      await _messaging.setAutoInitEnabled(true);
 
-        print('User granted permission: ${settings.authorizationStatus}');
-
-        // Wait a bit for the permission to be fully processed
-        await Future.delayed(const Duration(seconds: 1));
-
-        // Get APNS token with retry logic
-        String? apnsToken;
-        int retryCount = 0;
-        const maxRetries = 3;
-
-        while (apnsToken == null && retryCount < maxRetries) {
-          try {
-            apnsToken = await _firebaseMessaging.getAPNSToken();
-            if (apnsToken != null) {
-              print('APNS Token successfully obtained');
-            } else {
-              print(
-                'APNS Token is null, attempt ${retryCount + 1} of $maxRetries',
-              );
-              await Future.delayed(const Duration(seconds: 1));
-            }
-          } catch (e) {
-            print(
-              'Error getting APNS token, attempt ${retryCount + 1} of $maxRetries: $e',
-            );
-            await Future.delayed(const Duration(seconds: 1));
-          }
-          retryCount++;
-        }
-
-        if (apnsToken == null) {
-          print('Failed to get APNS token after $maxRetries attempts');
-        }
-      }
-
-      // Настройка фоновых сообщений
-      FirebaseMessaging.onBackgroundMessage(
-        _firebaseMessagingBackgroundHandler,
-      );
-
-      // Получение и отправка начального токена
-      await _handleInitialToken();
-    } catch (e) {
-      print('Ошибка настройки Firebase Messaging: $e');
-      rethrow; // Rethrow to handle it in the init method
-    }
-  }
-
-  // Настройка Awesome Notifications
-  static Future<void> _configureAwesomeNotifications() async {
-    try {
       await AwesomeNotifications().initialize(
-        null, // null означает использование иконки приложения
-        [
-          NotificationChannel(
-            channelKey: _defaultChannelId,
-            channelName: _defaultChannelName,
-            channelDescription: _defaultChannelDescription,
-            defaultColor: const Color(0xFF3DBFAD),
-            ledColor: const Color(0xFF3DBFAD),
-            importance: NotificationImportance.High,
-            channelShowBadge: true,
-            enableVibration: true,
-            enableLights: true,
-            playSound: true,
-          ),
-        ],
-        debug: true,
+        null,
+        [buildDefaultChannel()],
+        debug: false,
       );
 
-      // Запрос разрешений
-      await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-        if (!isAllowed) {
-          AwesomeNotifications().requestPermissionToSendNotifications();
-        }
-      });
-
-      // Настройка обработчиков уведомлений
+      // Разрешение здесь НЕ запрашиваем: раньше системный диалог всплывал на
+      // сплэше, до любого объяснения, а результат никто не проверял. Теперь
+      // его запрашивает `PushGate` после первого кадра — см.
+      // `core/push/push_gate.dart`.
       AwesomeNotifications().setListeners(
-        onActionReceivedMethod: _onNotificationActionReceived,
+        onActionReceivedMethod: onNotificationActionReceived,
         onNotificationCreatedMethod: _onNotificationCreated,
         onNotificationDisplayedMethod: _onNotificationDisplayed,
         onDismissActionReceivedMethod: _onDismissActionReceived,
       );
-    } catch (e) {
-      print('Ошибка настройки Awesome Notifications: $e');
-    }
-  }
 
-  // Настройка обработчиков уведомлений
-  static Future<void> _setupNotificationHandlers() async {
-    try {
-      // Обработка уведомлений в foreground
       FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
-
-      // Обработка открытия уведомления
       FirebaseMessaging.onMessageOpenedApp.listen(_handleNotificationOpened);
-
-      // Обработка обновления токена
-      _firebaseMessaging.onTokenRefresh.listen(_handleTokenRefresh);
-    } catch (e) {
-      print('Ошибка настройки обработчиков уведомлений: $e');
+      _messaging.onTokenRefresh.listen(PushTokenSync.onTokenRefresh);
+    } catch (e, st) {
+      pushLog.error('initEarly failed', e.toString(), e, st);
     }
   }
 
-  // Обработка начального сообщения
+  /// Сетевая часть: регистрация токена и разбор холодного старта по тапу.
+  static Future<void> initAfterUi() async {
+    try {
+      // force: холодный старт всегда переотправляет токен, не сверяясь ни со
+      // сроком свежести, ни с тем, что токен не менялся. Дороже на один POST
+      // за запуск, зато расхождение «на сервере лежит не то» лечится первым
+      // же открытием приложения, а не через неделю.
+      await PushTokenSync.ensureRegistered(
+        trigger: PushSyncTrigger.start,
+        force: true,
+      );
+      await _handleInitialMessage();
+    } catch (e, st) {
+      pushLog.error('initAfterUi failed', e.toString(), e, st);
+    }
+  }
+
+  /// Совместимость со старым вызовом из `main()`.
+  static Future<void> init() => initEarly();
+
+  static Future<void> requestPermissionIfNeeded() async {
+    if (Platform.isIOS) {
+      await _messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        provisional: false,
+      );
+    }
+    final allowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!allowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+  }
+
+  static Future<bool> isAllowed() =>
+      AwesomeNotifications().isNotificationAllowed();
+
+  static Future<void> openSystemSettings() =>
+      AwesomeNotifications().showNotificationConfigPage();
+
+  /// Холодный старт требует **двух** проверок, а не одной:
+  /// * `getInitialMessage` — тап по уведомлению из системного трея;
+  /// * `getInitialNotificationAction` — тап по уведомлению, созданному самим
+  ///   приложением. Второй раньше отсутствовал вовсе, поэтому такие тапы были
+  ///   мертвы.
   static Future<void> _handleInitialMessage() async {
-    try {
-      final initialMessage = await _firebaseMessaging.getInitialMessage();
-      if (initialMessage != null) {
-        _handleNotificationOpened(initialMessage);
-      }
-    } catch (e) {
-      print('Ошибка обработки начального сообщения: $e');
+    final initialMessage = await _messaging.getInitialMessage();
+    if (initialMessage != null) {
+      await PushMessageRouter.handleTap(initialMessage.data);
+      return;
+    }
+    final action = await AwesomeNotifications()
+        .getInitialNotificationAction(removeFromActionEvents: true);
+    if (action != null) {
+      await PushMessageRouter.handleTap(_payloadOf(action));
     }
   }
 
-  // Обработка уведомления в foreground
+  /// Нужна ли своя копия пуша, пришедшего, пока приложение открыто.
+  ///
+  /// На iOS пуш с блоком `notification` уже показала система: FCM-плагин
+  /// отдаёт решение о показе делегату awesome_notifications, и тот выводит
+  /// баннер. Своя копия удваивала бы каждый такой пуш — от того же защищается
+  /// фоновый обработчик. На Android система пуш на переднем плане не
+  /// показывает, поэтому там копия нужна всегда, как и data-only пушам на iOS.
+  /// Пуш без заголовка и текста не показываем нигде. Чистая — проверяется тестом.
+  static bool needsLocalCopy({
+    required bool isIOS,
+    required bool hasNotificationBlock,
+    String? title,
+    String? body,
+  }) {
+    if (title == null && body == null) return false;
+    return !(isIOS && hasNotificationBlock);
+  }
+
   static Future<void> _handleForegroundMessage(RemoteMessage message) async {
-    try {
-      final notification = message.notification;
-      final data = message.data;
+    final notification = message.notification;
+    final title = notification?.title ?? message.data['title'] as String?;
+    final body = notification?.body ?? message.data['body'] as String?;
+    pushLog.info('foreground message', message.messageId);
 
-      if (notification != null || data.isNotEmpty) {
-        final title =
-            notification?.title ?? data['title'] ?? 'Новое уведомление';
-        final body = notification?.body ?? data['body'] ?? '';
-
-        await _showNotification(
-          id: message.hashCode,
-          title: title,
-          body: body,
-          payload: data,
-        );
-      }
-    } catch (e) {
-      print('Ошибка обработки foreground сообщения: $e');
-    }
-  }
-
-  // Показ уведомления
-  static Future<void> _showNotification({
-    required int id,
-    required String title,
-    required String body,
-    Map<String, dynamic>? payload,
-  }) async {
-    try {
+    final localCopy = needsLocalCopy(
+      isIOS: Platform.isIOS,
+      hasNotificationBlock: notification != null,
+      title: title,
+      body: body,
+    );
+    if (!localCopy) pushLog.info('foreground: no local copy', message.messageId);
+    if (localCopy) {
       await AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: id,
-          channelKey: _defaultChannelId,
-          title: title,
-          body: body,
-          payload: payload?.map(
-            (key, value) => MapEntry(key, value?.toString()),
-          ),
+          id: (message.messageId ?? '${DateTime.now().microsecondsSinceEpoch}')
+                  .hashCode &
+              0x7fffffff,
+          channelKey: kDefaultChannelId,
+          title: title ?? 'Bai Market',
+          body: body ?? '',
+          payload: message.data.map((k, v) => MapEntry(k, v?.toString())),
           notificationLayout: NotificationLayout.Default,
-          category: NotificationCategory.Message,
         ),
       );
-    } catch (e) {
-      print('Ошибка показа уведомления: $e');
     }
+    // Сообщаем приложению: список уведомлений и бейдж на колокольчике должны
+    // обновиться.
+    PushEvents.notify();
   }
 
-  // Обработчики Awesome Notifications
-  @pragma('vm:entry-point')
-  static Future<void> _onNotificationActionReceived(
-    ReceivedAction receivedAction,
-  ) async {
-    try {
-      print('Уведомление нажато: ${receivedAction.payload}');
-      // Здесь можно добавить навигацию или другую логику при нажатии
-    } catch (e) {
-      print('Ошибка обработки нажатия на уведомление: $e');
-    }
-  }
+  static Future<void> _handleNotificationOpened(RemoteMessage message) =>
+      PushMessageRouter.handleTap(message.data);
+
+  static Map<String, dynamic> _payloadOf(ReceivedAction action) =>
+      Map<String, dynamic>.from(action.payload ?? const {});
 
   @pragma('vm:entry-point')
   static Future<void> _onNotificationCreated(
-    ReceivedNotification receivedNotification,
+    ReceivedNotification notification,
   ) async {
-    try {
-      print('Уведомление создано: ${receivedNotification.title}');
-    } catch (e) {
-      print('Ошибка создания уведомления: $e');
-    }
+    pushLog.info('notification created', '${notification.id}');
   }
 
   @pragma('vm:entry-point')
   static Future<void> _onNotificationDisplayed(
-    ReceivedNotification receivedNotification,
+    ReceivedNotification notification,
   ) async {
-    try {
-      print('Уведомление показано: ${receivedNotification.title}');
-    } catch (e) {
-      print('Ошибка отображения уведомления: $e');
-    }
+    pushLog.info('notification displayed', '${notification.id}');
   }
 
   @pragma('vm:entry-point')
-  static Future<void> _onDismissActionReceived(
-    ReceivedAction receivedAction,
-  ) async {
-    try {
-      print('Уведомление закрыто: ${receivedAction.title}');
-    } catch (e) {
-      print('Ошибка закрытия уведомления: $e');
-    }
-  }
-
-  // Обработка открытия уведомления
-  static void _handleNotificationOpened(RemoteMessage message) {
-    try {
-      print('Уведомление открыто: ${message.data}');
-      // Здесь можно добавить навигацию или другую логику при открытии
-    } catch (e) {
-      print('Ошибка обработки открытия уведомления: $e');
-    }
-  }
-
-  // Обработка обновления токена
-  static Future<void> _handleTokenRefresh(String newToken) async {
-    try {
-      print('FCM Token обновлён');
-      await _sendTokenToBackend(newToken);
-    } catch (e) {
-      print('Ошибка обработки обновления токена: $e');
-    }
-  }
-
-  // Обработка начального токена
-  static Future<void> _handleInitialToken() async {
-    try {
-      final fcmToken = await _firebaseMessaging.getToken();
-      if (fcmToken != null) {
-        print('FCM Token получен');
-        await _sendTokenToBackend(fcmToken);
-      }
-    } catch (e) {
-      print('Ошибка обработки начального токена: $e');
-    }
-  }
-
-  // Отправка токена на бэкенд
-  static Future<void> _sendTokenToBackend(String token) async {
-    try {
-      final authToken = await getAuthToken();
-      // print(authToken);
-      if (authToken == null) {
-        print('Токен авторизации не найден');
-        return;
-      }
-
-      _dio.options.headers['Authorization'] = 'Bearer $authToken';
-
-      final response = await _dio.post(
-        '${mainUrl}firebase-token/',
-        data: {'token': token},
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        print('FCM токен успешно отправлен на сервер');
-      } else {
-        print('Ошибка отправки FCM токена: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Ошибка отправки FCM токена на сервер: $e');
-    }
+  static Future<void> _onDismissActionReceived(ReceivedAction action) async {
+    pushLog.info('notification dismissed', '${action.id}');
   }
 }
 
-// Обработчик фоновых сообщений
+/// Тап по уведомлению, созданному приложением.
+///
+/// Top-level и `@pragma('vm:entry-point')` — может быть вызван из фонового
+/// изолята.
 @pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  try {
-    print('Получено фоновое сообщение: ${message.messageId}');
-    // Здесь можно добавить дополнительную логику для фоновых сообщений
-  } catch (e) {
-    print('Ошибка обработки фонового сообщения: $e');
-  }
+Future<void> onNotificationActionReceived(ReceivedAction action) async {
+  final payload = Map<String, dynamic>.from(action.payload ?? const {});
+  await PushMessageRouter.handleTap(payload);
+  PushEvents.notify();
 }

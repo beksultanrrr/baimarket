@@ -8,20 +8,29 @@ import '../../../../core/services/app_logger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../cubit/kaspi_payment_cubit.dart';
 import 'sheet_close_button.dart';
+import 'tenge_format.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 /// Открывает шит оплаты заказа через Kaspi.
 ///
 /// Показывает QR из [redirectUrl], кнопку «Оплатить» (открывает Kaspi)
 /// и опрашивает статус заказа. Возвращает `true`, если заказ оплачен —
 /// тогда вызывающий экран уходит на `/order_success`.
+///
+/// Сумма приходит готовой из заказа: [itemsTotal] — только товары,
+/// [deliveryPrice] — доставка из корня заказа. Она зашита в платёжную ссылку
+/// при создании заказа и после `retry()` не меняется, перечитывать заказ не надо.
 Future<bool?> showKaspiPaymentSheet({
   required BuildContext context,
   required int orderId,
   required String redirectUrl,
   required int amount,
+  int? itemsTotal,
+  int deliveryPrice = 0,
 }) {
   return showModalBottomSheet<bool>(
     context: context,
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     isDismissible: true,
@@ -31,16 +40,35 @@ Future<bool?> showKaspiPaymentSheet({
           orderId: orderId,
           redirectUrl: redirectUrl,
         ),
-        child: _KaspiPaymentSheet(amount: amount),
+        child: _KaspiPaymentSheet(
+          amount: amount,
+          itemsTotal: itemsTotal,
+          deliveryPrice: deliveryPrice,
+        ),
       );
     },
   );
 }
 
 class _KaspiPaymentSheet extends StatelessWidget {
-  const _KaspiPaymentSheet({required this.amount});
+  const _KaspiPaymentSheet({
+    required this.amount,
+    this.itemsTotal,
+    this.deliveryPrice = 0,
+  });
 
   final int amount;
+
+  /// Только товары. Если не передали — вычитаем доставку из общей суммы.
+  final int? itemsTotal;
+
+  /// Цена доставки из заказа. 0 — старый заказ, разбивку не показываем.
+  final int deliveryPrice;
+
+  int get _items => itemsTotal ?? (amount - deliveryPrice);
+
+  /// К оплате = товары + доставка.
+  int get _total => _items + deliveryPrice;
 
   Future<void> _openKaspi(BuildContext context, String url) async {
     paymentLog.step('kaspi: open redirectUrl', url);
@@ -126,8 +154,6 @@ class _KaspiPaymentSheet extends StatelessWidget {
     KaspiPaymentState state,
     AppLocalizations l10n,
   ) {
-    final amountText = '$amount ₸';
-
     // Провал / истёкшая ссылка — экран повтора оплаты.
     if (state.status == KaspiStatus.failed ||
         state.status == KaspiStatus.expired) {
@@ -150,6 +176,10 @@ class _KaspiPaymentSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
+          // Сумма нужна и здесь: повтор оплаты берёт новую ссылку, но цена
+          // доставки зашита в заказ и не пересчитывается.
+          _amountBlock(l10n),
+          const SizedBox(height: 20),
           _PrimaryButton(
             label: l10n.kaspiPayAgain,
             onPressed: () => context.read<KaspiPaymentCubit>().retry(),
@@ -164,15 +194,7 @@ class _KaspiPaymentSheet extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 4),
-        Text(
-          l10n.kaspiAmountToPay(amountText),
-          style: const TextStyle(
-            fontFamily: 'Gilroy',
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: Colors.black,
-          ),
-        ),
+        _amountBlock(l10n),
         const SizedBox(height: 16),
         Container(
           padding: const EdgeInsets.all(16),
@@ -232,6 +254,68 @@ class _KaspiPaymentSheet extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ],
+    );
+  }
+
+  /// Разбивка «Товары / Доставка / К оплате». Если доставки в заказе нет
+  /// ([deliveryPrice] == 0, старые заказы) — одна строка, как раньше.
+  Widget _amountBlock(AppLocalizations l10n) {
+    if (deliveryPrice <= 0) {
+      return Text(
+        l10n.kaspiAmountToPay(formatTenge(_total)),
+        style: const TextStyle(
+          fontFamily: 'Gilroy',
+          fontSize: 18,
+          fontWeight: FontWeight.w700,
+          color: Colors.black,
+        ),
+      );
+    }
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        children: [
+          _amountRow(l10n.items, formatTenge(_items)),
+          const SizedBox(height: 10),
+          _amountRow(l10n.delivery, formatTenge(deliveryPrice)),
+          const SizedBox(height: 12),
+          const Divider(height: 1, color: Color(0xFFEDEDED)),
+          const SizedBox(height: 12),
+          _amountRow(l10n.amountToPay, formatTenge(_total), strong: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _amountRow(String label, String value, {bool strong = false}) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: strong ? 15 : 14,
+              fontWeight: strong ? FontWeight.w600 : FontWeight.w500,
+              color: strong ? Colors.black : const Color(0xFF6E6E6E),
+            ),
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontFamily: 'Gilroy',
+            fontSize: strong ? 18 : 15,
+            fontWeight: strong ? FontWeight.w700 : FontWeight.w600,
+            color: Colors.black,
+          ),
         ),
       ],
     );

@@ -9,6 +9,7 @@ import 'payment_terms_text.dart';
 import 'payment_warning_box.dart';
 import 'save_card_switch.dart';
 import 'sheet_close_button.dart';
+import '../../../live/presentation/widgets/live_shopping_scope.dart';
 
 /// Открывает шит ввода новой карты. Возвращает `true`, если пользователь
 /// нажал "Оплатить" (карта валидна), иначе `null`.
@@ -18,6 +19,7 @@ Future<bool?> showNewCardSheet({
 }) {
   return showModalBottomSheet<bool>(
     context: context,
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (sheetCtx) {

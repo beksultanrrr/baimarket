@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/chat_message.dart';
-import '../cubit/live_cubit.dart';
+import '../../data/models/live_chat_message_model.dart';
+import '../../data/models/live_media.dart';
+import '../cubit/live_room_cubit.dart';
 import 'sheet_close_button.dart';
+import 'live_shopping_scope.dart';
 
 /// Открывает bottom-sheet «Комментарий» (frames 24/25) с лентой сообщений
 /// и input-ом снизу. Sheet скейлится через DraggableScrollableSheet — при
@@ -12,10 +14,11 @@ import 'sheet_close_button.dart';
 /// к клавиатуре.
 Future<void> showLiveCommentsSheet({
   required BuildContext context,
-  required LiveCubit cubit,
+  required LiveRoomCubit cubit,
 }) {
   return showModalBottomSheet<void>(
     context: context,
+    routeSettings: const RouteSettings(name: kLiveSheetRouteName),
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
     barrierColor: Colors.black.withValues(alpha: 0.4),
@@ -51,7 +54,7 @@ class _LiveCommentsSheetState extends State<_LiveCommentsSheet> {
   void _send() {
     final t = _input.text.trim();
     if (t.isEmpty) return;
-    context.read<LiveCubit>().sendMessage(t);
+    context.read<LiveRoomCubit>().sendChat(t);
     _input.clear();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollCtrl.hasClients) {
@@ -111,9 +114,9 @@ class _LiveCommentsSheetState extends State<_LiveCommentsSheet> {
                   ),
                 ),
                 Expanded(
-                  child: BlocBuilder<LiveCubit, LiveState>(
+                  child: BlocBuilder<LiveRoomCubit, LiveRoomState>(
                     builder: (context, state) {
-                      final messages = state.chatMessages;
+                      final messages = state.chat;
                       if (messages.isEmpty) {
                         return const Center(
                           child: Text(
@@ -154,10 +157,13 @@ class _LiveCommentsSheetState extends State<_LiveCommentsSheet> {
 
 class _CommentRow extends StatelessWidget {
   const _CommentRow({required this.message});
-  final ChatMessage message;
+  final LiveChatMessageModel message;
+
+  /// avatarUrl — имя файла в MinIO, а не готовая ссылка.
+  String get _avatar => liveAvatarUrl(message.avatarUrl);
 
   String get _initials {
-    final n = message.fullName.trim();
+    final n = (message.fullName ?? '').trim();
     if (n.isEmpty) return '?';
     return n
         .split(RegExp(r'\s+'))
@@ -191,9 +197,9 @@ class _CommentRow extends StatelessWidget {
             ),
             alignment: Alignment.center,
             child: ClipOval(
-              child: message.avatarUrl != null && message.avatarUrl!.isNotEmpty
+              child: _avatar.isNotEmpty
                   ? Image.network(
-                      message.avatarUrl!,
+                      _avatar,
                       width: 44,
                       height: 44,
                       fit: BoxFit.cover,
@@ -208,7 +214,7 @@ class _CommentRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  message.fullName,
+                  message.fullName ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -235,9 +241,10 @@ class _CommentRow extends StatelessWidget {
                     height: 1.25,
                   ),
                 ),
+                if (message.createdAtDate != null) ...[
                 const SizedBox(height: 4),
                 Text(
-                  _ago(message.timestamp),
+                  _ago(message.createdAtDate!),
                   style: const TextStyle(
                     fontFamily: 'Gilroy',
                     fontSize: 13,
@@ -245,6 +252,7 @@ class _CommentRow extends StatelessWidget {
                     color: Color(0xFFB0B0B0),
                   ),
                 ),
+                ],
               ],
             ),
           ),

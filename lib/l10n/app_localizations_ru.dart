@@ -9,7 +9,7 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appName => 'Bai Market';
+  String get appName => 'hibai';
 
   @override
   String get welcome => 'Добро пожаловать';
@@ -282,10 +282,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sortPopular => 'Популярное';
 
   @override
-  String get sortCheap => 'Сначала дешевые';
+  String get sortCheap => 'Дешевые';
 
   @override
-  String get sortExpensive => 'Сначала дорогие';
+  String get sortExpensive => 'Дорогие';
 
   @override
   String get myData => 'Мои данные';
@@ -378,7 +378,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get orderStatusWay => 'В пути';
 
   @override
-  String get orderStatusPickup => 'Готов к выдаче';
+  String get orderStatusPickup => 'Ждёт в отделении';
 
   @override
   String get orderStatusDelivered => 'Доставлен';
@@ -438,7 +438,46 @@ class AppLocalizationsRu extends AppLocalizations {
   String get getCode => 'Получить код';
 
   @override
+  String get orderConsentText => 'Нажимая на кнопку, вы соглашаетесь с Условиями оферты и Политикой конфиденциальности';
+
+  @override
+  String get orderConsentOffer => 'Условиями оферты';
+
+  @override
+  String get orderConsentPrivacy => 'Политикой конфиденциальности';
+
+  @override
   String get termsAndPrivacy => 'Нажимая на кнопку \"Получить код\", вы принимаете пользовательское соглашение и политику конфиденциальности';
+
+  @override
+  String get userAgreement => 'пользовательское соглашение';
+
+  @override
+  String get privacyPolicy => 'политику конфиденциальности';
+
+  @override
+  String get greeting => 'Здравствуйте!';
+
+  @override
+  String get cannotLogin => 'Не можете войти?';
+
+  @override
+  String get createPinTitle => 'Придумайте PIN-код';
+
+  @override
+  String get confirmPinTitle => 'Повторите PIN-код';
+
+  @override
+  String get pinMismatch => 'PIN-коды не совпадают';
+
+  @override
+  String get wrongPin => 'Неверный PIN-код';
+
+  @override
+  String get fillInData => 'Заполните данные';
+
+  @override
+  String get selectCity => 'Выберите город';
 
   @override
   String get enterCode => 'Введите код';
@@ -498,7 +537,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hitTag => 'Хит';
 
   @override
-  String get myTickets => 'Мой билеты';
+  String get myTickets => 'Мои билеты';
 
   @override
   String get specifyDeliveryAddress => 'Укажите адрес доставки';
@@ -514,6 +553,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get contacts => 'Контакты';
+
+  @override
+  String get sattyJuldyz => 'Satty juldyz';
+
+  @override
+  String get techSupport => 'Тех поддержка';
 
   @override
   String get inviteFriends => 'Приглашайте друзей';
@@ -573,6 +618,95 @@ class AppLocalizationsRu extends AppLocalizations {
   String get noSavedAddresses => 'У вас пока нет сохранённых адресов';
 
   @override
+  String get deliveryAddressesTitle => 'Адреса доставки';
+
+  @override
+  String get deliveryAddressTitle => 'Адрес доставки';
+
+  @override
+  String get addMoreAddress => 'Добавить еще адрес';
+
+  @override
+  String get saveAddress => 'Сохранить адрес';
+
+  @override
+  String get newAddress => 'Новый адрес';
+
+  @override
+  String addressLabeled(String label) {
+    return 'Адрес «$label»';
+  }
+
+  @override
+  String get addressAdded => 'Адрес успешно добавлен';
+
+  @override
+  String get addressDeleted => 'Адрес удалён';
+
+  @override
+  String get deleteAddressTitle => 'Удалить адрес?';
+
+  @override
+  String get deleteAddressMessage => 'Вы уверены, что хотите удалить этот адрес?';
+
+  @override
+  String get deleteAction => 'Удалить';
+
+  @override
+  String get addAction => 'Добавить';
+
+  @override
+  String get savingInProgress => 'Сохраняем...';
+
+  @override
+  String get addressNameLabel => 'Название адреса';
+
+  @override
+  String get addressNameHint => 'Например: Дом или работа';
+
+  @override
+  String get enterAddressName => 'Введите название';
+
+  @override
+  String get streetAndHouseHint => 'Улица и номер дома';
+
+  @override
+  String get enterAddressLine => 'Введите адрес';
+
+  @override
+  String get apartmentLabel => 'Квартира';
+
+  @override
+  String get entranceLabel => 'Подъезд';
+
+  @override
+  String get floorLabel => 'Этаж';
+
+  @override
+  String get postalIndexHint => 'Индекс';
+
+  @override
+  String get enterPostalIndex => 'Введите индекс';
+
+  @override
+  String get selectCityFirst => 'Выберите город';
+
+  @override
+  String get selectRegion => 'Выберите регион';
+
+  @override
+  String get addressesLoadError => 'Ошибка загрузки адресов';
+
+  @override
+  String get addressAddError => 'Ошибка добавления адреса';
+
+  @override
+  String get addressSaveError => 'Не удалось сохранить адрес';
+
+  @override
+  String get addressDeleteError => 'Ошибка удаления адреса';
+
+  @override
   String get addAddress => 'Добавить адрес';
 
   @override
@@ -583,6 +717,39 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get wholeCatalogTab => 'Весь каталог';
+
+  @override
+  String get catalogTileLottery => 'Розыгрыш-\nные товары';
+
+  @override
+  String get catalogTileDiscount => 'Товары со\nскидками';
+
+  @override
+  String get catalogTileMakeup => 'Для\nмакияжа';
+
+  @override
+  String get catalogTilePerfume => 'Парфюме-\nрия';
+
+  @override
+  String get catalogTileBodyCare => 'Уход за\nтелом';
+
+  @override
+  String get catalogTileHairCare => 'Уход за\nволосами';
+
+  @override
+  String get catalogTileCosmeticSets => 'Наборы\nкосметики';
+
+  @override
+  String get catalogTileFaceCare => 'Уход за\nлицом';
+
+  @override
+  String get catalogTileSunCare => 'Солнечная\nлиния';
+
+  @override
+  String get catalogTileHygiene => 'Личная\nгигиена';
+
+  @override
+  String get catalogTileOralCare => 'Уход за\nполостью рта';
 
   @override
   String get raffleDefaultTitle => 'Розыгрыш';
@@ -904,4 +1071,420 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get kaspiPayAgain => 'Повторить оплату';
+
+  @override
+  String sellerRaffleDate(String date) {
+    return 'Розыгрыш: $date';
+  }
+
+  @override
+  String get sellersEmpty => 'Магазинов пока нет';
+
+  @override
+  String get sellersLoadError => 'Не удалось загрузить магазины';
+
+  @override
+  String get sellerProductsEmpty => 'В этом магазине пока нет товаров';
+
+  @override
+  String get sellerNotFound => 'Магазин больше не доступен';
+
+  @override
+  String get sellerStoreTitleFallback => 'Магазин';
+
+  @override
+  String ticketsBadge(String count) {
+    return '+$count';
+  }
+
+  @override
+  String get productUnavailable => 'Товар больше не доступен';
+
+  @override
+  String get plusPriceActive => 'Ваша цена с Plus';
+
+  @override
+  String get reviewsEmpty => 'Отзывов пока нет';
+
+  @override
+  String get reviewAnonymous => 'Покупатель';
+
+  @override
+  String get reviewComposerHint => 'Расскажите о впечатлениях о товаре';
+
+  @override
+  String get reviewSend => 'Отправить';
+
+  @override
+  String get reviewSubmitted => 'Спасибо за отзыв!';
+
+  @override
+  String get reviewAlreadyLeft => 'Вы уже оставляли отзыв на этот товар';
+
+  @override
+  String get reviewTooManyRequests => 'Слишком много попыток. Попробуйте через минуту';
+
+  @override
+  String get reviewSubmitError => 'Не удалось отправить отзыв';
+
+  @override
+  String get reviewsLoadError => 'Не удалось загрузить отзывы';
+
+  @override
+  String shareProductMessage(String name, String price) {
+    return '$name — $price. Нашёл в Bai Market.';
+  }
+
+  @override
+  String shareProductMessageNoPrice(String name) {
+    return '$name. Нашёл в Bai Market.';
+  }
+
+  @override
+  String cartItemsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count товара',
+      many: '$count товаров',
+      few: '$count товара',
+      one: '$count товар',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkoutShort => 'Оформить';
+
+  @override
+  String get cartClearFailed => 'Не удалось очистить корзину';
+
+  @override
+  String get cartNotEnoughStock => 'Не хватает товара на складе';
+
+  @override
+  String get cartQuantityChangeFailed => 'Не удалось изменить количество — товар удалён из корзины, добавьте заново';
+
+  @override
+  String cartItemRemovedByStock(String name) {
+    return '«$name» закончился и удалён из корзины';
+  }
+
+  @override
+  String cartItemPriceChanged(String name) {
+    return 'Цена «$name» изменилась';
+  }
+
+  @override
+  String cartItemQuantityReduced(String name, String quantity) {
+    return 'Количество «$name» уменьшено до $quantity';
+  }
+
+  @override
+  String get cartRefreshFailed => 'Не удалось обновить корзину';
+
+  @override
+  String get pushPermissionTitle => 'Включите уведомления';
+
+  @override
+  String get pushPermissionBody => 'Сообщим о статусе заказа, результатах розыгрыша и новинках';
+
+  @override
+  String get pushPermissionAllow => 'Включить';
+
+  @override
+  String get pushPermissionLater => 'Позже';
+
+  @override
+  String get pushDisabledBanner => 'Уведомления отключены';
+
+  @override
+  String get pushEnableAction => 'Включить';
+
+  @override
+  String get notificationsSettingsTitle => 'Уведомления';
+
+  @override
+  String get notificationsOn => 'Включены';
+
+  @override
+  String get notificationsOff => 'Отключены';
+
+  @override
+  String get notificationsLoadError => 'Не удалось загрузить уведомления';
+
+  @override
+  String get commonCancel => 'Отмена';
+
+  @override
+  String get addedToCart => 'Добавлено в корзину';
+
+  @override
+  String get outOfStock => 'Нет в наличии';
+
+  @override
+  String get pullToRefreshHint => 'Потяните вниз, чтобы обновить';
+
+  @override
+  String get streamsLoadError => 'Не удалось загрузить эфиры';
+
+  @override
+  String get streamsEmptyTitle => 'Сейчас нет эфиров';
+
+  @override
+  String get streamsEmptySubtitle => 'Загляните чуть позже';
+
+  @override
+  String get streamErrorGeneric => 'Что-то пошло не так';
+
+  @override
+  String get streamEndedTitle => 'Эфир завершён';
+
+  @override
+  String get streamEndedSubtitle => 'Выберите другую трансляцию';
+
+  @override
+  String get streamReconnecting => 'Переподключаемся…';
+
+  @override
+  String get streamConnectionLost => 'Связь потеряна';
+
+  @override
+  String get streamRetry => 'Повторить';
+
+  @override
+  String get streamChatTooLong => 'Сообщение слишком длинное';
+
+  @override
+  String get streamChatRateLimited => 'Слишком много сообщений, подождите';
+
+  @override
+  String get streamProductsTitle => 'Товары в стриме';
+
+  @override
+  String get streamGiftsTitle => 'Подарки';
+
+  @override
+  String get pinnedProductBadge => 'В эфире';
+
+  @override
+  String get streamHostCameraPaused => 'Продавец отключил камеру';
+
+  @override
+  String get streamStartCta => 'Начать эфир';
+
+  @override
+  String get streamResumeCta => 'Вернуться в свой эфир';
+
+  @override
+  String get startStreamSheetTitle => 'Новый эфир';
+
+  @override
+  String get startStreamTitleLabel => 'Название эфира';
+
+  @override
+  String get startStreamTitleHint => 'Например: Распродажа кроссовок';
+
+  @override
+  String get startStreamTitleTooShort => 'Введите название подлиннее';
+
+  @override
+  String get startStreamSubmit => 'Начать';
+
+  @override
+  String get startStreamFailed => 'Не удалось начать эфир';
+
+  @override
+  String get streamAccessDenied => 'Эфиры недоступны, обратитесь в поддержку';
+
+  @override
+  String get streamAlreadyLiveTitle => 'У вас уже идёт эфир';
+
+  @override
+  String get streamAlreadyLiveMessage => 'Одновременно можно вести только один эфир. Завершите текущий или откройте его как зритель.';
+
+  @override
+  String get streamEndAndRestart => 'Завершить и начать заново';
+
+  @override
+  String get streamOpenAsViewer => 'Открыть как зритель';
+
+  @override
+  String get streamStopConfirmTitle => 'Завершить эфир?';
+
+  @override
+  String get streamStopConfirmAction => 'Завершить';
+
+  @override
+  String get hostCameraPaused => 'Камера выключена';
+
+  @override
+  String get hostPickProductTitle => 'Показать товар';
+
+  @override
+  String get hostPinProduct => 'Показать';
+
+  @override
+  String get hostUnpinProduct => 'Убрать товар с экрана';
+
+  @override
+  String get hostNoProducts => 'Товаров пока нет';
+
+  @override
+  String get hostPermissionDeniedTitle => 'Нужен доступ к камере и микрофону';
+
+  @override
+  String get hostPermissionDeniedMessage => 'Разрешите доступ в настройках, чтобы выйти в эфир.';
+
+  @override
+  String get hostOpenSettings => 'Настройки';
+
+  @override
+  String get storyOpenProduct => 'Перейти к товару';
+
+  @override
+  String stockLeft(int count) {
+    return 'Осталось $count шт.!';
+  }
+
+  @override
+  String get updateForcedTitle => 'Требуется обновление';
+
+  @override
+  String get updateForcedMessage => 'Эта версия Bai Market больше не поддерживается. Установите свежую — это займёт меньше минуты, и все покупки останутся на месте.';
+
+  @override
+  String get updateRecommendedTitle => 'Вышла новая версия';
+
+  @override
+  String get updateRecommendedMessage => 'Мы добавили новые возможности и починили пару мелочей. Обновление займёт меньше минуты.';
+
+  @override
+  String get updateNow => 'Обновить';
+
+  @override
+  String get updateLater => 'Позже';
+
+  @override
+  String get updateWhatsNew => 'Что нового';
+
+  @override
+  String profileVersion(String version) {
+    return 'Версия: $version';
+  }
+
+  @override
+  String updateVersionBadge(String version) {
+    return 'Версия $version';
+  }
+
+  @override
+  String get updateStoreOpenFailed => 'Не удалось открыть магазин приложений. Попробуйте ещё раз.';
+
+  @override
+  String get checkoutTitle => 'Оформление заказа';
+
+  @override
+  String get savedAddressTitle => 'Сохраненный адрес';
+
+  @override
+  String get selectSavedAddressFirst => 'Выберите адрес из сохранённых';
+
+  @override
+  String get chooseAction => 'выбрать';
+
+  @override
+  String get changeAction => 'Изменить';
+
+  @override
+  String get addressFallbackTitle => 'Адрес';
+
+  @override
+  String branchWithAddress(String address) {
+    return 'Филиал: $address';
+  }
+
+  @override
+  String get cityFallbackName => 'Город';
+
+  @override
+  String get recipientNameCourierLabel => 'Кто встретит (ФИО)';
+
+  @override
+  String get recipientNamePickupLabel => 'Кто придет (ФИО)';
+
+  @override
+  String get recipientNameHint => 'Например: Асылбек Даниял';
+
+  @override
+  String get processingAction => 'Обработка…';
+
+  @override
+  String get kaspiPaymentStartFailed => 'Не удалось начать оплату Kaspi';
+
+  @override
+  String get paymentMethodsTitle => 'Способы оплаты';
+
+  @override
+  String get deliveryByCourier => 'Курьером';
+
+  @override
+  String get deliverySelfPickup => 'Самовывоз';
+
+  @override
+  String get filialDistrict => 'Бостандыкский район';
+
+  @override
+  String get filialAddressLine => 'улица Абдуллы Розыбакиева, 112';
+
+  @override
+  String get deliveryMethodBranch => 'До отделения Казпочты';
+
+  @override
+  String get deliveryMethodBranchHint => 'Заберёте на почте по трек-номеру';
+
+  @override
+  String get deliveryMethodDoor => 'До двери';
+
+  @override
+  String get deliveryMethodDoorHint => 'Курьер Go Post привезёт домой';
+
+  @override
+  String get houseNumberLabel => 'Дом и квартира';
+
+  @override
+  String get houseNumberHint => '150, кв. 25';
+
+  @override
+  String get enterHouseNumber => 'Укажите дом и квартиру';
+
+  @override
+  String get postalCodeInvalidLength => 'Индекс должен быть из 6 цифр';
+
+  @override
+  String get enterPostalForDelivery => 'Введите индекс, чтобы узнать стоимость доставки';
+
+  @override
+  String get selectAddressForDelivery => 'Выберите адрес, чтобы узнать стоимость доставки';
+
+  @override
+  String get deliveryPriceCalculating => 'Рассчитываем…';
+
+  @override
+  String get amountToPay => 'К оплате';
+
+  @override
+  String get trackingNumberLabel => 'Трек-номер';
+
+  @override
+  String get trackOnKazpost => 'Отследить на post.kz';
+
+  @override
+  String get trackingNumberCopied => 'Трек-номер скопирован';
+
+  @override
+  String get orderStatusPickupKazpostMessage => 'Посылка ждёт в отделении Казпочты. Заберите её по трек-номеру';
+
+  @override
+  String get deliveryQuoteFailed => 'Не удалось рассчитать доставку. Попробуйте ещё раз';
 }

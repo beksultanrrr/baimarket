@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.bmarket.baimarket",
+      "sha256_cert_fingerprints": [
+        "A5:55:E7:D9:81:36:10:4E:FF:26:0B:F9:07:A8:88:A5:8D:ED:BE:84:A8:1E:68:40:9F:06:E6:37:80:7A:3E:A8"
+      ]
+    }
+  }
+]

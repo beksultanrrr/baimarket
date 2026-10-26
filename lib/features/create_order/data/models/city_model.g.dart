@@ -11,8 +11,9 @@ CityModel _$CityModelFromJson(Map<String, dynamic> json) => CityModel(
   nameEn: json['nameEn'] as String?,
   nameKz: json['nameKz'] as String?,
   nameRu: json['nameRu'] as String?,
-  pickupUrls:
-      (json['pickupUrls'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  pickupUrls: (json['pickupUrls'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
 );
 
 Map<String, dynamic> _$CityModelToJson(CityModel instance) => <String, dynamic>{
